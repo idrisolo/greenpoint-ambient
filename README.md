@@ -1,53 +1,54 @@
-# Greenpoint Ambient: Fire Stick setup
+# Greenpoint Ambient
 
-The dashboard is a web page (`index.html` plus `gallery.js`). The Fire Stick needs a URL to open it from, then a browser that can show it full screen.
+An ambient TV screensaver for a home in Greenpoint, Brooklyn: art and photography, live weather, the next G train, subway status, NYC events picked by an AI editor, free museum days, holiday countdowns, and fun facts.
 
-## 1. Put the page online
+Live page: https://idrisolo.github.io/greenpoint-ambient/
 
-The Fire Stick can't open files from your Mac, so the page needs a web address. Free option: GitHub Pages (Claude can set this up for you with your GitHub account). You end up with a URL like:
+## How it runs on the TV
 
-    https://idrisolo.github.io/greenpoint-ambient/
+The Fire TV Stick (Fire OS 6) uses a small custom app, **Greenpoint Ambient** (`firetv-app/`), as its system screensaver. After 3 minutes idle the dashboard appears; any remote button returns to what you were doing.
 
-Any change pushed to the repo shows up on the TV within a day (the page reloads itself at 4 AM), or right away if you restart the app.
+One-time setup (already done) from a computer on the same Wi-Fi, with ADB Debugging on:
 
-## 2. Install a kiosk browser on the Fire Stick (recommended: Fully Kiosk Browser)
+```bash
+cd firetv-app && ./build.sh
+adb connect <fire-stick-ip>:5555
+adb install -r greenpoint-ambient.apk
+adb shell pm grant com.greenpoint.ambient android.permission.WRITE_SECURE_SETTINGS
+adb shell settings put secure screensaver_components com.greenpoint.ambient/.DashboardDream
+adb shell settings put secure contextual_screen_off_timeout 180000   # start after 3 min (Amazon's timer)
+adb shell settings put system screen_off_timeout 180000
+adb shell settings put secure sleep_timeout 14400000                 # stay awake 4 h before sleeping
+```
 
-1. On the Fire Stick: **Settings → My Fire TV → Developer Options → Install unknown apps**, and allow **Downloader**.
-   (If Developer Options is hidden: Settings → My Fire TV → About, click the device name 7 times.)
-2. Install **Downloader** from the Amazon Appstore.
-3. In Downloader, go to `fully-kiosk.com`, download the Fire TV / Android APK, and install it.
-4. Open Fully Kiosk Browser and set:
-   - **Start URL**: your dashboard URL
-   - **Device Management → Launch on boot**: ON (the dashboard comes up whenever the TV/stick powers on)
-   - **Web Content Settings → Autoplay / Keep screen on**: ON
-   - **Toolbars & Appearance → Hide everything / Fullscreen mode**: ON
+The app re-applies the screensaver setting after reboots and updates. If the TV itself still switches off, check the Vizio's **Settings > Timers** (Sleep Timer, Auto Power Off).
 
-Simpler but less polished alternative: open the URL in the **Silk Browser**, bookmark it, and use the menu to go full screen. Silk doesn't launch on boot.
+### Private settings
 
-## 3. Make it the "idle" screen
+Never committed (git-ignored), baked into the app, and passed to the page after `#` so they never reach a server:
 
-Amazon doesn't let third-party apps replace the Fire Stick's built-in screensaver. The practical setup:
+- `firetv-app/personal.txt`: first line is the first name used in greetings.
+- `firetv-app/private.txt`: `tm=` Ticketmaster key (enables concerts), `wifi_ssid=`, `wifi_pass=`, `wifi_type=WPA` (enables the guest Wi-Fi card). See `private.txt.example`.
 
-- **Settings → Display & Sounds → Screen Saver → Start Time → Never**, so Amazon's screensaver doesn't cover the dashboard.
-- When you're done watching, press **Home** and open Fully Kiosk (or with Launch on boot, it's there whenever the TV turns on). The dashboard *is* the screensaver: the background changes every 50 seconds, the layout shifts a few pixels every few minutes to avoid burn-in, every fifth card it hides the info for a 2-minute gallery-only break, and it dims itself from 1 to 6 AM.
-- The Vizio will still turn itself off on its own timer, which is fine.
+Rebuild and reinstall the app after changing them.
 
-## Customizing
+## What's on screen
 
-Settings live near the top of the `<script>` in `index.html`:
+- Clock, weather with line icons, 5-day forecast, severe weather alerts (Open-Meteo, NWS).
+- Live next G trains at Greenpoint Av and a calm subway status that only speaks up for problems near home (MTA real-time feeds).
+- Cards: morning and evening briefings, AI editor's pick of the day and picks, NYC Parks events and street festivals citywide, concerts (with a Ticketmaster key), free museum days, Real Madrid matches, countdowns, guest Wi-Fi, and fun facts every 5th card.
+- Gallery of paintings (with museum wall labels) and photos, matched to weather, time of day, and season (holiday imagery from mid-November).
+- Modes: gallery-only breaks, late night (midnight to 6 AM, dim paintings only), matchday (Real Madrid white and gold), rain and snow window effect.
+- QR codes on cards open details or directions on a phone.
 
-- `CFG`: location, which subway lines to watch, card and photo timing, the gallery-only break, and night dimming hours (1 to 6 AM by default).
-- `PICKS`: curated Greenpoint / Brooklyn / NYC ideas. `months: [11, 12]` limits a card to those months; `days: [0, 6]` to weekends.
-- `FREE`: recurring free museum days. Hours change, so each card says to check or book ahead. Edit when you learn of new ones.
-- `gallery.js`: the background images (paintings and photos). Add any image URL as `{kind: "photo" or "art", title, credit, url}`. "art" shows the whole painting framed; "photo" fills the screen with a slow zoom.
+## Content that updates itself
 
-The location is set by hand (Greenpoint). To use somewhere else without editing code, add it to the URL:
-`...?lat=40.7128&lon=-74.0060&place=Lower%20Manhattan&lines=4,5,6&alertLines=4,5,6`
+- **AI editor, every morning ~6:30 AM**: a scheduled Claude routine researches NYC and writes `data/editor.json` (format in `data/README.md`).
+- **Refresh, 1st and 15th**: a scheduled Claude routine updates seasonal picks (`PICKS`, with `until` dates), checks free museum days (`FREE`), and adds verified facts (`FACTS`).
+- The page reloads itself when a new version is published, and daily at 4 AM.
 
-## Data sources (all free, no keys, refreshed automatically)
+## Editing
 
-- Weather: Open-Meteo, every 15 minutes. Severe weather warnings: National Weather Service.
-- Subway: MTA live service alerts, every 2 minutes. G, L, and 7 status in the bottom strip; G and L problems also get a full card.
-- Events: NYC Parks events (ranked by distance from home) and NYC street-event permits for Greenpoint and Williamsburg, hourly.
-- Real Madrid: next match and recent result from TheSportsDB, every 3 hours. A chip shows on match day.
-- Images: Wikimedia Commons (public-domain paintings and Creative Commons photos, credited on screen).
+- `index.html`: settings (`CFG`), curated `PICKS`, `FREE` days, `FACTS`, `COUNTDOWNS`.
+- `gallery.js`: images. `kind: "art"` (framed, museum label) or `"photo"`; `moods` (night, rain, snow, sunrise, sunset, cold, sunny, cloudy, holiday).
+- Before pushing, validate: extract the inline `<script>` blocks and run `node --check`.
