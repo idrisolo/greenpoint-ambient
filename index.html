@@ -1,0 +1,504 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Greenpoint Ambient</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #f7f3ec;
+    --ink-soft: rgba(247, 243, 236, 0.82);
+    --ink-faint: rgba(247, 243, 236, 0.55);
+    --panel: rgba(10, 12, 18, 0.58);
+    --line: rgba(247, 243, 236, 0.16);
+    --accent: #ffcf8a;
+    --good: #5fd38d; --warn: #ffb347; --bad: #ff6b6b;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 100%; height: 100%; overflow: hidden; background: #07080c; color: var(--ink);
+    font-family: Inter, system-ui, sans-serif; cursor: none; }
+  .shadow { text-shadow: 0 2px 18px rgba(0,0,0,.55), 0 1px 3px rgba(0,0,0,.5); }
+
+  /* ---------- Photo / art layer ---------- */
+  #gallery { position: fixed; inset: 0; z-index: 0; background: #07080c; }
+  .slide { position: absolute; inset: 0; opacity: 0; transition: opacity 3s ease; overflow: hidden; }
+  .slide.on { opacity: 1; }
+  .slide .photo { position: absolute; inset: 0; background-size: cover; background-position: center; will-change: transform; }
+  .slide.on .photo.kb { animation: kenburns var(--kb-dur, 60s) ease-out forwards; }
+  @keyframes kenburns { from { transform: scale(1.0) translate(0, 0); } to { transform: scale(1.09) translate(var(--kx, -1%), var(--ky, -1%)); } }
+  /* Paintings: shown whole, hung on a blurred, darkened copy of themselves */
+  .slide .wall { position: absolute; inset: -40px; background-size: cover; background-position: center; filter: blur(40px) brightness(.35) saturate(1.2); }
+  .slide .canvas { position: absolute; inset: 7vh 6vw 9vh; background-size: contain; background-position: center; background-repeat: no-repeat;
+    filter: drop-shadow(0 20px 50px rgba(0,0,0,.7)); }
+  #scrimTop { position: fixed; inset: 0 0 auto 0; height: 45vh; z-index: 1; background: linear-gradient(rgba(0,0,0,.72), rgba(0,0,0,.35) 50%, rgba(0,0,0,0)); transition: opacity 3s; }
+  #scrimBot { position: fixed; inset: auto 0 0 0; height: 55vh; z-index: 1; background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,.72)); transition: opacity 3s; }
+
+  /* ---------- Layout ---------- */
+  #stage { position: fixed; inset: 0; z-index: 2; padding: 4.5vh 4vw 4vh; display: grid; grid-template-rows: auto 1fr auto auto; transition: opacity 3s; }
+  header { display: flex; justify-content: space-between; align-items: flex-start; }
+  #time { font-family: Fraunces, Georgia, serif; font-weight: 300; font-size: 8.4vw; line-height: .9; letter-spacing: -.02em; }
+  #time .ampm { font-size: 2vw; font-family: Inter, sans-serif; letter-spacing: .1em; color: var(--ink-soft); margin-left: .6vw; }
+  #date { margin-top: 1.4vh; font-size: 1.75vw; color: var(--ink-soft); font-weight: 400; }
+  #place { margin-top: .6vh; font-size: .95vw; letter-spacing: .3em; text-transform: uppercase; color: var(--ink-faint); }
+
+  #weather { text-align: right; }
+  #now { display: flex; align-items: center; justify-content: flex-end; gap: 1vw; }
+  #now .icon { font-size: 3.8vw; line-height: 1; }
+  #now .temp { font-family: Fraunces, serif; font-weight: 300; font-size: 5.2vw; line-height: 1; }
+  #nowDesc { font-size: 1.3vw; color: var(--ink-soft); margin-top: .6vh; }
+  #forecast { display: flex; gap: 1.5vw; justify-content: flex-end; margin-top: 2vh; transition: opacity 2s; }
+  .day { text-align: center; min-width: 4vw; }
+  .day .n { font-size: .95vw; letter-spacing: .15em; text-transform: uppercase; color: var(--ink-faint); }
+  .day .i { font-size: 1.9vw; margin: .4vh 0; }
+  .day .t { font-size: 1.15vw; } .day .t span { color: var(--ink-faint); }
+  #alert { display: none; margin-top: 1.6vh; margin-left: auto; max-width: 32vw; padding: .9vh 1vw; border-radius: .6vw;
+    background: rgba(160, 30, 30, .78); font-size: 1.05vw; font-weight: 600; text-align: left; }
+
+  /* ---------- Rotating card ---------- */
+  #card { max-width: 54vw; padding: 3vh 2.2vw 2.6vh; border-radius: 1.2vw; background: var(--panel);
+    border: 1px solid var(--line); transition: opacity 1.2s ease, transform 1.2s ease; align-self: end; }
+  #card.out { opacity: 0; transform: translateY(2vh); }
+  #tag { display: inline-flex; align-items: center; gap: .6vw; font-size: .95vw; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--accent); }
+  #tag::before { content: ""; width: .6vw; height: .6vw; border-radius: 50%; background: currentColor; }
+  #card.mta #tag { color: var(--warn); } #card.free #tag { color: var(--good); } #card.rm #tag { color: #c9b8ff; }
+  #title { font-family: Fraunces, serif; font-weight: 500; font-size: 3.1vw; line-height: 1.12; margin: 1.2vh 0 1vh; }
+  #body { font-size: 1.5vw; line-height: 1.45; color: var(--ink-soft); font-weight: 300; }
+  #meta { margin-top: 1.4vh; font-size: 1.15vw; color: var(--ink-faint); }
+  #progress { margin-top: 2vh; height: 3px; background: var(--line); border-radius: 2px; overflow: hidden; }
+  #bar { height: 100%; width: 0; background: var(--accent); }
+
+  /* ---------- Bottom strip: transit + credit ---------- */
+  #strip { display: flex; justify-content: space-between; align-items: flex-end; margin-top: 2.6vh; gap: 2vw; transition: opacity 2s; }
+  #transit { display: flex; gap: 1.6vw; align-items: center; flex-wrap: wrap; }
+  .line { display: flex; align-items: center; gap: .55vw; font-size: 1.1vw; color: var(--ink-soft); }
+  .bullet { display: inline-flex; align-items: center; justify-content: center; width: 1.9vw; height: 1.9vw; border-radius: 50%;
+    font-weight: 700; font-size: 1.15vw; color: #fff; text-shadow: none; flex: none; }
+  .bullet.inl { width: 1.5em; height: 1.5em; font-size: .78em; vertical-align: .12em; margin: 0 .1em; }
+  .dot { width: .6vw; height: .6vw; border-radius: 50%; display: inline-block; }
+  #rmChip { font-size: 1.05vw; color: var(--ink-soft); display: none; }
+  #credit { text-align: right; font-size: .95vw; color: var(--ink-faint); max-width: 38vw; line-height: 1.4; transition: all 2s; }
+  #credit b { color: var(--ink-soft); font-weight: 600; font-style: italic; font-family: Fraunces, serif; font-size: 1.15vw; }
+
+  /* ---------- Ambient (gallery-only) mode ---------- */
+  body.ambient #card { opacity: 0; transform: translateY(2vh); }
+  body.ambient #forecast, body.ambient #transit, body.ambient #rmChip, body.ambient #nowDesc { opacity: 0; }
+  body.ambient #scrimBot { opacity: .5; }
+  body.ambient #credit { font-size: 1.15vw; }
+  body.ambient #credit b { font-size: 1.6vw; }
+
+  /* ---------- Late night: dim everything ---------- */
+  body.night #gallery { filter: brightness(.45); transition: filter 10s; }
+  body.night #stage { opacity: .6; }
+</style>
+</head>
+<body>
+  <div id="gallery"><div class="slide" id="s0"></div><div class="slide" id="s1"></div></div>
+  <div id="scrimTop"></div><div id="scrimBot"></div>
+
+  <main id="stage" class="shadow">
+    <header>
+      <div>
+        <div id="time">--:--</div>
+        <div id="date"></div>
+        <div id="place"></div>
+      </div>
+      <div id="weather">
+        <div id="now"><span class="icon"></span><span class="temp">--°</span></div>
+        <div id="nowDesc">Loading weather…</div>
+        <div id="forecast"></div>
+        <div id="alert"></div>
+      </div>
+    </header>
+    <div></div>
+    <section id="card" class="out" style="text-shadow:none">
+      <div id="tag"></div>
+      <h2 id="title"></h2>
+      <p id="body"></p>
+      <div id="meta"></div>
+      <div id="progress"><div id="bar"></div></div>
+    </section>
+    <div id="strip">
+      <div>
+        <div id="transit"></div>
+        <div id="rmChip"></div>
+      </div>
+      <div id="credit"></div>
+    </div>
+  </main>
+
+<script src="gallery.js"></script>
+<script>
+/* =====================================================================
+   SETTINGS. You can also override location from the URL, for example:
+   index.html?lat=40.7304&lon=-73.9515&place=Greenpoint%20%C2%B7%20Brooklyn
+   ===================================================================== */
+var qs = {}; location.search.replace(/[?&]([^=]+)=([^&]*)/g, function (_, k, v) { qs[k] = decodeURIComponent(v); });
+var CFG = {
+  lat: +qs.lat || 40.7304, lon: +qs.lon || -73.9515,       // Greenpoint, Brooklyn (set by hand, not detected)
+  place: qs.place || "Greenpoint · Brooklyn",
+  subwayLines: (qs.lines || "G,L,7").split(","),           // lines shown in the bottom strip
+  alertLines: (qs.alertLines || "G,L").split(","),         // lines that get a full alert card
+  cardSeconds: 24,            // each info card
+  photoSeconds: 50,           // each background image
+  ambientEvery: 5,            // after this many cards, a gallery-only break...
+  ambientSeconds: 120,        // ...lasting this long
+  nightStart: 1, nightEnd: 6, // dim the screen between these hours
+  eventRadiusKm: 4,           // "nearby" radius for NYC Parks events
+  realMadridId: "133738"      // TheSportsDB team id
+};
+document.getElementById("place").textContent = CFG.place;
+
+/* ================== CURATED PICKS ==================
+   months: 1-12 to limit by month; days: 0=Sun..6=Sat. */
+var PICKS = [
+  { tag: "Greenpoint gem", title: "Transmitter Park at sunset", body: "Walk to the end of Greenpoint Ave and watch Midtown light up across the East River.", meta: "Greenpoint Ave & West St" },
+  { tag: "Greenpoint gem", title: "Newtown Creek Nature Walk", body: "A strange, beautiful path beside the silver 'digester eggs.' One of the most cinematic spots in the neighborhood.", meta: "Paidge Ave & Provost St" },
+  { tag: "Greenpoint gem", title: "Manhattan Avenue Street End Park", body: "A quiet waterfront pocket at the top of Manhattan Ave, facing the Pulaski Bridge and the LIC skyline.", meta: "North end of Manhattan Ave" },
+  { tag: "Greenpoint gem", title: "A Polish bakery crawl", body: "Greenpoint's Polish roots run deep. Pączki, babka, and fresh rye down Manhattan Ave and Nassau Ave.", meta: "Manhattan Ave & Nassau Ave" },
+  { tag: "Greenpoint gem", title: "McCarren Park loop", body: "Run the track, watch a pickup game, or sit under the trees. The backyard of Greenpoint and Williamsburg.", meta: "Bedford Ave & N 12th St" },
+  { tag: "Walkable", title: "MoMA PS1, across the bridge", body: "Free for everyone as of 2026. Walk over the Pulaski Bridge into Long Island City and you're there in 20 minutes.", meta: "22-25 Jackson Ave, LIC · check hours at momaps1.org" },
+  { tag: "Weekend idea", title: "Take the NYC Ferry from Greenpoint", body: "Subway price, much better views. Ride to Dumbo or Wall St and watch the bridges go by.", meta: "India St pier · ferry.nyc", days: [0, 5, 6] },
+  { tag: "Brooklyn", title: "Domino Park, Williamsburg", body: "Waterfront park built around the old sugar refinery, with big Williamsburg Bridge views and tacos.", meta: "River St & Grand St" },
+  { tag: "Brooklyn", title: "Brooklyn Bridge Park", body: "Piers, lawns, and the best Manhattan views in the borough. Walk from Dumbo down to Pier 6.", meta: "Dumbo to Atlantic Ave" },
+  { tag: "Brooklyn", title: "Prospect Park", body: "Olmsted and Vaux's other masterpiece. The Long Meadow, the Boathouse, and the Ravine feel like leaving the city.", meta: "Grand Army Plaza entrance" },
+  { tag: "Brooklyn", title: "A night at BAM", body: "Films, dance, and theater all year. The BAM Rose Cinemas are perfect on a cold night.", meta: "Fort Greene · bam.org" },
+  { tag: "Brooklyn", title: "Bushwick street art walk", body: "The blocks around Jefferson St and Troutman St have some of the biggest murals in the city.", meta: "Jefferson St L stop" },
+  { tag: "Photo spot", title: "Kent Ave golden hour", body: "The Williamsburg waterfront faces west. Shoot the last 40 minutes before sunset with the skyline behind.", meta: "Kent Ave & N 5th St" },
+  { tag: "Photo spot", title: "Dumbo, Washington St", body: "The Manhattan Bridge framed between brick warehouses. Go early on a weekday to have it to yourself.", meta: "Washington St & Water St" },
+  { tag: "Photo spot", title: "Pulaski Bridge walkway", body: "Industrial creek on one side, skyline on the other. Best at blue hour.", meta: "McGuinness Blvd to LIC" },
+  { tag: "NYC", title: "The Met", body: "You could spend a week inside. Pay what you wish if you live in New York State.", meta: "Fifth Ave & 82nd St · metmuseum.org" },
+  { tag: "NYC", title: "Walk the High Line", body: "An elevated park on an old rail line, from Gansevoort St up to Hudson Yards.", meta: "Gansevoort St to 34th St" },
+  { tag: "NYC", title: "Film Forum or Metrograph", body: "Two of the best repertory cinemas anywhere: classics, restorations, and new indie films.", meta: "W Houston St · Ludlow St" },
+  { tag: "NYC", title: "Roosevelt Island Tram", body: "A subway fare buys a cable car ride over the East River. Go at dusk.", meta: "59th St & 2nd Ave" },
+  { tag: "Money tip", title: "Get an IDNYC card", body: "Free city ID that comes with free one-year memberships at museums like the Met, MoMA, and the Natural History Museum.", meta: "nyc.gov/idnyc" },
+  { tag: "This season", title: "Fall foliage in Prospect Park", body: "The Ravine and Lookout Hill peak in early to mid November.", meta: "Prospect Park", months: [10, 11] },
+  { tag: "This season", title: "Bryant Park Winter Village", body: "Free skating if you bring skates, a holiday market, and hot chocolate in Midtown.", meta: "42nd St & 6th Ave", months: [11, 12, 1, 2] },
+  { tag: "This season", title: "Thanksgiving balloon inflation", body: "The night before the parade, watch the giant balloons get inflated by the Natural History Museum.", meta: "Upper West Side · Thanksgiving eve", months: [11] },
+  { tag: "This season", title: "Dyker Heights Christmas lights", body: "Whole blocks of over-the-top holiday displays. Best after dark from early December.", meta: "11th–13th Aves, 83rd–86th St", months: [12] },
+  { tag: "This season", title: "Rockefeller Center tree", body: "Lit from late November into January. Go late at night to skip the crowds.", meta: "30 Rockefeller Plaza", months: [11, 12, 1] },
+  { tag: "This season", title: "Smorgasburg", body: "The giant outdoor food market, weekends in Williamsburg and Prospect Park.", meta: "smorgasburg.com", months: [4, 5, 6, 7, 8, 9, 10] },
+  { tag: "This season", title: "McCarren Park Pool", body: "A huge free public pool a few blocks away. Open late June through Labor Day.", meta: "Lorimer St & Bayard St", months: [6, 7, 8, 9] }
+];
+
+/* ================== FREE DAYS ==================
+   Hours change; each card tells you to check or book ahead.
+   day: 0=Sun..6=Sat. nth: only the nth such weekday of the month. months: limit by month. */
+var FREE = [
+  { day: 3, name: "Museum of the City of New York", what: "Free admission on Wednesdays.", meta: "Fifth Ave & 103rd St · check mcny.org" },
+  { day: 4, name: "Museum of Jewish Heritage", what: "Free Thursdays from 4 PM.", meta: "Battery Park City · mjhnyc.org" },
+  { day: 4, name: "Museum of Arts and Design", what: "Free or pay-what-you-wish Thursday evenings.", meta: "Columbus Circle · check madmuseum.org" },
+  { day: 5, name: "MoMA Friday Nights", what: "Free for New York State residents, 5:30 to 8:30 PM. Reserve online ahead.", meta: "53rd St · moma.org" },
+  { day: 5, name: "Whitney Free Friday Nights", what: "Free Friday evenings for everyone, with programs. Book a timed ticket ahead.", meta: "Meatpacking District · whitney.org" },
+  { day: 6, name: "The Jewish Museum", what: "Free on Saturdays.", meta: "Fifth Ave & 92nd St · thejewishmuseum.org" },
+  { day: 6, nth: 1, name: "Brooklyn Museum First Saturdays", what: "Free after-hours night with music, art, and talks on the first Saturday of select months. Register ahead.", meta: "Eastern Pkwy · brooklynmuseum.org" },
+  { day: [2, 3, 4, 5], months: [12, 1, 2], name: "Brooklyn Botanic Garden", what: "Pay what you wish on winter weekdays, Tuesday to Friday.", meta: "Prospect Heights · bbg.org" }
+];
+
+/* ================== HELPERS ================== */
+function $(id) { return document.getElementById(id); }
+function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+function shuffle(a) { for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+function hm(d) { return d.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" }); }
+function dayLabel(d) {
+  var t = new Date(); t.setHours(0, 0, 0, 0);
+  var diff = Math.round((new Date(d.getFullYear(), d.getMonth(), d.getDate()) - t) / 864e5);
+  return diff === 0 ? "Today" : diff === 1 ? "Tomorrow" : d.toLocaleDateString("en-US", { weekday: "long" });
+}
+function km(lat, lon) { var R = 6371, r = Math.PI / 180, dl = (lat - CFG.lat) * r, dn = (lon - CFG.lon) * r;
+  var a = Math.sin(dl / 2) * Math.sin(dl / 2) + Math.cos(CFG.lat * r) * Math.cos(lat * r) * Math.sin(dn / 2) * Math.sin(dn / 2);
+  return 2 * R * Math.asin(Math.sqrt(a)); }
+var _ta = document.createElement("textarea");
+function tidy(s) {
+  _ta.innerHTML = s || ""; s = _ta.value.replace(/[®™]/g, "").trim();   // decode &#174; etc.
+  s = s.replace(/\b\d+(ST|ND|RD|TH)\b/g, function (w) { return w.toLowerCase(); })
+    .replace(/\b[A-Z][A-Z0-9']+\b/g, function (w) { return /^(NYC|NYS|BAM|PS|US|II|III|NYRR)$/.test(w) ? w : w.charAt(0) + w.slice(1).toLowerCase(); })
+    .replace(/\bStreet\b/g, "St").replace(/\bAvenue\b/g, "Ave").replace(/\bRoad\b/g, "Rd").replace(/\bPlace\b/g, "Pl");
+  return s.replace(/\s+/g, " ");
+}
+// Cache the last good copy of each feed so a flaky connection never leaves the screen empty
+function cache(key, val) { try { if (val === undefined) return JSON.parse(localStorage.getItem(key)); localStorage.setItem(key, JSON.stringify(val)); } catch (e) { return null; } }
+function getJSON(url) { return fetch(url).then(function (r) { if (!r.ok) throw r.status; return r.json(); }); }
+
+/* ================== GALLERY ================== */
+var gal = shuffle((window.GALLERY || []).slice()), gi = 0, cur = 0;
+// Alternate paintings and photos so it never feels like a slideshow of one kind
+(function interleave() {
+  var art = gal.filter(function (g) { return g.kind === "art"; }), ph = gal.filter(function (g) { return g.kind !== "art"; }), out = [];
+  while (art.length || ph.length) { if (ph.length) out.push(ph.shift()); if (ph.length) out.push(ph.shift()); if (art.length) out.push(art.shift()); }
+  gal = out;
+})();
+function showImage() {
+  if (!gal.length) return;
+  var g = gal[gi++ % gal.length], img = new Image();
+  img.onload = function () {
+    cur = 1 - cur; var s = $("s" + cur), old = $("s" + (1 - cur));
+    if (g.kind === "art") {
+      s.innerHTML = '<div class="wall"></div><div class="canvas"></div>';
+      s.querySelector(".wall").style.backgroundImage = s.querySelector(".canvas").style.backgroundImage = "url('" + g.url + "')";
+    } else {
+      s.innerHTML = '<div class="photo kb"></div>';
+      var p = s.querySelector(".photo");
+      p.style.backgroundImage = "url('" + g.url + "')";
+      p.style.setProperty("--kb-dur", (CFG.photoSeconds + 5) + "s");
+      p.style.setProperty("--kx", (Math.random() * 4 - 2).toFixed(1) + "%");
+      p.style.setProperty("--ky", (Math.random() * 3 - 1.5).toFixed(1) + "%");
+    }
+    void s.offsetWidth; s.classList.add("on"); old.classList.remove("on");
+    $("credit").innerHTML = "<b>" + esc(g.title) + "</b><br>" + esc(g.credit || "");
+    // preload the next one
+    var n = gal[gi % gal.length]; if (n) (new Image()).src = n.url;
+  };
+  img.onerror = function () { gal.splice((gi - 1) % gal.length, 1); setTimeout(showImage, 500); };
+  img.src = g.url;
+}
+
+/* ================== WEATHER + ALERTS ================== */
+var WMO = { 0: ["☀️", "Clear"], 1: ["🌤️", "Mostly clear"], 2: ["⛅", "Partly cloudy"], 3: ["☁️", "Overcast"], 45: ["🌫️", "Fog"], 48: ["🌫️", "Freezing fog"],
+  51: ["🌦️", "Light drizzle"], 53: ["🌦️", "Drizzle"], 55: ["🌧️", "Heavy drizzle"], 56: ["🌧️", "Freezing drizzle"], 57: ["🌧️", "Freezing drizzle"],
+  61: ["🌧️", "Light rain"], 63: ["🌧️", "Rain"], 65: ["🌧️", "Heavy rain"], 66: ["🌧️", "Freezing rain"], 67: ["🌧️", "Freezing rain"],
+  71: ["🌨️", "Light snow"], 73: ["🌨️", "Snow"], 75: ["❄️", "Heavy snow"], 77: ["🌨️", "Snow grains"], 80: ["🌦️", "Showers"], 81: ["🌧️", "Showers"],
+  82: ["⛈️", "Heavy showers"], 85: ["🌨️", "Snow showers"], 86: ["❄️", "Snow showers"], 95: ["⛈️", "Thunderstorm"], 96: ["⛈️", "Thunderstorm, hail"], 99: ["⛈️", "Thunderstorm, hail"] };
+function wmo(c, night) { var w = WMO[c] || ["🌡️", ""]; return night && c <= 1 ? ["🌙", w[1]] : w; }
+var wx = cache("wx");
+function loadWeather() {
+  getJSON("https://api.open-meteo.com/v1/forecast?latitude=" + CFG.lat + "&longitude=" + CFG.lon +
+    "&current=temperature_2m,apparent_temperature,weather_code,is_day,wind_speed_10m" +
+    "&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,sunrise,sunset" +
+    "&hourly=precipitation_probability&forecast_hours=6&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=America%2FNew_York&forecast_days=6")
+    .then(function (d) { wx = d; cache("wx", d); renderWeather(); }).catch(renderWeather);
+  getJSON("https://api.weather.gov/alerts/active?point=" + CFG.lat.toFixed(4) + "," + CFG.lon.toFixed(4)).then(function (d) {
+    var f = (d.features || []).map(function (x) { return x.properties.event; });
+    $("alert").style.display = f.length ? "block" : "none";
+    $("alert").textContent = "⚠️ " + f.slice(0, 2).join(" · ");
+  }).catch(function () {});
+}
+function renderWeather() {
+  if (!wx) { $("nowDesc").textContent = "Weather unavailable"; return; }
+  var c = wx.current, w = wmo(c.weather_code, !c.is_day), dd = wx.daily;
+  document.querySelector("#now .icon").textContent = w[0];
+  document.querySelector("#now .temp").textContent = Math.round(c.temperature_2m) + "°";
+  var rainSoon = Math.max.apply(null, (wx.hourly && wx.hourly.precipitation_probability) || [0]);
+  $("nowDesc").textContent = w[1] + " · feels " + Math.round(c.apparent_temperature) + "° · H " + Math.round(dd.temperature_2m_max[0]) +
+    "° L " + Math.round(dd.temperature_2m_min[0]) + "°" + (rainSoon >= 40 ? " · " + rainSoon + "% rain soon" : "") + " · sunset " + hm(new Date(dd.sunset[0]));
+  var f = "";
+  for (var i = 1; i < dd.time.length; i++) {
+    var dt = new Date(dd.time[i] + "T12:00:00");
+    f += '<div class="day"><div class="n">' + dt.toLocaleDateString("en-US", { weekday: "short" }) + '</div><div class="i">' + wmo(dd.weather_code[i])[0] +
+      '</div><div class="t">' + Math.round(dd.temperature_2m_max[i]) + '° <span>' + Math.round(dd.temperature_2m_min[i]) + '°</span></div></div>';
+  }
+  $("forecast").innerHTML = f;
+}
+
+/* ================== MTA SUBWAY ALERTS ================== */
+var LINE_COLORS = { A: "#0039A6", C: "#0039A6", E: "#0039A6", B: "#FF6319", D: "#FF6319", F: "#FF6319", M: "#FF6319", G: "#6CBE45", L: "#A7A9AC",
+  J: "#996633", Z: "#996633", N: "#FCCC0A", Q: "#FCCC0A", R: "#FCCC0A", W: "#FCCC0A", 1: "#EE352E", 2: "#EE352E", 3: "#EE352E",
+  4: "#00933C", 5: "#00933C", 6: "#00933C", 7: "#B933AD", S: "#808183", GS: "#808183", FS: "#808183", H: "#808183", SI: "#0039A6" };
+function bullet(r, inline) { var c = LINE_COLORS[r] || "#666", dark = /^[NQRW]$/.test(r);
+  return '<span class="bullet' + (inline ? " inl" : "") + '" style="background:' + c + (dark ? ";color:#111" : "") + '">' + esc(r.replace(/X$/, "")) + "</span>"; }
+var SEVERITY = [[/^Suspended|No Scheduled Service/i, 4, "Suspended", "bad"], [/Part Suspended/i, 3, "Part suspended", "bad"], [/Delays/i, 3, "Delays", "warn"],
+  [/Reroute|Stops Skipped|Express to Local|Local to Express|Reduced Service|Some Delays|Slow Speeds|Trains Rerouted/i, 2, "Service change", "warn"]];
+var mta = [];
+function loadMTA() {
+  getJSON("https://api-endpoint.mta.info/Dataservice/mtagtfsfeeds/camsys%2Fsubway-alerts.json").then(function (d) {
+    var now = Date.now() / 1000;
+    mta = [];
+    (d.entity || []).forEach(function (e) {
+      var a = e.alert; if (!a) return;
+      var active = (a.active_period || []).some(function (p) { return (p.start || 0) <= now && now <= (p.end || 9e12); });
+      if (!active) return;
+      var routes = []; (a.informed_entity || []).forEach(function (i) { if (i.route_id && routes.indexOf(i.route_id) < 0) routes.push(i.route_id); });
+      if (!routes.length) return;
+      var type = (a["transit_realtime.mercury_alert"] || {}).alert_type || "";
+      var sev = [0, "Notice", "warn"]; SEVERITY.some(function (s) { if (s[0].test(type)) { sev = s.slice(1); return true; } });
+      var tr = (a.header_text && a.header_text.translation) || [], txt = "";
+      tr.forEach(function (t) { if (t.language === "en") txt = t.text; }); if (!txt && tr[0]) txt = tr[0].text;
+      if (/elevator|escalator/i.test(txt)) return;
+      mta.push({ routes: routes, sev: sev[0], label: sev[1], cls: sev[2], type: type, text: txt.replace(/\s+/g, " ").trim() });
+    });
+    renderTransit();
+  }).catch(function () {});
+}
+function renderTransit() {
+  $("transit").innerHTML = CFG.subwayLines.map(function (r) {
+    var worst = null; mta.forEach(function (m) { if (m.routes.indexOf(r) > -1 && (!worst || m.sev > worst.sev)) worst = m; });
+    var label = worst && worst.sev >= 2 ? worst.label : "Good service", cls = worst && worst.sev >= 2 ? worst.cls : "good";
+    return '<span class="line">' + bullet(r) + '<span class="dot" style="background:var(--' + cls + ')"></span>' + label + "</span>";
+  }).join("");
+}
+function mtaCards() {
+  var mine = mta.filter(function (m) { return m.sev >= 2 && m.routes.some(function (r) { return CFG.alertLines.indexOf(r) > -1; }); });
+  mine.sort(function (a, b) { return b.sev - a.sev; });
+  var seen = {};
+  return mine.filter(function (m) { var k = m.text.slice(0, 60); if (seen[k]) return false; seen[k] = 1; return true; }).slice(0, 3).map(function (m) {
+    var mineR = m.routes.filter(function (r) { return CFG.alertLines.indexOf(r) > -1; });
+    var nice = (m.type || m.label).replace(/^Planned\s*-\s*/i, "").toLowerCase();
+    var head = m.label === "Delays" ? "trains are delayed" : nice === "part suspended" ? "partly suspended" : nice;
+    return { cls: "mta", tag: "Subway alert", titleHTML: mineR.map(function (r) { return bullet(r, true); }).join("") + " " + esc(head.charAt(0).toUpperCase() + head.slice(1)),
+      bodyHTML: esc(m.text).replace(/\[([A-Z0-9]{1,2})\]/g, function (_, r) { return bullet(r, true); }), meta: "Live from the MTA · check the MTA app before you leave" };
+  });
+}
+
+/* ================== EVENTS: NYC Parks (with coordinates) + street permits ================== */
+var events = cache("events") || [];
+var COOL = /(festival|concert|music|jazz|film|movie|screening|tour|walk|market|lighting|parade|art|exhibit|history|bird|harvest|holiday|halloween|dance party|fair|garden|stargaz|astronomy|kayak|boat|photography|poetry|theater|theatre|comedy|lantern)/i;
+var BORING = /(yoga|fitness|circuit|training|bodyweight|zumba|aerobic|shape up|pilates|workout|cardio|sculpt|interval|hatha|vinyasa|flow\b|bodyroll|\brun\b|open run|running|workday|tree care|virtual|online|^celebration$|bollyx|groove|strong nation|walking group|exercise|senior|toning|stretch|bootcamp|boot camp|tai chi|swim lesson|learn to|it's my park|volunteer|meeting|class -|registration|closure|medical|distribution|hospital|vaccin|clinic|permit|picnic|bbq|wedding|birthday|private|filming|baptism)/i;
+function loadEvents() {
+  var start = new Date(); start.setHours(0, 0, 0, 0);
+  var end = new Date(+start + 8 * 864e5), out = [];
+  var parks = fetch("https://www.nycgovparks.org/xml/events_300_rss.xml").then(function (r) { return r.text(); }).then(function (x) {
+    var doc = new DOMParser().parseFromString(x, "text/xml");
+    [].forEach.call(doc.getElementsByTagName("item"), function (it) {
+      function g(t) { var n = it.getElementsByTagName(t)[0]; return n ? n.textContent.trim() : ""; }
+      var title = g("title"); if (!title || BORING.test(title)) return;
+      var c = g("event:coordinates").split(","), lat = parseFloat(c[0]), lon = parseFloat(c[1]);
+      var date = g("event:startdate"), t = g("event:starttime"), d = new Date(date + "T12:00:00");
+      if (!(d >= start && d < end)) return;
+      var dist = isNaN(lat) ? 99 : km(lat, lon), cool = COOL.test(title + " " + g("description").slice(0, 300));
+      if (dist > CFG.eventRadiusKm && !(cool && dist < 15)) return;
+      var where = g("event:parknames") || tidy(g("event:location")).replace(/\(.*$/, "");
+      out.push({ tag: dist <= CFG.eventRadiusKm ? "Happening nearby" : "Happening in NYC", title: tidy(title),
+        body: where + (dist < 30 ? " · " + (dist * 0.621).toFixed(1) + " mi away" : ""),
+        meta: dayLabel(d) + (t && !/^0:00/.test(t) ? " · " + t.replace(/ (am|pm)/, function (m) { return m.toUpperCase(); }) : "") + " · NYC Parks",
+        when: +d, score: (dist <= CFG.eventRadiusKm ? 60 : 0) + (cool ? 40 : 0) - dist * 2 - (d - start) / 864e5 * 3 });
+    });
+  }).catch(function () {});
+  var where = "start_date_time >= '" + isoDay(start) + "' AND start_date_time < '" + isoDay(end) +
+    "' AND event_borough = 'Brooklyn' AND community_board like '1,%' AND event_type in ('Farmers Market','Street Festival','Street Event','Block Party','Parade','Plaza Event','Special Event','Open Street Partner Event')";
+  var permits = getJSON("https://data.cityofnewyork.us/resource/tvpp-9vvx.json?$limit=500&$order=start_date_time&$where=" + encodeURIComponent(where)).then(function (rows) {
+    rows.forEach(function (r) {
+      if (!r.event_name || BORING.test(r.event_name)) return;
+      var s = new Date(r.start_date_time), e = new Date(r.end_date_time); if (e - s < 30 * 6e4) return;
+      var loc = tidy(r.event_location).replace(/:.*$/, "").split(",")[0], m = loc.match(/^(.+?) between (.+?) and /i); if (m) loc = m[1] + " near " + m[2];
+      out.push({ tag: "Happening nearby", title: tidy(r.event_name), body: loc, meta: dayLabel(s) + " · " + hm(s) + "–" + hm(e), when: +s,
+        score: 70 + (COOL.test(r.event_name) ? 30 : 0) - (s - start) / 864e5 * 3 });
+    });
+  }).catch(function () {});
+  Promise.all([parks, permits]).then(function () {
+    if (!out.length) return;
+    var seen = {}; out.sort(function (a, b) { return b.score - a.score; });
+    events = out.filter(function (e) { var k = e.title.toLowerCase(); if (seen[k]) return false; seen[k] = 1; return true; }).slice(0, 16);
+    cache("events", events);
+  });
+}
+function isoDay(d) { var p = function (n) { return (n < 10 ? "0" : "") + n; }; return d.getFullYear() + "-" + p(d.getMonth() + 1) + "-" + p(d.getDate()) + "T00:00:00"; }
+
+/* ================== REAL MADRID ================== */
+var rm = cache("rm") || {};
+function loadRM() {
+  var base = "https://www.thesportsdb.com/api/v1/json/123/";
+  getJSON(base + "eventsnext.php?id=" + CFG.realMadridId).then(function (d) { rm.next = (d.events || [])[0]; cache("rm", rm); renderRM(); }).catch(function () {});
+  getJSON(base + "eventslast.php?id=" + CFG.realMadridId).then(function (d) { rm.last = (d.results || [])[0]; cache("rm", rm); }).catch(function () {});
+}
+function kickoff(e) { return new Date((e.strTimestamp || (e.dateEvent + "T" + (e.strTime || "00:00:00"))).replace(/\+00:00$/, "") + "Z"); }
+function renderRM() {
+  var e = rm.next; if (!e) return;
+  var k = kickoff(e), hrs = (k - new Date()) / 36e5;
+  $("rmChip").style.display = hrs > -2.5 && hrs < 36 ? "block" : "none";
+  $("rmChip").textContent = "⚽ " + e.strHomeTeam + " vs " + e.strAwayTeam + " · " + (hrs < 0 ? "on now" : dayLabel(k) + " " + hm(k));
+}
+function rmCards() {
+  var c = [];
+  if (rm.next) { var k = kickoff(rm.next), days = (k - new Date()) / 864e5;
+    if (days > -0.1 && days < 7) c.push({ cls: "rm", tag: "Real Madrid · " + (rm.next.strLeague || "Next match"), title: rm.next.strHomeTeam + " vs " + rm.next.strAwayTeam,
+      body: "Kickoff " + dayLabel(k) + " at " + hm(k) + " New York time" + (rm.next.strVenue ? " · " + rm.next.strVenue : "") + ".", meta: "Hala Madrid" }); }
+  if (rm.last && rm.last.intHomeScore != null) { var l = kickoff(rm.last);
+    if ((new Date() - l) / 864e5 < 3) c.push({ cls: "rm", tag: "Real Madrid · Result", title: rm.last.strHomeTeam + " " + rm.last.intHomeScore + "–" + rm.last.intAwayScore + " " + rm.last.strAwayTeam,
+      body: (rm.last.strLeague || "") + " · " + l.toLocaleDateString("en-US", { weekday: "long", month: "short", day: "numeric" }), meta: "Full time" }); }
+  return c;
+}
+
+/* ================== FREE TODAY / TOMORROW ================== */
+function matchesFree(f, d) {
+  var days = [].concat(f.day);
+  if (days.indexOf(d.getDay()) < 0) return false;
+  if (f.months && f.months.indexOf(d.getMonth() + 1) < 0) return false;
+  if (f.nth && Math.ceil(d.getDate() / 7) !== f.nth) return false;
+  return true;
+}
+function freeCards() {
+  var now = new Date(), tom = new Date(+now + 864e5), out = [];
+  FREE.forEach(function (f) {
+    if (matchesFree(f, now)) out.push({ cls: "free", tag: "Free today", title: f.name, body: f.what, meta: f.meta });
+    else if (matchesFree(f, tom)) out.push({ cls: "free", tag: "Free tomorrow", title: f.name, body: f.what, meta: f.meta });
+  });
+  return out;
+}
+
+/* ================== WEATHER-AWARE TIP ================== */
+function weatherTip() {
+  if (!wx) return null;
+  var dd = wx.daily, hi = dd.temperature_2m_max[0], rain = dd.precipitation_probability_max[0] || 0, ss = new Date(dd.sunset[0]), mins = (ss - new Date()) / 6e4;
+  if (mins > 0 && mins < 120 && rain < 40) return { tag: "Golden hour", title: "Sunset at " + hm(ss), body: "About " + Math.round(mins) + " minutes away. Transmitter Park or the Kent Ave waterfront are a short walk.", meta: "Greenpoint waterfront" };
+  if (rain >= 60) return { tag: "Today's weather", title: "A rainy one", body: rain + "% chance of rain. Good day for a movie at Nitehawk or a long lunch on Franklin St.", meta: "Bring an umbrella" };
+  if (hi >= 85) return { tag: "Today's weather", title: "Hot out: " + Math.round(hi) + "°", body: "Head to the waterfront for a breeze, or ride the ferry for some air.", meta: "Stay hydrated" };
+  if (hi <= 35) return { tag: "Today's weather", title: "Cold one: high of " + Math.round(hi) + "°", body: "Layer up. Good day for a museum, a bakery run, or staying in.", meta: "Bundle up" };
+  if (rain < 20 && hi >= 55) return { tag: "Today's weather", title: "Nice day: " + Math.round(hi) + "° and dry", body: "Get outside: McCarren Park, the waterfront, or a ferry ride.", meta: "Low chance of rain" };
+  return null;
+}
+
+/* ================== CARD ROTATION ================== */
+var deck = [], shown = 0;
+function buildDeck() {
+  var now = new Date(), m = now.getMonth() + 1, d = now.getDay();
+  var picks = shuffle(PICKS.filter(function (p) { return (!p.months || p.months.indexOf(m) > -1) && (!p.days || p.days.indexOf(d) > -1); }));
+  var ev = events.slice(0, 10), urgent = mtaCards().concat(rmCards()), free = freeCards();
+  var tip = weatherTip();
+  deck = urgent.slice();          // subway problems and match day first
+  if (tip) deck.push(tip);
+  deck = deck.concat(free.slice(0, 2));
+  // then: event, pick, event, pick... with free-day cards and urgent ones sprinkled back in
+  var i = 0;
+  while (ev.length || picks.length) {
+    if (ev.length) deck.push(ev.shift());
+    if (picks.length) deck.push(picks.shift());
+    if (++i % 4 === 0) { if (free[2 + i / 4 - 1]) deck.push(free[2 + i / 4 - 1]); if (urgent[0]) deck.push(urgent[0]); }
+    if (deck.length > 24) break;
+  }
+}
+function nextCard() {
+  var body = document.body, card = $("card");
+  if (shown > 0 && shown % CFG.ambientEvery === 0 && !body.classList.contains("ambient")) {
+    body.classList.add("ambient"); shown++; setTimeout(nextCard, CFG.ambientSeconds * 1000); return;
+  }
+  body.classList.remove("ambient");
+  if (!deck.length) buildDeck();
+  var c = deck.shift(); shown++;
+  card.classList.add("out");
+  setTimeout(function () {
+    card.className = "out " + (c.cls || "");
+    $("tag").textContent = c.tag;
+    if (c.titleHTML) $("title").innerHTML = c.titleHTML; else $("title").textContent = c.title;
+    if (c.bodyHTML) $("body").innerHTML = c.bodyHTML; else $("body").textContent = c.body;
+    $("meta").textContent = c.meta || "";
+    var bar = $("bar"); bar.style.transition = "none"; bar.style.width = "0"; void bar.offsetWidth;
+    bar.style.transition = "width " + (CFG.cardSeconds - 1.2) + "s linear"; bar.style.width = "100%";
+    card.classList.remove("out");
+  }, 1200);
+  setTimeout(nextCard, CFG.cardSeconds * 1000);
+}
+
+/* ================== CLOCK, NIGHT DIMMING, BURN-IN SHIFT ================== */
+function tick() {
+  var n = new Date(), h = n.getHours(), m = n.getMinutes();
+  $("time").innerHTML = ((h % 12) || 12) + ":" + (m < 10 ? "0" : "") + m + '<span class="ampm">' + (h < 12 ? "AM" : "PM") + "</span>";
+  $("date").textContent = n.toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" });
+  document.body.classList.toggle("night", h >= CFG.nightStart && h < CFG.nightEnd);
+  if (m % 5 === 0) renderRM();
+}
+function shift() { $("stage").style.transform = "translate(" + Math.round(Math.random() * 16 - 8) + "px," + Math.round(Math.random() * 12 - 6) + "px)"; }
+
+/* ================== START ================== */
+tick(); setInterval(tick, 10000);
+setInterval(shift, 4 * 6e4);
+renderWeather(); loadWeather(); setInterval(loadWeather, 15 * 6e4);
+loadMTA(); setInterval(loadMTA, 2 * 6e4);
+loadEvents(); setInterval(loadEvents, 60 * 6e4);
+loadRM(); setInterval(loadRM, 3 * 36e5);
+showImage(); setInterval(showImage, CFG.photoSeconds * 1000);
+setTimeout(nextCard, 3000);
+setInterval(function () { var n = new Date(); if (n.getHours() === 4 && n.getMinutes() < 2) location.reload(); }, 6e4);
+</script>
+</body>
+</html>
