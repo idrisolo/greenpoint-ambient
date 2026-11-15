@@ -223,7 +223,7 @@ var CFG = {
 document.getElementById("place").textContent = CFG.place;
 
 /* ================== CURATED PICKS ==================
-   months: 1-12 to limit by month; days: 0=Sun..6=Sat. */
+   months: 1-12 to limit by month; days: 0=Sun..6=Sat; until: "YYYY-MM-DD" hides it after that date. */
 var PICKS = [
   { tag: "Greenpoint gem", title: "Transmitter Park at sunset", body: "Walk to the end of Greenpoint Ave and watch Midtown light up across the East River.", meta: "Greenpoint Ave & West St" },
   { tag: "Greenpoint gem", title: "Newtown Creek Nature Walk", body: "A strange, beautiful path beside the silver 'digester eggs.' One of the most cinematic spots in the neighborhood.", meta: "Paidge Ave & Provost St" },
@@ -247,8 +247,8 @@ var PICKS = [
   { tag: "Money tip", title: "Get an IDNYC card", body: "Free city ID that comes with free one-year memberships at museums like the Met, MoMA, and the Natural History Museum.", meta: "nyc.gov/idnyc" },
   { tag: "This season", title: "Fall foliage in Prospect Park", body: "The Ravine and Lookout Hill peak in early to mid November.", meta: "Prospect Park", months: [10, 11] },
   { tag: "This season", title: "Bryant Park Winter Village", body: "Free skating if you bring skates, a holiday market, and hot chocolate in Midtown. Tree lighting is Dec 1 at 5:30 PM.", meta: "42nd St & 6th Ave · holiday shops through Jan 3", months: [11, 12, 1, 2] },
-  { tag: "This season", title: "Greenpointers Holiday Market", body: "A one-day loft market with local designers, food stalls, and mulled wine, right on the Greenpoint waterfront.", meta: "Sun Dec 6 · 67 West St · check greenpointers.com", months: [11, 12] },
-  { tag: "This season", title: "Brooklyn holiday makers markets", body: "Markets for Makers at Industry City Nov 21 to 22, then FAD Market at Dumbo's Empire Stores Nov 30 to Dec 20.", meta: "Industry City · Empire Stores, 55 Water St", months: [11, 12] },
+  { tag: "This season", title: "Greenpointers Holiday Market", body: "A one-day loft market with local designers, food stalls, and mulled wine, right on the Greenpoint waterfront.", meta: "Sun Dec 6 · 67 West St · check greenpointers.com", months: [11, 12], until: "2026-12-06" },
+  { tag: "This season", title: "Brooklyn holiday makers markets", body: "Markets for Makers at Industry City Nov 21 to 22, then FAD Market at Dumbo's Empire Stores Nov 30 to Dec 20.", meta: "Industry City · Empire Stores, 55 Water St", months: [11, 12], until: "2026-12-20" },
   { tag: "This season", title: "Thanksgiving balloon inflation", body: "The night before the parade, watch the giant balloons get inflated by the Natural History Museum.", meta: "Upper West Side · Thanksgiving eve", months: [11] },
   { tag: "This season", title: "Dyker Heights Christmas lights", body: "Whole blocks of over-the-top holiday displays. Best after dark from early December.", meta: "11th–13th Aves, 83rd–86th St", months: [12] },
   { tag: "This season", title: "Rockefeller Center tree", body: "Lit from late November into January. Go late at night to skip the crowds.", meta: "30 Rockefeller Plaza", months: [11, 12, 1] },
@@ -884,7 +884,8 @@ function pickCard(p) {   // curated picks get a directions QR
 }
 function buildDeck() {
   var now = nyNow(), m = now.getMonth() + 1, d = now.getDay(), h = now.getHours();
-  var picks = shuffle(PICKS.filter(function (p) { return (!p.months || p.months.indexOf(m) > -1) && (!p.days || p.days.indexOf(d) > -1); })).map(pickCard);
+  var today = isoDay(now).slice(0, 10);   // "until": "YYYY-MM-DD" hides a dated pick once its last day has passed
+  var picks = shuffle(PICKS.filter(function (p) { return (!p.months || p.months.indexOf(m) > -1) && (!p.days || p.days.indexOf(d) > -1) && (!p.until || today <= p.until); })).map(pickCard);
   // Alternate concerts/shows with city events so neither crowds out the other
   var ev = [], es = events.slice(0, 10), ss = shows.slice(0, 6);
   while (es.length || ss.length) { if (es.length) ev.push(es.shift()); if (ss.length) ev.push(ss.shift()); }
