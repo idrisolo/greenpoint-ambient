@@ -1056,6 +1056,18 @@ loadShows(); setInterval(loadShows, 3 * 36e5);
 showImage(); setInterval(showImage, CFG.photoSeconds * 1000);
 setTimeout(nextCard, 3000);
 setInterval(function () { var n = nyNow(); if (n.getHours() === 4 && n.getMinutes() < 2) location.reload(); }, 6e4);
+// Self-update: if a new version of the page is published, reload so a long-running screensaver picks it up
+var pageVersion = null;
+function checkVersion() {
+  if (location.protocol !== "https:") return;
+  fetch(location.pathname + "?vcheck=" + Date.now(), { method: "HEAD", cache: "no-store" }).then(function (r) {
+    var v = r.headers.get("last-modified") || r.headers.get("etag");
+    if (!v) return;
+    if (pageVersion && v !== pageVersion) location.reload();
+    pageVersion = v;
+  }).catch(function () {});
+}
+checkVersion(); setInterval(checkVersion, 10 * 6e4);
 </script>
 </body>
 </html>
