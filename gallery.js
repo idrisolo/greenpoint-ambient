@@ -612,5 +612,201 @@ window.GALLERY = [
    "cold",
    "cloudy"
   ]
+ },
+ {
+  "kind": "photo",
+  "title": "Rockefeller Center Christmas Tree",
+  "credit": "Midtown Manhattan · Photo: JJonahJackalope · CC BY-SA 4.0",
+  "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/95/Rockefeller_Center_Christmas_Tree%2C_2023-12-02.jpg/1920px-Rockefeller_Center_Christmas_Tree%2C_2023-12-02.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "moods": [
+   "holiday",
+   "night"
+  ]
+ },
+ {
+  "kind": "photo",
+  "title": "The tree and the rink",
+  "credit": "Rockefeller Center · Photo: Anthony Quintano from Mount Laurel, United St · CC BY 2.0",
+  "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0e/Rockefeller_Center_Christmas_Tree_2021_%2851770696938%29.jpg/1920px-Rockefeller_Center_Christmas_Tree_2021_%2851770696938%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "moods": [
+   "holiday",
+   "night"
+  ]
+ },
+ {
+  "kind": "photo",
+  "title": "Dyker Heights lights",
+  "credit": "Brooklyn · Photo: Rhododendrites · CC BY-SA 4.0",
+  "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/98/Dyker_Lights_%2862281%29.jpg/1920px-Dyker_Lights_%2862281%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "moods": [
+   "holiday",
+   "night"
+  ]
+ },
+ {
+  "kind": "photo",
+  "title": "Bryant Park Winter Village",
+  "credit": "Midtown Manhattan · Photo: Rhododendrites · CC BY-SA 4.0",
+  "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2a/Bryant_Park_Winter_Village_%2861357%29.jpg/1920px-Bryant_Park_Winter_Village_%2861357%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "moods": [
+   "holiday",
+   "night"
+  ]
+ },
+ {
+  "kind": "photo",
+  "title": "Saks Fifth Avenue light show",
+  "credit": "Fifth Avenue · Photo: DanielPenfield · CC BY-SA 4.0",
+  "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/52/SaksFifthAvenueHolidayLightShow2019.jpg/1920px-SaksFifthAvenueHolidayLightShow2019.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "moods": [
+   "holiday",
+   "night"
+  ]
+ },
+ {
+  "kind": "photo",
+  "title": "Brooklyn Bridge in the snow",
+  "credit": "From Brooklyn Bridge Park · Photo: MusikAnimal · CC BY-SA 3.0",
+  "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/bb/Brooklyn_Bridge_during_snow_storm_January_2014.jpg/1920px-Brooklyn_Bridge_during_snow_storm_January_2014.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "moods": [
+   "holiday",
+   "cold",
+   "snow"
+  ]
+ },
+ {
+  "kind": "photo",
+  "title": "Times Square in a snowstorm",
+  "credit": "Manhattan · Photo: Alek Ajdic · CC BY 3.0",
+  "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8c/Times_Square_%2864227893%29.jpeg/1920px-Times_Square_%2864227893%29.jpeg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "moods": [
+   "holiday",
+   "night",
+   "snow"
+  ]
+ },
+ {
+  "kind": "art",
+  "title": "Winter in Union Square",
+  "credit": "Childe Hassam, c. 1889–90 · The Metropolitan Museum of Art",
+  "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8e/Winter_in_Union_Square_MET_DT5571.jpg/1920px-Winter_in_Union_Square_MET_DT5571.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "artist": "Childe Hassam",
+  "year": "c. 1889–90",
+  "museum": "The Metropolitan Museum of Art",
+  "story": "Hassam painted New York in every season. Here snow softens Union Square into a quiet, misty evening.",
+  "moods": [
+   "holiday",
+   "cold",
+   "snow"
+  ],
+  "see": "The Met, American Wing"
+ },
+ {
+  "kind": "art",
+  "title": "Late Afternoon, New York, Winter",
+  "credit": "Childe Hassam, 1900 · Brooklyn Museum",
+  "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/cb/Frederick_Childe_Hassam_-_Late_Afternoon%2C_New_York%2C_Winter_-_Google_Art_Project.jpg/1920px-Frederick_Childe_Hassam_-_Late_Afternoon%2C_New_York%2C_Winter_-_Google_Art_Project.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "artist": "Childe Hassam",
+  "year": "1900",
+  "museum": "Brooklyn Museum",
+  "story": "Street lamps coming on, carriages in the snow: New York at dusk at the turn of the century.",
+  "moods": [
+   "holiday",
+   "cold",
+   "snow"
+  ],
+  "see": "Brooklyn Museum"
+ },
+ {
+  "kind": "art",
+  "title": "A Morning Snow, Hudson River",
+  "credit": "George Bellows, 1910 · Brooklyn Museum",
+  "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/13/Brooklyn_Museum_-_A_Morning_Snow--Hudson_River_-_George_Wesley_Bellows_-_overall.jpg/1920px-Brooklyn_Museum_-_A_Morning_Snow--Hudson_River_-_George_Wesley_Bellows_-_overall.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "artist": "George Bellows",
+  "year": "1910",
+  "museum": "Brooklyn Museum",
+  "story": "Bellows, of the Ashcan School, loved New York's working waterfront in every kind of weather.",
+  "moods": [
+   "holiday",
+   "cold",
+   "snow"
+  ],
+  "see": "Brooklyn Museum"
+ },
+ {
+  "kind": "art",
+  "title": "Hunters in the Snow",
+  "credit": "Pieter Bruegel the Elder, 1565 · Kunsthistorisches Museum, Vienna",
+  "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d8/Pieter_Bruegel_the_Elder_-_Hunters_in_the_Snow_%28Winter%29_-_Google_Art_Project.jpg/1920px-Pieter_Bruegel_the_Elder_-_Hunters_in_the_Snow_%28Winter%29_-_Google_Art_Project.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "artist": "Pieter Bruegel the Elder",
+  "year": "1565",
+  "museum": "Kunsthistorisches Museum, Vienna",
+  "story": "One of a series of six paintings of the seasons. Only five survive.",
+  "moods": [
+   "holiday",
+   "cold",
+   "snow"
+  ]
+ },
+ {
+  "kind": "art",
+  "title": "The Magpie",
+  "credit": "Claude Monet, 1868–69 · Musée d'Orsay, Paris",
+  "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/78/Claude_Monet_-_The_Magpie_-_Google_Art_Project.jpg/1920px-Claude_Monet_-_The_Magpie_-_Google_Art_Project.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "artist": "Claude Monet",
+  "year": "1868–69",
+  "museum": "Musée d'Orsay, Paris",
+  "story": "Find the single black magpie on the gate. The Paris Salon rejected the painting in 1869.",
+  "moods": [
+   "holiday",
+   "cold",
+   "snow"
+  ]
+ },
+ {
+  "kind": "art",
+  "title": "Evening Snow at Kambara",
+  "credit": "Utagawa Hiroshige, c. 1833 · Woodblock print",
+  "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/49/Ando_Hiroshige_-_Evening_Snow_at_Kambara_%28number_sixteen_of_the_series_Fifty-three_Stations_-_1985.317_-_Cleveland_Museum_of_Art.tif/lossy-page1-1920px-Ando_Hiroshige_-_Evening_Snow_at_Kambara_%28number_sixteen_of_the_series_Fifty-three_Stations_-_1985.317_-_Cleveland_Museum_of_Art.tif.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "artist": "Utagawa Hiroshige",
+  "year": "c. 1833",
+  "museum": "Woodblock print",
+  "story": "Kambara is a mild coastal town that rarely sees snow. Hiroshige imagined it white.",
+  "moods": [
+   "holiday",
+   "cold",
+   "snow"
+  ]
+ },
+ {
+  "kind": "art",
+  "title": "Year-End Fair at Kinryūzan Temple",
+  "credit": "Utagawa Hiroshige, 1857 · Woodblock print",
+  "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8a/%E6%9D%B1%E9%83%BD%E5%90%8D%E6%89%80_%E6%B5%85%E8%8D%89%E9%87%91%E9%BE%8D%E5%B1%B1%E5%B9%B4%E3%81%AE%E5%B8%82-Year_End_Fair_at_Kinryuzan_Temple_MET_DP123285.jpg/1920px-%E6%9D%B1%E9%83%BD%E5%90%8D%E6%89%80_%E6%B5%85%E8%8D%89%E9%87%91%E9%BE%8D%E5%B1%B1%E5%B9%B4%E3%81%AE%E5%B8%82-Year_End_Fair_at_Kinryuzan_Temple_MET_DP123285.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "artist": "Utagawa Hiroshige",
+  "year": "1857",
+  "museum": "Woodblock print",
+  "story": "Shoppers hurry through the snow to the year-end market at Asakusa, buying decorations for the New Year.",
+  "moods": [
+   "holiday",
+   "cold",
+   "snow"
+  ],
+  "see": "The Met owns an impression"
+ },
+ {
+  "kind": "art",
+  "title": "Winter, Fifth Avenue",
+  "credit": "Alfred Stieglitz, 1893 · Photogravure",
+  "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1d/Alfred_Stieglitz_Winter_Fifth_Avenue_1892.jpg/1920px-Alfred_Stieglitz_Winter_Fifth_Avenue_1892.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+  "artist": "Alfred Stieglitz",
+  "year": "1893",
+  "museum": "Photogravure",
+  "story": "Stieglitz waited about three hours in a February blizzard to catch this carriage. One of the first great photographs of New York.",
+  "moods": [
+   "holiday",
+   "cold",
+   "snow"
+  ]
  }
 ];

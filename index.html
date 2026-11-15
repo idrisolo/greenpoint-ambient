@@ -911,7 +911,7 @@ var COUNTDOWNS = [
   { md: "12-25", title: "Christmas", body: "Rockefeller tree, Saks light show on Fifth Ave, Dyker Heights after dark, and the Bryant Park market. Plan a lights night." },
   { md: "12-31", title: "New Year's Eve", body: "The ball drops at midnight in Times Square. For a calmer view, the fireworks over Prospect Park are a Brooklyn favorite." }
 ];
-function holidaySeason() { var n = nyNow(), m = n.getMonth() + 1, d = n.getDate(); return (m === 11 && d >= 20) || m === 12 || (m === 1 && d <= 6); }
+function holidaySeason() { var n = nyNow(), m = n.getMonth() + 1, d = n.getDate(); return (m === 11 && d >= 10) || m === 12 || (m === 1 && d <= 6); }
 function countdownCard() {
   var now = nyNow(), today = new Date(now.getFullYear(), now.getMonth(), now.getDate()), best = null;
   COUNTDOWNS.concat((editor && editor.countdowns) || []).forEach(function (c) {
