@@ -92,6 +92,11 @@
   /* Big number */
   .big .num { font-family: Fraunces, serif; font-weight: 300; font-size: 9vw; line-height: .9; letter-spacing: -.03em; }
   .big .title { margin-top: 0; }
+  /* Fun fact: editorial pull-quote */
+  .fact { display: flex; gap: 1.4vw; align-items: flex-start; max-width: 50vw; }
+  .fact .mark { font-family: Fraunces, serif; font-size: 9vw; line-height: .75; color: var(--accent); opacity: .9; margin-top: .6vh; }
+  .fact .cat { color: var(--ink-faint); font-weight: 600; }
+  .fact .ftext { font-family: Fraunces, serif; font-weight: 300; font-size: 2.45vw; line-height: 1.28; margin-top: 1.4vh; }
   /* Morning briefing */
   .brief .hello { font-family: Fraunces, serif; font-weight: 300; font-size: 3.6vw; line-height: 1.05; margin: 1vh 0 2.2vh; }
   .brief .items { display: grid; grid-template-columns: 1fr 1fr; gap: 2.2vh 3vw; }
@@ -195,7 +200,8 @@ var CFG = {
   ambientSeconds: 120,        // ...lasting this long
   nightStart: 1, nightEnd: 6, // dim the screen between these hours
   eventRadiusKm: 4,           // "nearby" radius for NYC Parks events
-  realMadridId: "133738"      // TheSportsDB team id
+  realMadridId: "133738",     // TheSportsDB team id
+  name: (qs.name || "").slice(0, 30)   // passed in by the Fire Stick app, so it's never in the public code
 };
 document.getElementById("place").textContent = CFG.place;
 
@@ -243,6 +249,46 @@ var FREE = [
   { day: 6, name: "The Jewish Museum", what: "Free on Saturdays.", meta: "Fifth Ave & 92nd St · thejewishmuseum.org" },
   { day: 6, nth: 1, name: "Brooklyn Museum First Saturdays", what: "Free after-hours night with music, art, and talks on the first Saturday of select months. Register ahead.", meta: "Eastern Pkwy · brooklynmuseum.org" },
   { day: [2, 3, 4, 5], months: [12, 1, 2], name: "Brooklyn Botanic Garden", what: "Pay what you wish on winter weekdays, Tuesday to Friday.", meta: "Prospect Heights · bbg.org" }
+];
+
+/* ================== FUN FACTS ==================
+   Short, checked, and worth repeating to a guest. Add your own: { c: "category", t: "text" } */
+var FACTS = [
+  { c: "Greenpoint history", t: "The USS Monitor, the Union's famous ironclad warship, was built at the Continental Iron Works in Greenpoint and launched in 1862." },
+  { c: "Greenpoint history", t: "Greenpoint's cross streets run in alphabetical order: Ash, Box, Clay, Dupont, Eagle, Freeman, Green, Huron, India, Java, Kent. The missing L became Greenpoint Avenue." },
+  { c: "Greenpoint history", t: "In the 1800s Greenpoint practiced the five \"black arts\": printing, pottery, glass, iron, and refining. They were named for the coal smoke they made." },
+  { c: "Greenpoint history", t: "By 1883, eighteen of Brooklyn's twenty glass factories were in Greenpoint." },
+  { c: "Greenpoint history", t: "Transmitter Park is named for WNYC radio, which broadcast from two 304-foot towers on that spot from 1937 to 1990. The old transmitter house is still there." },
+  { c: "Greenpoint history", t: "Each silver \"digester egg\" at Newtown Creek is about 140 feet tall and holds 3 million gallons. Inside, bacteria break down sewage sludge and make gas." },
+  { c: "Greenpoint history", t: "Pratt Institute was founded by Charles Pratt, whose Astral Oil Works refined kerosene on the Greenpoint waterfront." },
+  { c: "Greenpoint history", t: "The Pulaski Bridge is named for Casimir Pulaski, the Polish-born hero of the American Revolution. A fitting front door for Little Poland." },
+  { c: "NYC history", t: "In May 1884, P.T. Barnum marched 21 elephants, including the famous Jumbo, across the Brooklyn Bridge to prove it was safe." },
+  { c: "NYC history", t: "When the Brooklyn Bridge's chief engineer fell ill, his wife Emily Warren Roebling took over day-to-day work. She was the first to cross it on opening day." },
+  { c: "NYC history", t: "Brooklyn was its own city until 1898, one of the largest in America at the time." },
+  { c: "NYC history", t: "Kings County and Queens are named for England's King Charles II and his wife, Catherine of Braganza." },
+  { c: "NYC history", t: "Times Square was called Longacre Square until 1904, when The New York Times moved in. The ball first dropped on New Year's Eve 1907." },
+  { c: "NYC history", t: "The Empire State Building went up in just over a year and opened in 1931. It even has its own ZIP code: 10118." },
+  { c: "NYC history", t: "The Statue of Liberty is clad in copper and was originally a shiny copper-brown. It weathered to green over about two decades." },
+  { c: "City life", t: "Grand Central's ceiling shows the zodiac backwards, as if you were looking at the sky from outside." },
+  { c: "City life", t: "Stand in opposite corners of the tiled arches outside Grand Central's Oyster Bar and whisper. The other person will hear you clearly." },
+  { c: "City life", t: "Central Park is bigger than the entire country of Monaco." },
+  { c: "City life", t: "The East River isn't a river. It's a tidal strait connecting New York Harbor to Long Island Sound." },
+  { c: "City life", t: "Most of the city's tap water comes from reservoirs in the Catskills and beyond, more than 100 miles away, and travels here mostly by gravity." },
+  { c: "City life", t: "The Cyclone roller coaster at Coney Island opened in 1927, and it's still running." },
+  { c: "City life", t: "Hundreds of languages are spoken in New York, making it one of the most linguistically diverse cities on Earth." },
+  { c: "Film & photo", t: "Twice a year, around late May and mid-July, the sunset lines up perfectly with Manhattan's street grid. Neil deGrasse Tyson named it Manhattanhenge." },
+  { c: "Film & photo", t: "Golden hour looks warm because low sunlight passes through more of the atmosphere, which scatters away the blue." },
+  { c: "Film & photo", t: "Spike Lee's Do the Right Thing was shot on one block of Stuyvesant Avenue in Bed-Stuy. It's now co-named Do The Right Thing Way." },
+  { c: "Film & photo", t: "Kaufman Astoria Studios in Queens opened in 1920 as Paramount's East Coast studio. Sesame Street is made there." },
+  { c: "Film & photo", t: "Broadway Stages, one of the city's busiest film and TV studio companies, is based right here in Greenpoint." },
+  { c: "Film & photo", t: "Film Forum has been showing independent and repertory films in Manhattan since 1970." },
+  { c: "Art", t: "Van Gogh is often said to have sold just one painting in his lifetime. The Starry Night now hangs at MoMA, a subway ride away." },
+  { c: "Art", t: "The Temple of Dendur at the Met is a real Egyptian temple, about 2,000 years old, given to the United States in 1965 and rebuilt indoors." },
+  { c: "Art", t: "Hokusai's Great Wave is a woodblock print, so many copies were made. The Met owns impressions of it." },
+  { c: "Real Madrid", t: "\"Real\" means royal. King Alfonso XIII granted the title in 1920, and the crown on the crest comes with it." },
+  { c: "Real Madrid", t: "The Bernabéu is named for Santiago Bernabéu, who played for the club and then served as its president for 35 years." },
+  { c: "Real Madrid", t: "FIFA named Real Madrid the best club of the 20th century." },
+  { c: "Real Madrid", t: "Real Madrid has won the European Cup, now the Champions League, more times than any other club." }
 ];
 
 /* ================== HELPERS ================== */
@@ -476,6 +522,8 @@ function mtaCards() {
 
 /* ================== EVENTS: NYC Parks (with coordinates) + street permits ================== */
 var events = cache("events2") || [];   // "events2": newer format with links and dates
+var BORO = { B: "Brooklyn", M: "Manhattan", Q: "Queens", X: "the Bronx", R: "Staten Island" };
+var BORO_NAME = { Brooklyn: "Brooklyn", Manhattan: "Manhattan", Queens: "Queens", Bronx: "the Bronx", "Staten Island": "Staten Island" };
 var COOL = /(festival|concert|music|jazz|film|movie|screening|tour|walk|market|lighting|parade|art|exhibit|history|bird|harvest|holiday|halloween|dance party|fair|garden|stargaz|astronomy|kayak|boat|photography|poetry|theater|theatre|comedy|lantern)/i;
 var BORING = /(yoga|fitness|circuit|training|bodyweight|zumba|aerobic|shape up|pilates|workout|cardio|sculpt|interval|hatha|vinyasa|flow\b|bodyroll|\brun\b|open run|running|workday|tree care|virtual|online|^celebration$|bollyx|groove|strong nation|walking group|exercise|senior|toning|stretch|bootcamp|boot camp|tai chi|swim lesson|learn to|it's my park|volunteer|meeting|class -|registration|closure|medical|distribution|hospital|vaccin|clinic|permit|picnic|bbq|wedding|birthday|private|filming|baptism)/i;
 function loadEvents() {
@@ -490,32 +538,39 @@ function loadEvents() {
       var date = g("event:startdate"), t = g("event:starttime"), d = new Date(date + "T12:00:00");
       if (!(d >= start && d < end)) return;
       var dist = isNaN(lat) ? 99 : km(lat, lon), cool = COOL.test(title + " " + g("description").slice(0, 300));
-      if (dist > CFG.eventRadiusKm && !(cool && dist < 15)) return;
+      var near = dist <= CFG.eventRadiusKm;
+      if (!near && !cool) return;            // farther away, it has to be worth the trip
+      var boro = BORO[(g("event:parkids") || " ").charAt(0)] || "";
       var where = g("event:parknames") || tidy(g("event:location")).replace(/\(.*$/, "");
       var tt = t && !/^0:00/.test(t) ? t.replace(/ (am|pm)/, function (m) { return m.toUpperCase(); }) : "";
-      out.push({ tag: dist <= CFG.eventRadiusKm ? "Happening nearby" : "Happening in NYC", title: tidy(title),
-        body: where + (dist < 30 ? " · " + (dist * 0.621).toFixed(1) + " mi away" : ""), place: where,
+      var tm = tt.match(/(\d+):(\d+)\s*(AM|PM)/i);   // real start time, so lists sort correctly
+      if (tm) { d = new Date(date + "T00:00:00"); d.setHours((+tm[1] % 12) + (/pm/i.test(tm[3]) ? 12 : 0), +tm[2]); }
+      out.push({ tag: near ? "Happening nearby" : "Happening in " + (boro || "NYC"), title: tidy(title), boro: boro,
+        body: where + (boro && boro !== "Brooklyn" ? " · " + boro : "") + (dist < 60 ? " · " + (dist * 0.621).toFixed(1) + " mi away" : ""), place: where + (boro && boro !== "Brooklyn" ? ", " + boro : ""),
         meta: dayLabel(d) + (tt ? " · " + tt : "") + " · NYC Parks", timeText: tt, day: date,
         url: (g("link") || "").replace(/^http:/, "https:") || mapsUrl(where + ", New York"), qrCap: "Scan for details",
-        when: +d, score: (dist <= CFG.eventRadiusKm ? 60 : 0) + (cool ? 40 : 0) - dist * 2 - (d - start) / 864e5 * 3 });
+        when: +d, score: (near ? 40 : 0) + (cool ? 50 : 0) - dist * 1.5 - (d - start) / 864e5 * 3 });
     });
   }).catch(function () {});
   var where = "start_date_time >= '" + isoDay(start) + "' AND start_date_time < '" + isoDay(end) +
-    "' AND event_borough = 'Brooklyn' AND community_board like '1,%' AND event_type in ('Farmers Market','Street Festival','Street Event','Block Party','Parade','Plaza Event','Special Event','Open Street Partner Event')";
-  var permits = getJSON("https://data.cityofnewyork.us/resource/tvpp-9vvx.json?$limit=500&$order=start_date_time&$where=" + encodeURIComponent(where)).then(function (rows) {
+    "' AND ((event_borough = 'Brooklyn' AND community_board like '1,%' AND event_type in ('Farmers Market','Street Festival','Street Event','Block Party','Parade','Plaza Event','Special Event','Open Street Partner Event'))" +
+    " OR event_type in ('Street Festival','Parade'))";
+  var permits = getJSON("https://data.cityofnewyork.us/resource/tvpp-9vvx.json?$limit=800&$order=start_date_time&$where=" + encodeURIComponent(where)).then(function (rows) {
     rows.forEach(function (r) {
       if (!r.event_name || BORING.test(r.event_name)) return;
       var s = new Date(r.start_date_time), e = new Date(r.end_date_time); if (e - s < 30 * 6e4) return;
+      var near = r.event_borough === "Brooklyn" && /^1,/.test(r.community_board || ""), boro = BORO_NAME[r.event_borough] || "";
       var loc = tidy(r.event_location).replace(/:.*$/, "").split(",")[0], m = loc.match(/^(.+?) between (.+?) and /i); if (m) loc = m[1] + " near " + m[2];
-      out.push({ tag: "Happening nearby", title: tidy(r.event_name), body: loc, place: loc, meta: dayLabel(s) + " · " + hm(s) + "–" + hm(e), when: +s,
-        timeText: hm(s) + "–" + hm(e), day: r.start_date_time.slice(0, 10), url: mapsUrl(loc + ", Brooklyn, NY"), qrCap: "Scan for directions",
-        score: 70 + (COOL.test(r.event_name) ? 30 : 0) - (s - start) / 864e5 * 3 });
+      out.push({ tag: near ? "Happening nearby" : "Happening in " + (boro || "NYC"), title: tidy(r.event_name), boro: boro,
+        body: loc + (near ? "" : " · " + boro), place: loc + (near ? "" : ", " + boro), meta: dayLabel(s) + " · " + hm(s) + "–" + hm(e), when: +s,
+        timeText: hm(s) + "–" + hm(e), day: r.start_date_time.slice(0, 10), url: mapsUrl(loc + ", " + (r.event_borough || "Brooklyn") + ", NY"), qrCap: "Scan for directions",
+        score: (near ? 70 : 45) + (COOL.test(r.event_name) || /Festival|Parade/.test(r.event_type) ? 30 : 0) - (s - start) / 864e5 * 3 });
     });
   }).catch(function () {});
   Promise.all([parks, permits]).then(function () {
     if (!out.length) return;
     var seen = {}; out.sort(function (a, b) { return b.score - a.score; });
-    events = out.filter(function (e) { var k = e.title.toLowerCase(); if (seen[k]) return false; seen[k] = 1; return true; }).slice(0, 16);
+    events = out.filter(function (e) { var k = e.title.toLowerCase(); if (seen[k]) return false; seen[k] = 1; return true; }).slice(0, 24);
     cache("events2", events);
   });
 }
@@ -591,11 +646,21 @@ function wearAdvice(hi, lo) {
 function briefing() {
   if (!wx) return null;
   var now = nyNow(), h = now.getHours(), dd = wx.daily, hi = dd.temperature_2m_max[0], lo = dd.temperature_2m_min[0], rain = dd.precipitation_probability_max[0] || 0;
-  var hello = h < 12 ? "Good morning." : h < 17 ? "Good afternoon." : "Good evening.";
+  var hello = (h < 12 ? "Good morning" : h < 17 ? "Good afternoon" : "Good evening") + (CFG.name ? ", " + CFG.name : "") + ".";
   var mine = mta.filter(affectsMe);
   var subway = mine.length ? mine[0].routes.filter(function (r) { return CFG.alertLines.indexOf(r) > -1; }).join(" and ") + " trains: " + mine[0].label.toLowerCase() : CFG.alertLines.join(" and ") + " running normally near home";
   var free = freeCards().filter(function (c) { return c.tag === "Free today"; })[0];
   var todayKey = isoDay(now).slice(0, 10), ev = events.filter(function (e) { return e.day === todayKey; })[0];
+  if (h >= 17) {   // Evening edition: tonight and tomorrow
+    var tomKey = isoDay(new Date(+now + 864e5)).slice(0, 10), tev = events.filter(function (e) { return e.day === tomKey; })[0];
+    var thi = dd.temperature_2m_max[1], train = dd.precipitation_probability_max[1] || 0, tw = wmo(dd.weather_code[1]);
+    var freeTom = freeCards().filter(function (c) { return c.tag === "Free tomorrow"; })[0];
+    return { layout: "brief", label: "Evening briefing", hello: hello + " Down to " + Math.round(lo) + "° tonight.", items: [
+      { i: tw[0], k: "Tomorrow", v: Math.round(thi) + "°, " + tw[1].toLowerCase() + (train >= 40 ? ", " + train + "% rain" : "") },
+      { i: "shirt", k: "Tomorrow, wear", v: wearAdvice(thi, dd.temperature_2m_min[1]) },
+      { i: "train", k: "Subway", v: subway },
+      { i: "star", k: freeTom || tev ? "Tomorrow" : "Tonight", v: freeTom ? freeTom.title + " is free" : tev ? tev.title + (tev.timeText ? ", " + tev.timeText : "") : "Clear skies? Look for the moon over the Manhattan skyline from Transmitter Park." } ] };
+  }
   var highlight = free ? free.title + " is free today" : ev ? ev.title + (ev.timeText ? ", " + ev.timeText : "") : "Sunset at " + hm(new Date(dd.sunset[0])) + ". Catch it from the waterfront.";
   return { layout: "brief", hello: hello + " " + Math.round(hi) + "° today.", items: [
     { i: "shirt", k: "Wear", v: wearAdvice(hi, lo) },
@@ -612,13 +677,44 @@ function listCard() {
     pool = pool.filter(function (e) { return wk.indexOf(e.day) > -1; }); tag = "This weekend"; title = "Three ideas for the weekend";
   } else { tag = "Coming up"; title = "On the calendar this week"; }
   if (pool.length < 3) { pool = events.slice(); tag = "Coming up"; title = "On the calendar this week"; }
-  pool.sort(function (a, b) { return a.when - b.when; });
+  // Best three, spread across boroughs (at most two from one borough), then shown in time order
+  pool.sort(function (a, b) { return b.score - a.score; });
+  var picked = [], per = {};
+  pool.forEach(function (e) { var k = e.boro || "Brooklyn"; if (picked.length < 3 && (per[k] || 0) < 2) { picked.push(e); per[k] = (per[k] || 0) + 1; } });
+  pool = picked.sort(function (a, b) { return a.when - b.when; });
   if (pool.length < 2) return null;
-  if (pool.slice(0, 3).every(function (e) { return e.day === todayKey; })) { tag = h >= 16 ? "Tonight" : "Today"; title = "Three ideas for today"; }
+  var allToday = pool.slice(0, 3).every(function (e) { return e.day === todayKey; });
+  if (allToday) { tag = h >= 16 ? "Tonight" : "Today"; title = "Three ideas for today"; }
   return { layout: "list", tag: tag, title: title, rows: pool.slice(0, 3).map(function (e) {
     var dt = new Date(e.day + "T12:00:00");
+    if (allToday) return { w: e.timeText ? e.timeText.replace(/:00/g, "").replace(/–.*/, "") : "All day", t: e.title, p: e.place || "" };
     return { w: dayLabel(dt) === "Today" ? "Today" : dt.toLocaleDateString("en-US", { weekday: "short" }) + (e.timeText ? " " + e.timeText.replace(/:00/g, "").replace(/–.*/, "") : ""), t: e.title, p: e.place || "" };
   }) };
+}
+
+/* ================== FACTS: curated + "On this day in New York" ================== */
+var otd = cache("otd") || { day: "", items: [] }, factBag = [];
+var NYRE = /(New York City|Brooklyn|Manhattan|Queens|the Bronx|Staten Island|Harlem|Coney Island|Central Park|Broadway|Times Square|Statue of Liberty|Ellis Island|Yankee Stadium|Madison Square)/;
+function loadOTD() {
+  var n = nyNow(), key = (n.getMonth() + 1) + "/" + n.getDate();
+  if (otd.day === key) return;
+  var mm = ("0" + (n.getMonth() + 1)).slice(-2), dd = ("0" + n.getDate()).slice(-2);
+  getJSON("https://en.wikipedia.org/api/rest_v1/feed/onthisday/all/" + mm + "/" + dd).then(function (d) {
+    var items = [];
+    (d.selected || []).concat(d.events || []).forEach(function (e) {
+      if (e.text && NYRE.test(e.text) && e.text.length < 230 && !items.some(function (x) { return x.t === e.text; })) items.push({ y: e.year, t: e.text });
+    });
+    otd = { day: key, items: items.slice(0, 4) }; cache("otd", otd);
+  }).catch(function () {});
+}
+function nextFact() {
+  var n = nyNow(), key = (n.getMonth() + 1) + "/" + n.getDate();
+  // Today's NYC history gets priority, once each
+  if (otd.day === key) { var u = otd.items.filter(function (x) { return !x.used; })[0];
+    if (u) { u.used = true; return { layout: "fact", kicker: "On this day in " + u.y, cat: "New York history", text: u.t }; } }
+  if (!factBag.length) factBag = shuffle(FACTS.slice());
+  var f = factBag.shift();
+  return { layout: "fact", kicker: "Worth talking about", cat: f.c, text: f.t };
 }
 
 /* ================== CARD RENDERING ================== */
@@ -642,8 +738,10 @@ function renderCard(c) {
       return '<li><span class="lw">' + esc(r.w) + '</span><span class="lt">' + esc(r.t) + (r.p ? '<span class="lp">' + esc(r.p) + "</span>" : "") + "</span></li>"; }).join("") + "</ol></div>";
   } else if (L === "big") {
     h = '<div class="row big"><div class="grow">' + tag + '<div class="num">' + esc(c.num) + '</div><div class="title">' + title + '</div><div class="body">' + body + "</div></div>" + qrBlock(c) + "</div>";
+  } else if (L === "fact") {
+    h = '<div class="fact"><div class="mark">“</div><div><div class="tag">' + esc(c.kicker) + ' <span class="cat">· ' + esc(c.cat) + '</span></div><div class="ftext">' + esc(c.text) + "</div></div></div>";
   } else if (L === "brief") {
-    h = '<div class="brief"><div class="tag">' + esc(nyNow().toLocaleDateString("en-US", { weekday: "long" })) + ' briefing</div><div class="hello">' + esc(c.hello) + '</div><div class="items">' +
+    h = '<div class="brief"><div class="tag">' + esc(c.label || nyNow().toLocaleDateString("en-US", { weekday: "long" }) + " briefing") + '</div><div class="hello">' + esc(c.hello) + '</div><div class="items">' +
       c.items.map(function (it) { return '<div class="it">' + icon(it.i) + '<div><div class="k">' + esc(it.k) + '</div><div class="v">' + esc(it.v) + "</div></div></div>"; }).join("") + "</div></div>";
   } else {
     h = '<div class="row"><div class="grow">' + tag + '<div class="title' + long + '">' + title + '</div><div class="body">' + body + '</div><div class="meta">' + esc(c.meta || "") + "</div></div>" + qrBlock(c) + "</div>";
@@ -661,7 +759,7 @@ function buildDeck() {
   var picks = shuffle(PICKS.filter(function (p) { return (!p.months || p.months.indexOf(m) > -1) && (!p.days || p.days.indexOf(d) > -1); })).map(pickCard);
   var ev = events.slice(0, 10).map(function (e) { return e.day ? Object.assign({ layout: "poster" }, e) : e; });
   var urgent = mtaCards().concat(rmCards()), free = freeCards(), big = bigWeather(), brief = briefing(), list = listCard();
-  var morning = h >= 5 && h < 11;
+  var morning = (h >= 5 && h < 11) || (h >= 17 && h < 23);   // briefing editions: morning and evening
   deck = [];
   if (morning && brief) deck.push(brief);         // mornings open with the briefing
   deck = deck.concat(urgent);                      // then anything that affects you right now
@@ -686,7 +784,8 @@ function nextCard() {
   }
   body.classList.remove("ambient");
   if (!deck.length) buildDeck();
-  var c = deck.shift(); shown++;
+  // Every fifth card is a fun fact; the rest come from the deck
+  var c = shown % 5 === 3 ? nextFact() : deck.shift(); shown++;
   if (!c) { setTimeout(nextCard, 5000); return; }
   card.classList.add("out");
   setTimeout(function () {
@@ -717,6 +816,7 @@ renderWeather(); loadWeather(); setInterval(loadWeather, 15 * 6e4);
 loadMTA(); setInterval(loadMTA, 2 * 6e4);
 loadEvents(); setInterval(loadEvents, 60 * 6e4);
 loadRM(); setInterval(loadRM, 3 * 36e5);
+loadOTD(); setInterval(loadOTD, 36e5);
 showImage(); setInterval(showImage, CFG.photoSeconds * 1000);
 setTimeout(nextCard, 3000);
 setInterval(function () { var n = nyNow(); if (n.getHours() === 4 && n.getMinutes() < 2) location.reload(); }, 6e4);
