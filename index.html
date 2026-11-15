@@ -132,6 +132,7 @@
   #rmChip { font-size: 1.05vw; color: var(--ink-soft); display: none; }
   #credit { text-align: right; font-size: .95vw; color: var(--ink-faint); max-width: 48vw; line-height: 1.4; transition: all 2s; }
   #credit b { color: var(--ink-soft); font-weight: 600; font-style: italic; font-family: Fraunces, serif; font-size: 1.15vw; }
+  #credit .filmtag { display: inline-block; font-size: .7vw; font-weight: 700; letter-spacing: .12em; color: #1d1b18; background: #e8b04a; border-radius: .2vw; padding: .1vh .4vw; margin-right: .6vw; vertical-align: .15vh; }
   #credit .why { display: block; margin-top: .5vh; color: var(--accent); font-size: .85vw; letter-spacing: .16em; text-transform: uppercase; }
   /* Museum wall label for paintings */
   #placardWrap { position: fixed; right: 4vw; bottom: 4vh; z-index: 3; }
@@ -390,7 +391,7 @@ function currentMood() {
   if (c >= 3) return "cloudy";
   return null;
 }
-var recent = [];
+var recent = [], sinceFilm = 3;
 function nextGalleryItem() {
   if (document.body.classList.contains("night")) {   // late night: paintings only, night scenes first
     var art = gal.filter(function (g) { return g.kind === "art" && recent.indexOf(g.url) < 0; });
@@ -405,6 +406,11 @@ function nextGalleryItem() {
   if (holidaySeason()) {   // holiday season: more holiday NYC and winter art, especially after dark
     var after = nyNow().getHours() >= 16, hol = gal.filter(function (g) { return g.moods.indexOf("holiday") > -1 && recent.indexOf(g.url) < 0; });
     if (hol.length && Math.random() < (after ? 0.5 : 0.3)) return { g: hol[Math.floor(Math.random() * hol.length)], why: "Chosen for the holidays" };
+  }
+  // About one image in six is a frame from the house film archive
+  if (++sinceFilm >= 6 || qs.film) {   // ?film=1 previews the film frames
+    var film = gal.filter(function (g) { return g.kind === "film" && recent.indexOf(g.url) < 0; });
+    if (film.length) { sinceFilm = 0; return { g: film[Math.floor(Math.random() * film.length)], why: "From the house film archive" }; }
   }
   var mood = currentMood(), want = mood === "snow" ? "cold" : mood;
   // Two out of three images match the moment when we can; the rest keep the usual variety.
@@ -446,7 +452,8 @@ function showImage() {
       setTimeout(function () { var pl = $("placardWrap").querySelector(".placard"); if (pl) pl.classList.add("in"); }, 50);
     } else {
       $("placardWrap").innerHTML = "";
-      $("credit").innerHTML = "<b>" + esc(g.title) + "</b><br>" + esc(g.credit || "") + (pick.why ? '<span class="why">' + esc(pick.why) + "</span>" : "");
+      var by = g.kind === "film" ? '<span class="filmtag">35mm</span>Shot on film' + (CFG.name ? " by " + esc(CFG.name) : "") + " · " + esc(g.place || "") : esc(g.credit || "");
+      $("credit").innerHTML = "<b>" + esc(g.title) + "</b><br>" + by + (pick.why ? '<span class="why">' + esc(pick.why) + "</span>" : "");
     }
     // preload the likely next one
     var n = gal[gi % gal.length]; if (n) (new Image()).src = n.url;
@@ -486,7 +493,7 @@ function loadWeather() {
   getJSON("https://api.open-meteo.com/v1/forecast?latitude=" + CFG.lat + "&longitude=" + CFG.lon +
     "&current=temperature_2m,apparent_temperature,weather_code,is_day,wind_speed_10m" +
     "&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,sunrise,sunset" +
-    "&hourly=precipitation_probability&forecast_hours=6&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=America%2FNew_York&forecast_days=6")
+    "&hourly=precipitation_probability,cloud_cover,cloud_cover_low,cloud_cover_mid,cloud_cover_high&forecast_hours=6&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=America%2FNew_York&forecast_days=6")
     .then(function (d) { wx = d; cache("wx", d); renderWeather(); }).catch(renderWeather);
   getJSON("https://api.weather.gov/alerts/active?point=" + CFG.lat.toFixed(4) + "," + CFG.lon.toFixed(4)).then(function (d) {
     var f = (d.features || []).map(function (x) { return x.properties.event; });
@@ -494,6 +501,39 @@ function loadWeather() {
     $("alert").textContent = "Weather alert: " + f.slice(0, 2).join(" · ");
   }).catch(function () {});
 }
+/* Will tonight's sunset be worth walking to the water for? Mid and high clouds catch the color; a low grey deck blocks it. */
+function sunsetOutlook() {
+  if (!wx || !wx.hourly || !wx.hourly.cloud_cover) return null;
+  var hh = wx.hourly, ss = new Date(wx.daily.sunset[0]), k = -1;
+  for (var i = 0; i < hh.time.length; i++) if (Math.abs(new Date(hh.time[i]) - ss) <= 36e5) { k = i; if (new Date(hh.time[i]) >= ss - 18e5) break; }
+  if (k < 0) return null;
+  var low = hh.cloud_cover_low[k], upper = Math.max(hh.cloud_cover_mid[k], hh.cloud_cover_high[k]), all = hh.cloud_cover[k], p = (hh.precipitation_probability || [])[k] || 0;
+  if (low >= 70 || all >= 92 || p >= 50) return { q: "grey" };
+  if (upper >= 25 && upper <= 85 && low < 45) return { q: "vivid", line: "High clouds could light up pink and orange." };
+  if (all <= 25) return { q: "clear", line: "Clear skies: a clean, golden one." };
+  return { q: "fair", line: "Some clouds around. Could go either way." };
+}
+/* Air quality (US AQI), from Open-Meteo's free air quality model */
+var air = cache("air");
+function loadAir() {
+  getJSON("https://air-quality-api.open-meteo.com/v1/air-quality?latitude=" + CFG.lat + "&longitude=" + CFG.lon +
+    "&current=us_aqi,us_aqi_pm2_5,us_aqi_ozone&hourly=us_aqi&forecast_hours=12&timezone=America%2FNew_York")
+    .then(function (d) { air = d; cache("air", d); renderWeather(); }).catch(function () {});
+}
+function aqiInfo() {
+  if (qs.aqi) air = { current: { us_aqi: +qs.aqi, us_aqi_pm2_5: +qs.aqi, us_aqi_ozone: 0 }, hourly: { us_aqi: [] } };   // ?aqi=130 previews the alert
+  if (!air || !air.current || air.current.us_aqi == null) return null;
+  var now = air.current.us_aqi, peak = Math.max.apply(null, [now].concat((air.hourly && air.hourly.us_aqi || []).filter(function (v) { return v != null; })));
+  var lvl = function (v) { return v <= 50 ? "Good" : v <= 100 ? "Moderate" : v <= 150 ? "Unhealthy for sensitive groups" : v <= 200 ? "Unhealthy" : v <= 300 ? "Very unhealthy" : "Hazardous"; };
+  var cause = (air.current.us_aqi_ozone || 0) > (air.current.us_aqi_pm2_5 || 0) ? "ozone" : "fine particles";
+  return { now: now, peak: peak, level: lvl(now), peakLevel: lvl(peak), cause: cause };
+}
+function sunsetNote() {
+  var ss = new Date(wx.daily.sunset[0]), mins = (ss - nyNow()) / 6e4, o = sunsetOutlook();
+  if (mins > 0 && mins <= 60 && (!o || o.q !== "grey")) return " · golden hour now, sunset " + hm(ss);
+  return " · sunset " + hm(ss);
+}
+function airNote() { var a = aqiInfo(); return a && a.now > 50 ? " · air " + a.now + " " + (a.now <= 100 ? "moderate" : "unhealthy") : ""; }
 function renderWeather() {
   if (!wx) { $("nowDesc").textContent = "Weather unavailable"; return; }
   var c = wx.current, w = wmo(c.weather_code, !c.is_day), dd = wx.daily;
@@ -501,7 +541,7 @@ function renderWeather() {
   document.querySelector("#now .temp").textContent = Math.round(c.temperature_2m) + "°";
   var rainSoon = Math.max.apply(null, (wx.hourly && wx.hourly.precipitation_probability) || [0]);
   $("nowDesc").textContent = w[1] + " · feels " + Math.round(c.apparent_temperature) + "° · H " + Math.round(dd.temperature_2m_max[0]) +
-    "° L " + Math.round(dd.temperature_2m_min[0]) + "°" + (rainSoon >= 40 ? " · " + rainSoon + "% rain soon" : "") + " · sunset " + hm(new Date(dd.sunset[0]));
+    "° L " + Math.round(dd.temperature_2m_min[0]) + "°" + (rainSoon >= 40 ? " · " + rainSoon + "% rain soon" : "") + sunsetNote() + airNote();
   var f = "";
   for (var i = 1; i < dd.time.length; i++) {
     var dt = new Date(dd.time[i] + "T12:00:00");
@@ -792,8 +832,13 @@ function freeCards() {
 function bigWeather() {
   if (!wx) return null;
   var dd = wx.daily, hi = Math.round(dd.temperature_2m_max[0]), rain = dd.precipitation_probability_max[0] || 0, ss = new Date(dd.sunset[0]), mins = (ss - nyNow()) / 6e4;
-  if (mins > 0 && mins < 120 && rain < 40) return { layout: "big", tag: "Golden hour", num: hm(ss).replace(/ (AM|PM)/, ""), title: "Sunset in " + Math.round(mins) + " minutes",
-    body: "Transmitter Park and the Kent Ave waterfront face it head on.", url: mapsUrl("Transmitter Park, Brooklyn"), qrCap: "Scan for directions" };
+  var so = sunsetOutlook();
+  if (mins > 0 && mins < 120 && rain < 40 && (!so || so.q !== "grey")) {
+    var gh = mins <= 60 ? "Golden hour is on. Sunset in " + Math.round(mins) + " min" : "Sunset in " + Math.round(mins) + " minutes";
+    return { layout: "big", tag: so && so.q === "vivid" ? "Golden hour · could be a vivid one" : "Golden hour", num: hm(ss).replace(/ (AM|PM)/, ""), title: gh,
+      body: (so && so.line ? so.line + " " : "") + "Transmitter Park and the Kent Ave waterfront face it head on." + (so && so.q === "vivid" ? " Good light for the film camera." : ""),
+      url: mapsUrl("Transmitter Park, Brooklyn"), qrCap: "Scan for directions" };
+  }
   if (rain >= 60) return { layout: "big", tag: "Today", num: rain + "%", title: "Chance of rain. Take an umbrella.", body: "Good day for a movie at Nitehawk or a long lunch on Franklin St." };
   if (hi >= 85) return { layout: "big", tag: "Today", num: hi + "°", title: "A hot one.", body: "Head to the waterfront for a breeze, or ride the ferry for some air." };
   if (hi <= 35) return { layout: "big", tag: "Today", num: hi + "°", title: "Is the high. Bundle up.", body: "Good day for a museum, a bakery run, or staying in." };
@@ -805,6 +850,14 @@ function bigWeather() {
     return { layout: "big", tag: "Looking ahead", num: Math.round(dd.temperature_2m_max[bi]) + "°", title: d.toLocaleDateString("en-US", { weekday: "long" }) + " looks like the best day this week.",
       body: (dd.precipitation_probability_max[bi] || 0) < 25 ? "Dry, too. Plan something outside." : "Some chance of rain, but the warmest of the bunch." }; }
   return null;
+}
+function airCards() {
+  var a = aqiInfo();
+  if (!a || a.peak <= 100) return [];
+  var v = Math.max(a.now, a.peak), bad = v > 150;
+  return [{ layout: "big", tag: "Heads up · air quality", num: String(v), title: (a.now >= a.peak ? "" : "Later today: ") + a.peakLevel + ".",
+    body: (bad ? "Keep windows closed and save the run for another day." : "If you have asthma or a heart condition, take it easy outside today.") + " Mostly " + a.cause + ".",
+    url: "https://www.airnow.gov/?city=Brooklyn&state=NY&country=USA", qrCap: "Scan for AirNow" }];
 }
 function wearAdvice(hi, lo) {
   var t = (hi + lo) / 2;
@@ -993,7 +1046,7 @@ function buildDeck() {
   var ev = editorEvents(), es = events.slice(0, 10), ss = shows.slice(0, 6);
   while (es.length || ss.length) { if (es.length) ev.push(es.shift()); if (ss.length) ev.push(ss.shift()); }
   ev = ev.map(function (e) { return e.day ? Object.assign({ layout: "poster" }, e) : e; });
-  var urgent = mtaCards().concat(rmCards()), free = freeCards(), big = bigWeather(), brief = briefing(), list = listCard();
+  var urgent = mtaCards().concat(rmCards()).concat(airCards()), free = freeCards(), big = bigWeather(), brief = briefing(), list = listCard();
   var morning = (h >= 5 && h < 11) || (h >= 17 && h < 23);   // briefing editions: morning and evening
   deck = [];
   if (morning && brief) deck.push(brief);         // mornings open with the briefing
@@ -1055,7 +1108,7 @@ function shift() { $("stage").style.transform = "translate(" + Math.round(Math.r
 /* ================== START ================== */
 tick(); setInterval(tick, 10000);
 setInterval(shift, 4 * 6e4);
-renderWeather(); loadWeather(); setInterval(loadWeather, 15 * 6e4);
+renderWeather(); loadWeather(); setInterval(loadWeather, 15 * 6e4); loadAir(); setInterval(loadAir, 30 * 6e4);
 loadMTA(); setInterval(loadMTA, 2 * 6e4);
 loadTrains(); setInterval(loadTrains, 30000); setInterval(renderTrains, 15000);
 loadEvents(); setInterval(loadEvents, 60 * 6e4);

@@ -808,5 +808,22 @@ window.GALLERY = [
    "cold",
    "snow"
   ]
- }
+ },
+ /* House film archive: 35mm frames, already shared publicly. The photographer's name is added on the TV only. */
+ {"kind": "film", "title": "April in Gangnam", "place": "Seoul", "credit": "Shot on 35mm film · Seoul", "url": "film/f1.jpg", "moods": ["cloudy"]},
+ {"kind": "film", "title": "Sungnyemun Gate", "place": "Seoul", "credit": "Shot on 35mm film · Seoul", "url": "film/f2.jpg", "moods": ["sunny"]},
+ {"kind": "film", "title": "Market lunch", "place": "Seoul", "credit": "Shot on 35mm film · Seoul", "url": "film/f19.jpg", "moods": ["cold"]},
+ {"kind": "film", "title": "Under the flags", "place": "Seoul", "credit": "Shot on 35mm film · Seoul", "url": "film/f20.jpg", "moods": []},
+ {"kind": "film", "title": "Pike Place Market", "place": "Seattle", "credit": "Shot on 35mm film · Seattle", "url": "film/f88.jpg", "moods": ["sunny"]},
+ {"kind": "film", "title": "Statue among the palms", "place": "Puerto Rico", "credit": "Shot on 35mm film · Puerto Rico", "url": "film/f141.jpg", "moods": ["cloudy"]},
+ {"kind": "film", "title": "Over the bay", "place": "San Juan, Puerto Rico", "credit": "Shot on 35mm film · San Juan, Puerto Rico", "url": "film/f150.jpg", "moods": ["cloudy"]},
+ {"kind": "film", "title": "Cheyenne Frontier Days", "place": "Wyoming", "credit": "Shot on 35mm film · Wyoming", "url": "film/f162.jpg", "moods": ["sunny"]},
+ {"kind": "film", "title": "Mount Rainier", "place": "Washington", "credit": "Shot on 35mm film · Washington", "url": "film/f176.jpg", "moods": ["sunny", "cold"]},
+ {"kind": "film", "title": "Into the gorge", "place": "United States", "credit": "Shot on 35mm film · United States", "url": "film/f229.jpg", "moods": ["rain", "cloudy"]},
+ {"kind": "film", "title": "Cloud Gate", "place": "Chicago", "credit": "Shot on 35mm film · Chicago", "url": "film/f260.jpg", "moods": ["sunny"]},
+ {"kind": "film", "title": "The Chicago Theatre", "place": "Chicago", "credit": "Shot on 35mm film · Chicago", "url": "film/f261.jpg", "moods": ["cloudy"]},
+ {"kind": "film", "title": "Christ the Redeemer", "place": "Rio de Janeiro", "credit": "Shot on 35mm film · Rio de Janeiro", "url": "film/f270.jpg", "moods": ["cloudy"]},
+ {"kind": "film", "title": "Pier light", "place": "Washington", "credit": "Shot on 35mm film · Washington", "url": "film/f273.jpg", "moods": ["sunset"]},
+ {"kind": "film", "title": "Sensō-ji", "place": "Tokyo", "credit": "Shot on 35mm film · Tokyo", "url": "film/f294.jpg", "moods": []},
+ {"kind": "film", "title": "Toward the Skytree", "place": "Tokyo", "credit": "Shot on 35mm film · Tokyo", "url": "film/f301.jpg", "moods": ["cloudy"]}
 ];
