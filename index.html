@@ -197,12 +197,17 @@ var FREE = [
 ];
 
 /* ================== HELPERS ================== */
+// Always show New York time, even if the TV device is set to another time zone.
+// nyNow() returns a Date whose local fields (getHours, getDay...) read as New York wall-clock time.
+var TZ = "America/New_York";
+function toNY(d) { try { return new Date(d.toLocaleString("en-US", { timeZone: TZ })); } catch (e) { return d; } }
+function nyNow() { return toNY(new Date()); }
 function $(id) { return document.getElementById(id); }
 function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
 function shuffle(a) { for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
 function hm(d) { return d.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" }); }
 function dayLabel(d) {
-  var t = new Date(); t.setHours(0, 0, 0, 0);
+  var t = nyNow(); t.setHours(0, 0, 0, 0);
   var diff = Math.round((new Date(d.getFullYear(), d.getMonth(), d.getDate()) - t) / 864e5);
   return diff === 0 ? "Today" : diff === 1 ? "Tomorrow" : d.toLocaleDateString("en-US", { weekday: "long" });
 }
@@ -345,7 +350,7 @@ var events = cache("events") || [];
 var COOL = /(festival|concert|music|jazz|film|movie|screening|tour|walk|market|lighting|parade|art|exhibit|history|bird|harvest|holiday|halloween|dance party|fair|garden|stargaz|astronomy|kayak|boat|photography|poetry|theater|theatre|comedy|lantern)/i;
 var BORING = /(yoga|fitness|circuit|training|bodyweight|zumba|aerobic|shape up|pilates|workout|cardio|sculpt|interval|hatha|vinyasa|flow\b|bodyroll|\brun\b|open run|running|workday|tree care|virtual|online|^celebration$|bollyx|groove|strong nation|walking group|exercise|senior|toning|stretch|bootcamp|boot camp|tai chi|swim lesson|learn to|it's my park|volunteer|meeting|class -|registration|closure|medical|distribution|hospital|vaccin|clinic|permit|picnic|bbq|wedding|birthday|private|filming|baptism)/i;
 function loadEvents() {
-  var start = new Date(); start.setHours(0, 0, 0, 0);
+  var start = nyNow(); start.setHours(0, 0, 0, 0);
   var end = new Date(+start + 8 * 864e5), out = [];
   var parks = fetch("https://www.nycgovparks.org/xml/events_300_rss.xml").then(function (r) { return r.text(); }).then(function (x) {
     var doc = new DOMParser().parseFromString(x, "text/xml");
@@ -391,20 +396,20 @@ function loadRM() {
   getJSON(base + "eventsnext.php?id=" + CFG.realMadridId).then(function (d) { rm.next = (d.events || [])[0]; cache("rm", rm); renderRM(); }).catch(function () {});
   getJSON(base + "eventslast.php?id=" + CFG.realMadridId).then(function (d) { rm.last = (d.results || [])[0]; cache("rm", rm); }).catch(function () {});
 }
-function kickoff(e) { return new Date((e.strTimestamp || (e.dateEvent + "T" + (e.strTime || "00:00:00"))).replace(/\+00:00$/, "") + "Z"); }
+function kickoff(e) { return toNY(new Date((e.strTimestamp || (e.dateEvent + "T" + (e.strTime || "00:00:00"))).replace(/\+00:00$/, "") + "Z")); }
 function renderRM() {
   var e = rm.next; if (!e) return;
-  var k = kickoff(e), hrs = (k - new Date()) / 36e5;
+  var k = kickoff(e), hrs = (k - nyNow()) / 36e5;
   $("rmChip").style.display = hrs > -2.5 && hrs < 36 ? "block" : "none";
   $("rmChip").textContent = "⚽ " + e.strHomeTeam + " vs " + e.strAwayTeam + " · " + (hrs < 0 ? "on now" : dayLabel(k) + " " + hm(k));
 }
 function rmCards() {
   var c = [];
-  if (rm.next) { var k = kickoff(rm.next), days = (k - new Date()) / 864e5;
+  if (rm.next) { var k = kickoff(rm.next), days = (k - nyNow()) / 864e5;
     if (days > -0.1 && days < 7) c.push({ cls: "rm", tag: "Real Madrid · " + (rm.next.strLeague || "Next match"), title: rm.next.strHomeTeam + " vs " + rm.next.strAwayTeam,
       body: "Kickoff " + dayLabel(k) + " at " + hm(k) + " New York time" + (rm.next.strVenue ? " · " + rm.next.strVenue : "") + ".", meta: "Hala Madrid" }); }
   if (rm.last && rm.last.intHomeScore != null) { var l = kickoff(rm.last);
-    if ((new Date() - l) / 864e5 < 3) c.push({ cls: "rm", tag: "Real Madrid · Result", title: rm.last.strHomeTeam + " " + rm.last.intHomeScore + "–" + rm.last.intAwayScore + " " + rm.last.strAwayTeam,
+    if ((nyNow() - l) / 864e5 < 3) c.push({ cls: "rm", tag: "Real Madrid · Result", title: rm.last.strHomeTeam + " " + rm.last.intHomeScore + "–" + rm.last.intAwayScore + " " + rm.last.strAwayTeam,
       body: (rm.last.strLeague || "") + " · " + l.toLocaleDateString("en-US", { weekday: "long", month: "short", day: "numeric" }), meta: "Full time" }); }
   return c;
 }
@@ -418,7 +423,7 @@ function matchesFree(f, d) {
   return true;
 }
 function freeCards() {
-  var now = new Date(), tom = new Date(+now + 864e5), out = [];
+  var now = nyNow(), tom = new Date(+now + 864e5), out = [];
   FREE.forEach(function (f) {
     if (matchesFree(f, now)) out.push({ cls: "free", tag: "Free today", title: f.name, body: f.what, meta: f.meta });
     else if (matchesFree(f, tom)) out.push({ cls: "free", tag: "Free tomorrow", title: f.name, body: f.what, meta: f.meta });
@@ -429,7 +434,7 @@ function freeCards() {
 /* ================== WEATHER-AWARE TIP ================== */
 function weatherTip() {
   if (!wx) return null;
-  var dd = wx.daily, hi = dd.temperature_2m_max[0], rain = dd.precipitation_probability_max[0] || 0, ss = new Date(dd.sunset[0]), mins = (ss - new Date()) / 6e4;
+  var dd = wx.daily, hi = dd.temperature_2m_max[0], rain = dd.precipitation_probability_max[0] || 0, ss = new Date(dd.sunset[0]), mins = (ss - nyNow()) / 6e4;
   if (mins > 0 && mins < 120 && rain < 40) return { tag: "Golden hour", title: "Sunset at " + hm(ss), body: "About " + Math.round(mins) + " minutes away. Transmitter Park or the Kent Ave waterfront are a short walk.", meta: "Greenpoint waterfront" };
   if (rain >= 60) return { tag: "Today's weather", title: "A rainy one", body: rain + "% chance of rain. Good day for a movie at Nitehawk or a long lunch on Franklin St.", meta: "Bring an umbrella" };
   if (hi >= 85) return { tag: "Today's weather", title: "Hot out: " + Math.round(hi) + "°", body: "Head to the waterfront for a breeze, or ride the ferry for some air.", meta: "Stay hydrated" };
@@ -441,7 +446,7 @@ function weatherTip() {
 /* ================== CARD ROTATION ================== */
 var deck = [], shown = 0;
 function buildDeck() {
-  var now = new Date(), m = now.getMonth() + 1, d = now.getDay();
+  var now = nyNow(), m = now.getMonth() + 1, d = now.getDay();
   var picks = shuffle(PICKS.filter(function (p) { return (!p.months || p.months.indexOf(m) > -1) && (!p.days || p.days.indexOf(d) > -1); }));
   var ev = events.slice(0, 10), urgent = mtaCards().concat(rmCards()), free = freeCards();
   var tip = weatherTip();
@@ -481,7 +486,7 @@ function nextCard() {
 
 /* ================== CLOCK, NIGHT DIMMING, BURN-IN SHIFT ================== */
 function tick() {
-  var n = new Date(), h = n.getHours(), m = n.getMinutes();
+  var n = nyNow(), h = n.getHours(), m = n.getMinutes();
   $("time").innerHTML = ((h % 12) || 12) + ":" + (m < 10 ? "0" : "") + m + '<span class="ampm">' + (h < 12 ? "AM" : "PM") + "</span>";
   $("date").textContent = n.toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" });
   document.body.classList.toggle("night", h >= CFG.nightStart && h < CFG.nightEnd);
@@ -498,7 +503,7 @@ loadEvents(); setInterval(loadEvents, 60 * 6e4);
 loadRM(); setInterval(loadRM, 3 * 36e5);
 showImage(); setInterval(showImage, CFG.photoSeconds * 1000);
 setTimeout(nextCard, 3000);
-setInterval(function () { var n = new Date(); if (n.getHours() === 4 && n.getMinutes() < 2) location.reload(); }, 6e4);
+setInterval(function () { var n = nyNow(); if (n.getHours() === 4 && n.getMinutes() < 2) location.reload(); }, 6e4);
 </script>
 </body>
 </html>
