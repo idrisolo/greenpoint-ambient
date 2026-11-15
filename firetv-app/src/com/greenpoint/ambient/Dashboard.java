@@ -37,7 +37,9 @@ final class Dashboard {
     static WebView createWebView(Context ctx) {
         final WebView web = new WebView(ctx);
         web.setBackgroundColor(Color.BLACK);
-        web.setLayerType(View.LAYER_TYPE_HARDWARE, null);
+        // No forced hardware layer: on the Fire Stick 4K's PowerVR driver, an extra off-screen layer
+        // crashed the render thread after ~20 minutes (SIGSEGV in KEGLReleaseRenderTarget).
+        web.setLayerType(View.LAYER_TYPE_NONE, null);
         web.setFocusable(false);
         WebSettings s = web.getSettings();
         s.setJavaScriptEnabled(true);
