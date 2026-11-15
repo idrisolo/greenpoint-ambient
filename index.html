@@ -56,18 +56,55 @@
   #alert { display: none; margin-top: 1.6vh; margin-left: auto; max-width: 32vw; padding: .9vh 1vw; border-radius: .6vw;
     background: rgba(160, 30, 30, .78); font-size: 1.05vw; font-weight: 600; text-align: left; }
 
-  /* ---------- Rotating card ---------- */
-  #card { max-width: 54vw; padding: 3vh 2.2vw 2.6vh; border-radius: 1.2vw; background: var(--panel);
-    border: 1px solid var(--line); transition: opacity 1.2s ease, transform 1.2s ease; align-self: end; }
+  /* ---------- Rotating card (several layouts) ---------- */
+  #card { max-width: 58vw; padding: 3vh 2.2vw 2.6vh; border-radius: 1.2vw; background: var(--panel);
+    border: 1px solid var(--line); transition: opacity 1.2s ease, transform 1.2s ease; align-self: end; text-shadow: none; }
   #card.out { opacity: 0; transform: translateY(2vh); }
-  #tag { display: inline-flex; align-items: center; gap: .6vw; font-size: .95vw; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--accent); }
-  #tag::before { content: ""; width: .6vw; height: .6vw; border-radius: 50%; background: currentColor; }
-  #card.mta #tag { color: var(--warn); } #card.free #tag { color: var(--good); } #card.rm #tag { color: #c9b8ff; }
-  #title { font-family: Fraunces, serif; font-weight: 500; font-size: 3.1vw; line-height: 1.12; margin: 1.2vh 0 1vh; }
-  #body { font-size: 1.5vw; line-height: 1.45; color: var(--ink-soft); font-weight: 300; }
-  #meta { margin-top: 1.4vh; font-size: 1.15vw; color: var(--ink-faint); }
+  .tag { display: inline-flex; align-items: center; gap: .6vw; font-size: .95vw; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--accent); }
+  .tag::before { content: ""; width: .6vw; height: .6vw; border-radius: 50%; background: currentColor; }
+  #card.mta .tag { color: var(--warn); } #card.free .tag { color: var(--good); } #card.rm .tag { color: #c9b8ff; }
+  .title { font-family: Fraunces, serif; font-weight: 500; font-size: 3.1vw; line-height: 1.12; margin: 1.2vh 0 1vh; }
+  .body { font-size: 1.5vw; line-height: 1.45; color: var(--ink-soft); font-weight: 300; }
+  .meta { margin-top: 1.4vh; font-size: 1.15vw; color: var(--ink-faint); }
+  .row { display: flex; gap: 2vw; align-items: center; }
+  .grow { flex: 1; min-width: 0; }
   #progress { margin-top: 2vh; height: 3px; background: var(--line); border-radius: 2px; overflow: hidden; }
   #bar { height: 100%; width: 0; background: var(--accent); }
+  /* QR tile: black on white so phones read it from across the room */
+  .qr { flex: none; text-align: center; }
+  .qr .code { background: #fff; padding: .55vw; border-radius: .6vw; width: 10.5vw; height: 10.5vw; }
+  .qr svg { width: 100%; height: 100%; display: block; }
+  .qr .cap { margin-top: .9vh; font-size: .85vw; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-faint); }
+  /* Poster: date block + headline */
+  .date { flex: none; text-align: center; padding-right: 2vw; border-right: 1px solid var(--line); min-width: 8vw; }
+  .date .dow { font-size: .95vw; font-weight: 700; letter-spacing: .25em; text-transform: uppercase; color: var(--accent); }
+  .date .num { font-family: Fraunces, serif; font-weight: 300; font-size: 6vw; line-height: 1; margin: .4vh 0; }
+  .date .when { font-size: 1.05vw; color: var(--ink-soft); }
+  .poster .title { font-size: 3.4vw; }
+  .poster .title.long, .row .title.long { font-size: 2.5vw; }
+  /* List: three things */
+  .list ol { list-style: none; margin-top: 1.8vh; }
+  .list li { display: grid; grid-template-columns: 9.5vw 1fr; gap: 1.4vw; padding: 1.3vh 0; border-top: 1px solid var(--line); align-items: baseline; }
+  .list li:first-child { border-top: 0; }
+  .list .lw { font-size: 1.05vw; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
+  .list .lt { font-family: Fraunces, serif; font-size: 1.85vw; line-height: 1.2; }
+  .list .lp { display: block; font-family: Inter, sans-serif; font-size: 1.05vw; color: var(--ink-faint); margin-top: .3vh; }
+  /* Big number */
+  .big .num { font-family: Fraunces, serif; font-weight: 300; font-size: 9vw; line-height: .9; letter-spacing: -.03em; }
+  .big .title { margin-top: 0; }
+  /* Morning briefing */
+  .brief .hello { font-family: Fraunces, serif; font-weight: 300; font-size: 3.6vw; line-height: 1.05; margin: 1vh 0 2.2vh; }
+  .brief .items { display: grid; grid-template-columns: 1fr 1fr; gap: 2.2vh 3vw; }
+  .brief .it { display: flex; gap: 1vw; align-items: flex-start; }
+  .brief .it svg { width: 2.2vw; height: 2.2vw; flex: none; margin-top: .2vh; }
+  .brief .k { font-size: .85vw; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--ink-faint); }
+  .brief .v { font-size: 1.45vw; line-height: 1.3; margin-top: .3vh; }
+
+  /* Line icons (stroke follows text color) */
+  .ico { fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+  #now .icon svg { width: 4.2vw; height: 4.2vw; display: block; }
+  .day .i svg { width: 2.2vw; height: 2.2vw; display: block; margin: 0 auto; }
+  .sunc { color: #ffd27a; } .moonc { color: #dfe6ff; }
 
   /* ---------- Bottom strip: transit + credit ---------- */
   #strip { display: flex; justify-content: space-between; align-items: flex-end; margin-top: 2.6vh; gap: 2vw; transition: opacity 2s; }
@@ -80,6 +117,19 @@
   #rmChip { font-size: 1.05vw; color: var(--ink-soft); display: none; }
   #credit { text-align: right; font-size: .95vw; color: var(--ink-faint); max-width: 38vw; line-height: 1.4; transition: all 2s; }
   #credit b { color: var(--ink-soft); font-weight: 600; font-style: italic; font-family: Fraunces, serif; font-size: 1.15vw; }
+  #credit .why { display: block; margin-top: .5vh; color: var(--accent); font-size: .85vw; letter-spacing: .16em; text-transform: uppercase; }
+  /* Museum wall label for paintings */
+  #placardWrap { position: fixed; right: 4vw; bottom: 4vh; z-index: 3; }
+  .placard { text-align: left; background: #f3eee4; color: #1d1b18; text-shadow: none; padding: 2vh 1.5vw 1.9vh; border-radius: .25vw;
+    width: 25vw; box-shadow: 0 1.5vh 4vh rgba(0,0,0,.45); opacity: 0; transform: translateY(1vh); transition: opacity 1.6s ease 2.5s, transform 1.6s ease 2.5s; }
+  .placard.in { opacity: 1; transform: none; }
+  .placard .pa { font-size: .85vw; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: #6b6358; }
+  .placard .pt { font-family: Fraunces, serif; font-style: italic; font-size: 1.6vw; line-height: 1.15; margin: .6vh 0 .2vh; }
+  .placard .py { font-size: .95vw; color: #6b6358; }
+  .placard .ps { font-size: 1.02vw; line-height: 1.45; margin-top: 1.2vh; color: #2c2925; }
+  .placard .pm { font-size: .82vw; color: #8a8276; margin-top: 1.2vh; }
+  .placard .see { margin-top: 1vh; font-size: .9vw; font-weight: 600; color: #8a5a12; }
+  .placard .why { margin-top: 1vh; font-size: .78vw; letter-spacing: .16em; text-transform: uppercase; color: #8a5a12; }
 
   /* ---------- Ambient (gallery-only) mode ---------- */
   body.ambient #card { opacity: 0; transform: translateY(2vh); }
@@ -112,11 +162,8 @@
       </div>
     </header>
     <div></div>
-    <section id="card" class="out" style="text-shadow:none">
-      <div id="tag"></div>
-      <h2 id="title"></h2>
-      <p id="body"></p>
-      <div id="meta"></div>
+    <section id="card" class="out">
+      <div id="cardBody"></div>
       <div id="progress"><div id="bar"></div></div>
     </section>
     <div id="strip">
@@ -127,8 +174,10 @@
       <div id="credit"></div>
     </div>
   </main>
+  <div id="placardWrap"></div>
 
 <script src="gallery.js"></script>
+<script src="vendor/qrcode.min.js"></script>
 <script>
 /* =====================================================================
    SETTINGS. You can also override location from the URL, for example:
@@ -222,6 +271,11 @@ function tidy(s) {
     .replace(/\bStreet\b/g, "St").replace(/\bAvenue\b/g, "Ave").replace(/\bRoad\b/g, "Rd").replace(/\bPlace\b/g, "Pl");
   return s.replace(/\s+/g, " ");
 }
+function mapsUrl(q) { return "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(q); }
+function siteFromMeta(meta) { var m = (meta || "").match(/\b([a-z0-9-]+\.)+(org|com|nyc|gov|info)\b(\/[a-z]*)?/i); return m ? "https://" + m[0] : ""; }
+function qrSVG(url) {
+  try { var q = qrcode(0, "L"); q.addData(url); q.make(); return q.createSvgTag({ cellSize: 4, margin: 0, scalable: true }); } catch (e) { return ""; }
+}
 // Cache the last good copy of each feed so a flaky connection never leaves the screen empty
 function cache(key, val) { try { if (val === undefined) return JSON.parse(localStorage.getItem(key)); localStorage.setItem(key, JSON.stringify(val)); } catch (e) { return null; } }
 function getJSON(url) { return fetch(url).then(function (r) { if (!r.ok) throw r.status; return r.json(); }); }
@@ -234,9 +288,43 @@ var gal = shuffle((window.GALLERY || []).slice()), gi = 0, cur = 0;
   while (art.length || ph.length) { if (ph.length) out.push(ph.shift()); if (ph.length) out.push(ph.shift()); if (art.length) out.push(art.shift()); }
   gal = out;
 })();
+/* What's it like outside right now? Used to pick art that fits the moment. */
+var MOOD_WHY = { night: "Chosen for tonight", rain: "Chosen for the rain outside", snow: "Chosen for the snow outside", sunrise: "Chosen for sunrise",
+  sunset: "Chosen for golden hour", cold: "Chosen for a cold day", sunny: "Chosen for the sunshine", cloudy: "Chosen for a grey day" };
+function currentMood() {
+  if (!wx || !wx.current) return null;
+  var c = wx.current.weather_code, t = wx.current.temperature_2m, now = nyNow(), dd = wx.daily;
+  if ((c >= 51 && c <= 67) || (c >= 80 && c <= 82) || c >= 95) return "rain";
+  if ((c >= 71 && c <= 77) || c === 85 || c === 86) return "snow";
+  var sr = new Date(dd.sunrise[0]), ss = new Date(dd.sunset[0]), M = 6e4;
+  if (now > +ss + 45 * M || now < sr - 30 * M) return "night";
+  if (now >= sr - 30 * M && now <= +sr + 75 * M) return "sunrise";
+  if (now >= ss - 90 * M && now <= +ss + 45 * M) return "sunset";
+  if (t <= 45) return "cold";
+  if (c <= 1 && t >= 58) return "sunny";
+  if (c >= 3) return "cloudy";
+  return null;
+}
+var recent = [];
+function nextGalleryItem() {
+  var mood = currentMood(), want = mood === "snow" ? "cold" : mood;
+  // Two out of three images match the moment when we can; the rest keep the usual variety.
+  if (want && Math.random() < 0.67) {
+    var pool = gal.filter(function (g) { return g.moods && g.moods.indexOf(want) > -1 && recent.indexOf(g.url) < 0; });
+    if (pool.length) { var p = pool[Math.floor(Math.random() * pool.length)]; return { g: p, why: MOOD_WHY[mood] }; }
+  }
+  for (var tries = 0; tries < gal.length; tries++) { var g = gal[gi++ % gal.length]; if (recent.indexOf(g.url) < 0) return { g: g, why: "" }; }
+  return { g: gal[gi++ % gal.length], why: "" };
+}
+function placardHTML(g, why) {
+  return '<div class="placard"><div class="pa">' + esc(g.artist || "") + '</div><div class="pt">' + esc(g.title) + '</div><div class="py">' + esc(g.year || "") +
+    '</div>' + (g.story ? '<div class="ps">' + esc(g.story) + "</div>" : "") + '<div class="pm">' + esc(g.museum || "") + "</div>" +
+    (g.see ? '<div class="see">See it in New York: ' + esc(g.see) + "</div>" : "") + (why ? '<div class="why">' + esc(why) + "</div>" : "") + "</div>";
+}
 function showImage() {
   if (!gal.length) return;
-  var g = gal[gi++ % gal.length], img = new Image();
+  var pick = nextGalleryItem(), g = pick.g, img = new Image();
+  recent.push(g.url); if (recent.length > Math.min(12, gal.length - 4)) recent.shift();
   img.onload = function () {
     cur = 1 - cur; var s = $("s" + cur), old = $("s" + (1 - cur));
     if (g.kind === "art") {
@@ -251,21 +339,47 @@ function showImage() {
       p.style.setProperty("--ky", (Math.random() * 3 - 1.5).toFixed(1) + "%");
     }
     void s.offsetWidth; s.classList.add("on"); old.classList.remove("on");
-    $("credit").innerHTML = "<b>" + esc(g.title) + "</b><br>" + esc(g.credit || "");
-    // preload the next one
+    if (g.kind === "art") {
+      $("credit").innerHTML = "";
+      $("placardWrap").innerHTML = placardHTML(g, pick.why);
+      setTimeout(function () { var pl = $("placardWrap").querySelector(".placard"); if (pl) pl.classList.add("in"); }, 50);
+    } else {
+      $("placardWrap").innerHTML = "";
+      $("credit").innerHTML = "<b>" + esc(g.title) + "</b><br>" + esc(g.credit || "") + (pick.why ? '<span class="why">' + esc(pick.why) + "</span>" : "");
+    }
+    // preload the likely next one
     var n = gal[gi % gal.length]; if (n) (new Image()).src = n.url;
   };
-  img.onerror = function () { gal.splice((gi - 1) % gal.length, 1); setTimeout(showImage, 500); };
+  img.onerror = function () { var k = gal.indexOf(g); if (k > -1) gal.splice(k, 1); setTimeout(showImage, 500); };
   img.src = g.url;
 }
 
 /* ================== WEATHER + ALERTS ================== */
-var WMO = { 0: ["☀️", "Clear"], 1: ["🌤️", "Mostly clear"], 2: ["⛅", "Partly cloudy"], 3: ["☁️", "Overcast"], 45: ["🌫️", "Fog"], 48: ["🌫️", "Freezing fog"],
-  51: ["🌦️", "Light drizzle"], 53: ["🌦️", "Drizzle"], 55: ["🌧️", "Heavy drizzle"], 56: ["🌧️", "Freezing drizzle"], 57: ["🌧️", "Freezing drizzle"],
-  61: ["🌧️", "Light rain"], 63: ["🌧️", "Rain"], 65: ["🌧️", "Heavy rain"], 66: ["🌧️", "Freezing rain"], 67: ["🌧️", "Freezing rain"],
-  71: ["🌨️", "Light snow"], 73: ["🌨️", "Snow"], 75: ["❄️", "Heavy snow"], 77: ["🌨️", "Snow grains"], 80: ["🌦️", "Showers"], 81: ["🌧️", "Showers"],
-  82: ["⛈️", "Heavy showers"], 85: ["🌨️", "Snow showers"], 86: ["❄️", "Snow showers"], 95: ["⛈️", "Thunderstorm"], 96: ["⛈️", "Thunderstorm, hail"], 99: ["⛈️", "Thunderstorm, hail"] };
-function wmo(c, night) { var w = WMO[c] || ["🌡️", ""]; return night && c <= 1 ? ["🌙", w[1]] : w; }
+var WMO = { 0: ["sun", "Clear"], 1: ["partly", "Mostly clear"], 2: ["partly", "Partly cloudy"], 3: ["cloud", "Overcast"], 45: ["fog", "Fog"], 48: ["fog", "Freezing fog"],
+  51: ["rain", "Light drizzle"], 53: ["rain", "Drizzle"], 55: ["rain", "Heavy drizzle"], 56: ["rain", "Freezing drizzle"], 57: ["rain", "Freezing drizzle"],
+  61: ["rain", "Light rain"], 63: ["rain", "Rain"], 65: ["rain", "Heavy rain"], 66: ["rain", "Freezing rain"], 67: ["rain", "Freezing rain"],
+  71: ["snow", "Light snow"], 73: ["snow", "Snow"], 75: ["snow", "Heavy snow"], 77: ["snow", "Snow grains"], 80: ["rain", "Showers"], 81: ["rain", "Showers"],
+  82: ["storm", "Heavy showers"], 85: ["snow", "Snow showers"], 86: ["snow", "Snow showers"], 95: ["storm", "Thunderstorm"], 96: ["storm", "Thunderstorm, hail"], 99: ["storm", "Thunderstorm, hail"] };
+function wmo(c, night) { var w = WMO[c] || ["cloud", ""]; return night && c <= 2 ? [c === 0 ? "moon" : "moonpartly", w[1]] : w; }
+// Thin line icons drawn to match the typography
+var CLOUD = '<path d="M7 18h10.5a3.5 3.5 0 0 0 .4-6.98A5 5 0 0 0 8.2 10.1 4 4 0 0 0 7 18z"/>';
+var ICONS = {
+  sun: '<g class="sunc"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></g>',
+  moon: '<path class="moonc" d="M19 14.5A7.5 7.5 0 0 1 9.5 5a7.5 7.5 0 1 0 9.5 9.5z"/>',
+  partly: '<g class="sunc"><circle cx="9" cy="8.5" r="3.2"/><path d="M9 2.5v1.4M3 8.5h1.4M4.8 4.3l1 1M13.2 4.3l-1 1"/></g><path d="M8.5 19.5h9a3 3 0 0 0 .3-6 4.3 4.3 0 0 0-8.3-.8 3.4 3.4 0 0 0-1 6.8z"/>',
+  moonpartly: '<path class="moonc" d="M12.5 8.6A4.6 4.6 0 0 1 6.9 3 4.6 4.6 0 1 0 12.5 8.6z"/><path d="M8.5 19.5h9a3 3 0 0 0 .3-6 4.3 4.3 0 0 0-8.3-.8 3.4 3.4 0 0 0-1 6.8z"/>',
+  cloud: CLOUD,
+  rain: '<path d="M7 15h10.5a3.5 3.5 0 0 0 .4-6.98A5 5 0 0 0 8.2 7.1 4 4 0 0 0 7 15z"/><path d="M9 18l-1 2.5M13 18l-1 2.5M17 18l-1 2.5"/>',
+  snow: '<path d="M7 15h10.5a3.5 3.5 0 0 0 .4-6.98A5 5 0 0 0 8.2 7.1 4 4 0 0 0 7 15z"/><path d="M9 18.5h.01M13 20h.01M17 18.5h.01M11 21.5h.01M15 21.5h.01" stroke-width="2.4"/>',
+  storm: '<path d="M7 15h10.5a3.5 3.5 0 0 0 .4-6.98A5 5 0 0 0 8.2 7.1 4 4 0 0 0 7 15z"/><path d="M12.5 15.5l-2 3.5h3l-2 3.5"/>',
+  fog: '<path d="M4 9h16M6 13h12M4 17h16"/>',
+  shirt: '<path d="M8 3l-4.5 3 2 4L8 9v12h8V9l2.5 1 2-4L16 3a4 4 0 0 1-8 0z"/>',
+  umbrella: '<path d="M3 12a9 9 0 0 1 18 0H3zM12 12v7a2 2 0 0 0 4 0M12 3v0"/>',
+  train: '<rect x="6" y="3" width="12" height="13" rx="3"/><path d="M6 10h12M9 19l-2 2.5M15 19l2 2.5M9 13.5h.01M15 13.5h.01" />',
+  sunset: '<g class="sunc"><path d="M7 17a5 5 0 0 1 10 0M3 17h18M12 5v4M5.6 9.6l1.4 1.4M18.4 9.6L17 11M9.5 7.5L12 5l2.5 2.5"/></g>',
+  star: '<path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/>'
+};
+function icon(name) { return '<svg class="ico" viewBox="0 0 24 24">' + (ICONS[name] || CLOUD) + "</svg>"; }
 var wx = cache("wx");
 function loadWeather() {
   getJSON("https://api.open-meteo.com/v1/forecast?latitude=" + CFG.lat + "&longitude=" + CFG.lon +
@@ -276,13 +390,13 @@ function loadWeather() {
   getJSON("https://api.weather.gov/alerts/active?point=" + CFG.lat.toFixed(4) + "," + CFG.lon.toFixed(4)).then(function (d) {
     var f = (d.features || []).map(function (x) { return x.properties.event; });
     $("alert").style.display = f.length ? "block" : "none";
-    $("alert").textContent = "⚠️ " + f.slice(0, 2).join(" · ");
+    $("alert").textContent = "Weather alert: " + f.slice(0, 2).join(" · ");
   }).catch(function () {});
 }
 function renderWeather() {
   if (!wx) { $("nowDesc").textContent = "Weather unavailable"; return; }
   var c = wx.current, w = wmo(c.weather_code, !c.is_day), dd = wx.daily;
-  document.querySelector("#now .icon").textContent = w[0];
+  document.querySelector("#now .icon").innerHTML = icon(w[0]);
   document.querySelector("#now .temp").textContent = Math.round(c.temperature_2m) + "°";
   var rainSoon = Math.max.apply(null, (wx.hourly && wx.hourly.precipitation_probability) || [0]);
   $("nowDesc").textContent = w[1] + " · feels " + Math.round(c.apparent_temperature) + "° · H " + Math.round(dd.temperature_2m_max[0]) +
@@ -290,7 +404,7 @@ function renderWeather() {
   var f = "";
   for (var i = 1; i < dd.time.length; i++) {
     var dt = new Date(dd.time[i] + "T12:00:00");
-    f += '<div class="day"><div class="n">' + dt.toLocaleDateString("en-US", { weekday: "short" }) + '</div><div class="i">' + wmo(dd.weather_code[i])[0] +
+    f += '<div class="day"><div class="n">' + dt.toLocaleDateString("en-US", { weekday: "short" }) + '</div><div class="i">' + icon(wmo(dd.weather_code[i])[0]) +
       '</div><div class="t">' + Math.round(dd.temperature_2m_max[i]) + '° <span>' + Math.round(dd.temperature_2m_min[i]) + '°</span></div></div>';
   }
   $("forecast").innerHTML = f;
@@ -325,28 +439,43 @@ function loadMTA() {
     renderTransit();
   }).catch(function () {});
 }
+// Stations a Greenpoint trip actually touches. Changes elsewhere on the line stay quiet.
+var HOME_AREA = /(Greenpoint Av|Nassau Av|Court Sq|21 St|Metropolitan Av|Lorimer St|Bedford Av|1 Av|3 Av|Union Sq|14 St|8 Av|Hunters Point|Vernon|Queensboro Plaza|Long Island City|Queens Plaza|entire line|no \[G\] trains? (running|between Court)|no \[L\] trains? (running|between 8 Av))/i;
+function affectsMe(m) {
+  if (!m.routes.some(function (r) { return CFG.alertLines.indexOf(r) > -1; })) return false;
+  return nearHome(m);
+}
+function nearHome(m) {
+  return m.sev >= 4 || (m.sev >= 2 && HOME_AREA.test(m.text)) || (m.label === "Delays" && !/In (the )?Bronx|In Manhattan, uptown/i.test(m.text));
+}
 function renderTransit() {
-  $("transit").innerHTML = CFG.subwayLines.map(function (r) {
-    var worst = null; mta.forEach(function (m) { if (m.routes.indexOf(r) > -1 && (!worst || m.sev > worst.sev)) worst = m; });
-    var label = worst && worst.sev >= 2 ? worst.label : "Good service", cls = worst && worst.sev >= 2 ? worst.cls : "good";
-    return '<span class="line">' + bullet(r) + '<span class="dot" style="background:var(--' + cls + ')"></span>' + label + "</span>";
-  }).join("");
+  var issues = [];
+  CFG.subwayLines.forEach(function (r) {
+    var worst = null;
+    mta.forEach(function (m) { if (m.routes.indexOf(r) > -1 && nearHome(m) && (!worst || m.sev > worst.sev)) worst = m; });
+    if (worst) issues.push('<span class="line">' + bullet(r) + '<span class="dot" style="background:var(--' + worst.cls + ')"></span>' + worst.label + "</span>");
+  });
+  // Calm by default: one quiet line when everything near home is fine
+  $("transit").innerHTML = issues.length ? issues.join("") :
+    '<span class="line" style="opacity:.85">' + CFG.subwayLines.map(function (r) { return bullet(r); }).join("") +
+    '<span class="dot" style="background:var(--good);margin-left:.3vw"></span>Good service near home</span>';
 }
 function mtaCards() {
-  var mine = mta.filter(function (m) { return m.sev >= 2 && m.routes.some(function (r) { return CFG.alertLines.indexOf(r) > -1; }); });
+  var mine = mta.filter(affectsMe);
   mine.sort(function (a, b) { return b.sev - a.sev; });
   var seen = {};
   return mine.filter(function (m) { var k = m.text.slice(0, 60); if (seen[k]) return false; seen[k] = 1; return true; }).slice(0, 3).map(function (m) {
     var mineR = m.routes.filter(function (r) { return CFG.alertLines.indexOf(r) > -1; });
     var nice = (m.type || m.label).replace(/^Planned\s*-\s*/i, "").toLowerCase();
     var head = m.label === "Delays" ? "trains are delayed" : nice === "part suspended" ? "partly suspended" : nice;
-    return { cls: "mta", tag: "Subway alert", titleHTML: mineR.map(function (r) { return bullet(r, true); }).join("") + " " + esc(head.charAt(0).toUpperCase() + head.slice(1)),
-      bodyHTML: esc(m.text).replace(/\[([A-Z0-9]{1,2})\]/g, function (_, r) { return bullet(r, true); }), meta: "Live from the MTA · check the MTA app before you leave" };
+    return { cls: "mta", tag: "Heads up · subway", titleHTML: mineR.map(function (r) { return bullet(r, true); }).join("") + " " + esc(head.charAt(0).toUpperCase() + head.slice(1)),
+      bodyHTML: esc(m.text).replace(/\[([A-Z0-9]{1,2})\]/g, function (_, r) { return bullet(r, true); }), meta: "Live from the MTA",
+      url: "https://www.mta.info/alerts", qrCap: "Scan for details" };
   });
 }
 
 /* ================== EVENTS: NYC Parks (with coordinates) + street permits ================== */
-var events = cache("events") || [];
+var events = cache("events2") || [];   // "events2": newer format with links and dates
 var COOL = /(festival|concert|music|jazz|film|movie|screening|tour|walk|market|lighting|parade|art|exhibit|history|bird|harvest|holiday|halloween|dance party|fair|garden|stargaz|astronomy|kayak|boat|photography|poetry|theater|theatre|comedy|lantern)/i;
 var BORING = /(yoga|fitness|circuit|training|bodyweight|zumba|aerobic|shape up|pilates|workout|cardio|sculpt|interval|hatha|vinyasa|flow\b|bodyroll|\brun\b|open run|running|workday|tree care|virtual|online|^celebration$|bollyx|groove|strong nation|walking group|exercise|senior|toning|stretch|bootcamp|boot camp|tai chi|swim lesson|learn to|it's my park|volunteer|meeting|class -|registration|closure|medical|distribution|hospital|vaccin|clinic|permit|picnic|bbq|wedding|birthday|private|filming|baptism)/i;
 function loadEvents() {
@@ -363,9 +492,11 @@ function loadEvents() {
       var dist = isNaN(lat) ? 99 : km(lat, lon), cool = COOL.test(title + " " + g("description").slice(0, 300));
       if (dist > CFG.eventRadiusKm && !(cool && dist < 15)) return;
       var where = g("event:parknames") || tidy(g("event:location")).replace(/\(.*$/, "");
+      var tt = t && !/^0:00/.test(t) ? t.replace(/ (am|pm)/, function (m) { return m.toUpperCase(); }) : "";
       out.push({ tag: dist <= CFG.eventRadiusKm ? "Happening nearby" : "Happening in NYC", title: tidy(title),
-        body: where + (dist < 30 ? " · " + (dist * 0.621).toFixed(1) + " mi away" : ""),
-        meta: dayLabel(d) + (t && !/^0:00/.test(t) ? " · " + t.replace(/ (am|pm)/, function (m) { return m.toUpperCase(); }) : "") + " · NYC Parks",
+        body: where + (dist < 30 ? " · " + (dist * 0.621).toFixed(1) + " mi away" : ""), place: where,
+        meta: dayLabel(d) + (tt ? " · " + tt : "") + " · NYC Parks", timeText: tt, day: date,
+        url: (g("link") || "").replace(/^http:/, "https:") || mapsUrl(where + ", New York"), qrCap: "Scan for details",
         when: +d, score: (dist <= CFG.eventRadiusKm ? 60 : 0) + (cool ? 40 : 0) - dist * 2 - (d - start) / 864e5 * 3 });
     });
   }).catch(function () {});
@@ -376,7 +507,8 @@ function loadEvents() {
       if (!r.event_name || BORING.test(r.event_name)) return;
       var s = new Date(r.start_date_time), e = new Date(r.end_date_time); if (e - s < 30 * 6e4) return;
       var loc = tidy(r.event_location).replace(/:.*$/, "").split(",")[0], m = loc.match(/^(.+?) between (.+?) and /i); if (m) loc = m[1] + " near " + m[2];
-      out.push({ tag: "Happening nearby", title: tidy(r.event_name), body: loc, meta: dayLabel(s) + " · " + hm(s) + "–" + hm(e), when: +s,
+      out.push({ tag: "Happening nearby", title: tidy(r.event_name), body: loc, place: loc, meta: dayLabel(s) + " · " + hm(s) + "–" + hm(e), when: +s,
+        timeText: hm(s) + "–" + hm(e), day: r.start_date_time.slice(0, 10), url: mapsUrl(loc + ", Brooklyn, NY"), qrCap: "Scan for directions",
         score: 70 + (COOL.test(r.event_name) ? 30 : 0) - (s - start) / 864e5 * 3 });
     });
   }).catch(function () {});
@@ -384,7 +516,7 @@ function loadEvents() {
     if (!out.length) return;
     var seen = {}; out.sort(function (a, b) { return b.score - a.score; });
     events = out.filter(function (e) { var k = e.title.toLowerCase(); if (seen[k]) return false; seen[k] = 1; return true; }).slice(0, 16);
-    cache("events", events);
+    cache("events2", events);
   });
 }
 function isoDay(d) { var p = function (n) { return (n < 10 ? "0" : "") + n; }; return d.getFullYear() + "-" + p(d.getMonth() + 1) + "-" + p(d.getDate()) + "T00:00:00"; }
@@ -425,41 +557,126 @@ function matchesFree(f, d) {
 function freeCards() {
   var now = nyNow(), tom = new Date(+now + 864e5), out = [];
   FREE.forEach(function (f) {
-    if (matchesFree(f, now)) out.push({ cls: "free", tag: "Free today", title: f.name, body: f.what, meta: f.meta });
-    else if (matchesFree(f, tom)) out.push({ cls: "free", tag: "Free tomorrow", title: f.name, body: f.what, meta: f.meta });
+    var base = { cls: "free", title: f.name, body: f.what, meta: f.meta, url: siteFromMeta(f.meta), qrCap: "Scan for hours" };
+    if (matchesFree(f, now)) out.push(Object.assign({ tag: "Free today" }, base));
+    else if (matchesFree(f, tom)) out.push(Object.assign({ tag: "Free tomorrow" }, base));
   });
   return out;
 }
 
-/* ================== WEATHER-AWARE TIP ================== */
-function weatherTip() {
+/* ================== WEATHER CARDS ================== */
+function bigWeather() {
   if (!wx) return null;
-  var dd = wx.daily, hi = dd.temperature_2m_max[0], rain = dd.precipitation_probability_max[0] || 0, ss = new Date(dd.sunset[0]), mins = (ss - nyNow()) / 6e4;
-  if (mins > 0 && mins < 120 && rain < 40) return { tag: "Golden hour", title: "Sunset at " + hm(ss), body: "About " + Math.round(mins) + " minutes away. Transmitter Park or the Kent Ave waterfront are a short walk.", meta: "Greenpoint waterfront" };
-  if (rain >= 60) return { tag: "Today's weather", title: "A rainy one", body: rain + "% chance of rain. Good day for a movie at Nitehawk or a long lunch on Franklin St.", meta: "Bring an umbrella" };
-  if (hi >= 85) return { tag: "Today's weather", title: "Hot out: " + Math.round(hi) + "°", body: "Head to the waterfront for a breeze, or ride the ferry for some air.", meta: "Stay hydrated" };
-  if (hi <= 35) return { tag: "Today's weather", title: "Cold one: high of " + Math.round(hi) + "°", body: "Layer up. Good day for a museum, a bakery run, or staying in.", meta: "Bundle up" };
-  if (rain < 20 && hi >= 55) return { tag: "Today's weather", title: "Nice day: " + Math.round(hi) + "° and dry", body: "Get outside: McCarren Park, the waterfront, or a ferry ride.", meta: "Low chance of rain" };
+  var dd = wx.daily, hi = Math.round(dd.temperature_2m_max[0]), rain = dd.precipitation_probability_max[0] || 0, ss = new Date(dd.sunset[0]), mins = (ss - nyNow()) / 6e4;
+  if (mins > 0 && mins < 120 && rain < 40) return { layout: "big", tag: "Golden hour", num: hm(ss).replace(/ (AM|PM)/, ""), title: "Sunset in " + Math.round(mins) + " minutes",
+    body: "Transmitter Park and the Kent Ave waterfront face it head on.", url: mapsUrl("Transmitter Park, Brooklyn"), qrCap: "Scan for directions" };
+  if (rain >= 60) return { layout: "big", tag: "Today", num: rain + "%", title: "Chance of rain. Take an umbrella.", body: "Good day for a movie at Nitehawk or a long lunch on Franklin St." };
+  if (hi >= 85) return { layout: "big", tag: "Today", num: hi + "°", title: "A hot one.", body: "Head to the waterfront for a breeze, or ride the ferry for some air." };
+  if (hi <= 35) return { layout: "big", tag: "Today", num: hi + "°", title: "Is the high. Bundle up.", body: "Good day for a museum, a bakery run, or staying in." };
+  if (rain < 20 && hi >= 55) return { layout: "big", tag: "Today", num: hi + "°", title: "And dry. Get outside.", body: "McCarren Park, the waterfront, or a ferry ride." };
+  // Best day in the next few
+  var best = -1, bi = 0;
+  for (var i = 1; i < dd.time.length; i++) { var sc = dd.temperature_2m_max[i] - (dd.precipitation_probability_max[i] || 0) * .4; if (sc > best) { best = sc; bi = i; } }
+  if (bi) { var d = new Date(dd.time[bi] + "T12:00:00");
+    return { layout: "big", tag: "Looking ahead", num: Math.round(dd.temperature_2m_max[bi]) + "°", title: d.toLocaleDateString("en-US", { weekday: "long" }) + " looks like the best day this week.",
+      body: (dd.precipitation_probability_max[bi] || 0) < 25 ? "Dry, too. Plan something outside." : "Some chance of rain, but the warmest of the bunch." }; }
   return null;
+}
+function wearAdvice(hi, lo) {
+  var t = (hi + lo) / 2;
+  return t <= 30 ? "Heavy coat, hat and gloves" : t <= 42 ? "Warm coat and a scarf" : t <= 55 ? "A jacket or a warm layer" : t <= 68 ? "Light layers" : t <= 78 ? "T-shirt weather" : "Shorts and sunscreen";
+}
+
+/* ================== MORNING BRIEFING + LISTS ================== */
+function briefing() {
+  if (!wx) return null;
+  var now = nyNow(), h = now.getHours(), dd = wx.daily, hi = dd.temperature_2m_max[0], lo = dd.temperature_2m_min[0], rain = dd.precipitation_probability_max[0] || 0;
+  var hello = h < 12 ? "Good morning." : h < 17 ? "Good afternoon." : "Good evening.";
+  var mine = mta.filter(affectsMe);
+  var subway = mine.length ? mine[0].routes.filter(function (r) { return CFG.alertLines.indexOf(r) > -1; }).join(" and ") + " trains: " + mine[0].label.toLowerCase() : CFG.alertLines.join(" and ") + " running normally near home";
+  var free = freeCards().filter(function (c) { return c.tag === "Free today"; })[0];
+  var todayKey = isoDay(now).slice(0, 10), ev = events.filter(function (e) { return e.day === todayKey; })[0];
+  var highlight = free ? free.title + " is free today" : ev ? ev.title + (ev.timeText ? ", " + ev.timeText : "") : "Sunset at " + hm(new Date(dd.sunset[0])) + ". Catch it from the waterfront.";
+  return { layout: "brief", hello: hello + " " + Math.round(hi) + "° today.", items: [
+    { i: "shirt", k: "Wear", v: wearAdvice(hi, lo) },
+    { i: "umbrella", k: "Umbrella", v: rain >= 40 ? "Yes, " + rain + "% chance of rain" : "Not needed (" + rain + "%)" },
+    { i: "train", k: "Subway", v: subway },
+    { i: "star", k: "Today", v: highlight } ] };
+}
+function listCard() {
+  var now = nyNow(), d = now.getDay(), h = now.getHours(), todayKey = isoDay(now).slice(0, 10);
+  var pool = events.slice(), title, tag;
+  if (h >= 16 && h < 22) { pool = pool.filter(function (e) { return e.day === todayKey; }); tag = "Tonight"; title = "Still on today"; }
+  else if (d >= 4 || d === 0) {
+    var wk = []; for (var i = 0; i < 4; i++) { var x = new Date(+now + i * 864e5); if (x.getDay() === 5 || x.getDay() === 6 || x.getDay() === 0) wk.push(isoDay(x).slice(0, 10)); }
+    pool = pool.filter(function (e) { return wk.indexOf(e.day) > -1; }); tag = "This weekend"; title = "Three ideas for the weekend";
+  } else { tag = "Coming up"; title = "On the calendar this week"; }
+  if (pool.length < 3) { pool = events.slice(); tag = "Coming up"; title = "On the calendar this week"; }
+  pool.sort(function (a, b) { return a.when - b.when; });
+  if (pool.length < 2) return null;
+  if (pool.slice(0, 3).every(function (e) { return e.day === todayKey; })) { tag = h >= 16 ? "Tonight" : "Today"; title = "Three ideas for today"; }
+  return { layout: "list", tag: tag, title: title, rows: pool.slice(0, 3).map(function (e) {
+    var dt = new Date(e.day + "T12:00:00");
+    return { w: dayLabel(dt) === "Today" ? "Today" : dt.toLocaleDateString("en-US", { weekday: "short" }) + (e.timeText ? " " + e.timeText.replace(/:00/g, "").replace(/–.*/, "") : ""), t: e.title, p: e.place || "" };
+  }) };
+}
+
+/* ================== CARD RENDERING ================== */
+function qrBlock(c) {
+  if (!c.url) return "";
+  var svg = qrSVG(c.url); if (!svg) return "";
+  return '<div class="qr"><div class="code">' + svg + '</div><div class="cap">' + esc(c.qrCap || "Scan for details") + "</div></div>";
+}
+function renderCard(c) {
+  var L = c.layout || "standard", h = "";
+  var tag = '<div class="tag">' + esc(c.tag || "") + "</div>";
+  var title = c.titleHTML || esc(c.title || ""), body = c.bodyHTML || esc(c.body || "");
+  var long = !c.titleHTML && (c.title || "").length > 36 ? " long" : "";
+  if (L === "poster") {
+    var d = new Date(c.day + "T12:00:00");
+    h = '<div class="row poster"><div class="date"><div class="dow">' + esc(dayLabel(d) === "Today" ? "Today" : dayLabel(d) === "Tomorrow" ? "Tomorrow" : d.toLocaleDateString("en-US", { weekday: "short" })) +
+      '</div><div class="num">' + d.getDate() + '</div><div class="when">' + esc(d.toLocaleDateString("en-US", { month: "short" }) + (c.timeText ? " · " + c.timeText : "")) + "</div></div>" +
+      '<div class="grow">' + tag + '<div class="title' + long + '">' + title + '</div><div class="body">' + body + "</div></div>" + qrBlock(c) + "</div>";
+  } else if (L === "list") {
+    h = '<div class="list">' + tag + '<div class="title' + long + '">' + title + "</div><ol>" + c.rows.map(function (r) {
+      return '<li><span class="lw">' + esc(r.w) + '</span><span class="lt">' + esc(r.t) + (r.p ? '<span class="lp">' + esc(r.p) + "</span>" : "") + "</span></li>"; }).join("") + "</ol></div>";
+  } else if (L === "big") {
+    h = '<div class="row big"><div class="grow">' + tag + '<div class="num">' + esc(c.num) + '</div><div class="title">' + title + '</div><div class="body">' + body + "</div></div>" + qrBlock(c) + "</div>";
+  } else if (L === "brief") {
+    h = '<div class="brief"><div class="tag">' + esc(nyNow().toLocaleDateString("en-US", { weekday: "long" })) + ' briefing</div><div class="hello">' + esc(c.hello) + '</div><div class="items">' +
+      c.items.map(function (it) { return '<div class="it">' + icon(it.i) + '<div><div class="k">' + esc(it.k) + '</div><div class="v">' + esc(it.v) + "</div></div></div>"; }).join("") + "</div></div>";
+  } else {
+    h = '<div class="row"><div class="grow">' + tag + '<div class="title' + long + '">' + title + '</div><div class="body">' + body + '</div><div class="meta">' + esc(c.meta || "") + "</div></div>" + qrBlock(c) + "</div>";
+  }
+  return h;
 }
 
 /* ================== CARD ROTATION ================== */
 var deck = [], shown = 0;
+function pickCard(p) {   // curated picks get a directions QR
+  return Object.assign({ url: mapsUrl(p.title.replace(/^A /, "") + ", " + (p.meta || "").split("·")[0] + ", New York"), qrCap: "Scan for directions" }, p);
+}
 function buildDeck() {
-  var now = nyNow(), m = now.getMonth() + 1, d = now.getDay();
-  var picks = shuffle(PICKS.filter(function (p) { return (!p.months || p.months.indexOf(m) > -1) && (!p.days || p.days.indexOf(d) > -1); }));
-  var ev = events.slice(0, 10), urgent = mtaCards().concat(rmCards()), free = freeCards();
-  var tip = weatherTip();
-  deck = urgent.slice();          // subway problems and match day first
-  if (tip) deck.push(tip);
-  deck = deck.concat(free.slice(0, 2));
-  // then: event, pick, event, pick... with free-day cards and urgent ones sprinkled back in
+  var now = nyNow(), m = now.getMonth() + 1, d = now.getDay(), h = now.getHours();
+  var picks = shuffle(PICKS.filter(function (p) { return (!p.months || p.months.indexOf(m) > -1) && (!p.days || p.days.indexOf(d) > -1); })).map(pickCard);
+  var ev = events.slice(0, 10).map(function (e) { return e.day ? Object.assign({ layout: "poster" }, e) : e; });
+  var urgent = mtaCards().concat(rmCards()), free = freeCards(), big = bigWeather(), brief = briefing(), list = listCard();
+  var morning = h >= 5 && h < 11;
+  deck = [];
+  if (morning && brief) deck.push(brief);         // mornings open with the briefing
+  deck = deck.concat(urgent);                      // then anything that affects you right now
+  if (big) deck.push(big);
+  if (free[0]) deck.push(free[0]);
+  if (list) deck.push(list);
   var i = 0;
   while (ev.length || picks.length) {
     if (ev.length) deck.push(ev.shift());
     if (picks.length) deck.push(picks.shift());
-    if (++i % 4 === 0) { if (free[2 + i / 4 - 1]) deck.push(free[2 + i / 4 - 1]); if (urgent[0]) deck.push(urgent[0]); }
-    if (deck.length > 24) break;
+    i++;
+    if (i === 3 && free[1]) deck.push(free[1]);
+    if (i === 4 && morning && brief) deck.push(brief);
+    if (i === 5 && list) deck.push(list);
+    if (deck.length > 22) break;
   }
 }
 function nextCard() {
@@ -470,18 +687,17 @@ function nextCard() {
   body.classList.remove("ambient");
   if (!deck.length) buildDeck();
   var c = deck.shift(); shown++;
+  if (!c) { setTimeout(nextCard, 5000); return; }
   card.classList.add("out");
   setTimeout(function () {
     card.className = "out " + (c.cls || "");
-    $("tag").textContent = c.tag;
-    if (c.titleHTML) $("title").innerHTML = c.titleHTML; else $("title").textContent = c.title;
-    if (c.bodyHTML) $("body").innerHTML = c.bodyHTML; else $("body").textContent = c.body;
-    $("meta").textContent = c.meta || "";
+    $("cardBody").innerHTML = renderCard(c);
     var bar = $("bar"); bar.style.transition = "none"; bar.style.width = "0"; void bar.offsetWidth;
-    bar.style.transition = "width " + (CFG.cardSeconds - 1.2) + "s linear"; bar.style.width = "100%";
+    var secs = c.layout === "brief" || c.layout === "list" ? CFG.cardSeconds + 8 : CFG.cardSeconds;
+    bar.style.transition = "width " + (secs - 1.2) + "s linear"; bar.style.width = "100%";
     card.classList.remove("out");
+    setTimeout(nextCard, secs * 1000);
   }, 1200);
-  setTimeout(nextCard, CFG.cardSeconds * 1000);
 }
 
 /* ================== CLOCK, NIGHT DIMMING, BURN-IN SHIFT ================== */
