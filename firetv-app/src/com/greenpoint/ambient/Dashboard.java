@@ -26,7 +26,10 @@ final class Dashboard {
     private Dashboard() {}
 
     /** Page URL with a cache-buster so every screensaver start gets the latest version of the page. */
-    static String freshUrl() { return URL + "?t=" + (System.currentTimeMillis() / 60000L); }
+    static String freshUrl() {
+        String name = Personal.NAME;   // generated at build time from personal.txt, which is never committed
+        return URL + "?" + (name.isEmpty() ? "" : "name=" + android.net.Uri.encode(name) + "&") + "t=" + (System.currentTimeMillis() / 60000L);
+    }
 
     @SuppressLint("SetJavaScriptEnabled")
     static WebView createWebView(Context ctx) {

@@ -11,6 +11,11 @@ JAR=$SDK/platforms/android-30/android.jar
 OUT=build
 rm -rf $OUT && mkdir -p $OUT/res $OUT/classes $OUT/dex
 
+# Your first name for greetings lives in personal.txt (git-ignored), so it never reaches the public repo.
+NAME=$(head -1 personal.txt 2>/dev/null | tr -cd 'A-Za-z .-' || true)
+mkdir -p $OUT/gen/com/greenpoint/ambient
+printf 'package com.greenpoint.ambient;\nfinal class Personal { static final String NAME = "%s"; }\n' "$NAME" > $OUT/gen/com/greenpoint/ambient/Personal.java
+
 $BT/aapt2 compile --dir res -o $OUT/res.zip
 $BT/aapt2 link -o $OUT/unsigned.apk -I $JAR --manifest AndroidManifest.xml $OUT/res.zip --java $OUT/gen
 javac -nowarn -source 8 -target 8 -bootclasspath $JAR -classpath $JAR -d $OUT/classes \
