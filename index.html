@@ -564,14 +564,18 @@ function nextTrainMins(dir, n) {   // upcoming arrivals in whole minutes, skippi
     .map(function (a) { return Math.max(0, Math.round((a.time - now) / 60)); });
 }
 function renderTrains() {
-  if (!trains || Date.now() - trainsAt > 10 * 6e4) { $("trains").innerHTML = ""; return; }   // stale data is worse than none
+  if (!trains || Date.now() - trainsAt > 10 * 6e4) {   // stale data is worse than none
+    $("trains").innerHTML = ""; if (transitOK && !$("transit").innerHTML) renderTransit(); return; }
   var parts = TRAIN_STOP.dirs.map(function (d) {
     var m = nextTrainMins(d.s, 2); if (!m.length) return "";
     return '<span><span class="dir">' + esc(d.label) + '</span><span class="mins">' + (m[0] === 0 ? "Now" : m[0]) +
       (m[0] === 0 ? "" : "<small>min</small>") + "</span>" + (m[1] !== undefined ? '<span class="dir" style="margin-left:.6vw">then ' + m[1] + "</span>" : "") + "</span>";
   }).filter(Boolean);
-  $("trains").innerHTML = parts.length ? bullet("G") + '<span class="stn">' + esc(TRAIN_STOP.name) + "</span>" + parts.join('<span class="sep"></span>') : "";
+  $("trains").innerHTML = parts.length ? bullet("G") + '<span class="stn">' + esc(TRAIN_STOP.name) + "</span>" + parts.join('<span class="sep"></span>') +
+    (transitOK ? '<span class="sep"></span><span class="dir" style="color:var(--ink-soft)"><span class="dot" style="background:var(--good);margin-right:.5vw"></span>Good service</span>' : "") : "";
+  if (transitOK && parts.length) $("transit").innerHTML = "";
 }
+var transitOK = false;
 
 /* ================== MTA SUBWAY ALERTS ================== */
 var LINE_COLORS = { A: "#0039A6", C: "#0039A6", E: "#0039A6", B: "#FF6319", D: "#FF6319", F: "#FF6319", M: "#FF6319", G: "#6CBE45", L: "#A7A9AC",
@@ -618,7 +622,10 @@ function renderTransit() {
     mta.forEach(function (m) { if (m.routes.indexOf(r) > -1 && nearHome(m) && (!worst || m.sev > worst.sev)) worst = m; });
     if (worst) issues.push('<span class="line">' + bullet(r) + '<span class="dot" style="background:var(--' + worst.cls + ')"></span>' + worst.label + "</span>");
   });
-  // Calm by default: one quiet line when everything near home is fine
+  // Calm by default: one quiet line when everything near home is fine.
+  // If the live countdown is showing, fold "good service" into that row instead of a second line.
+  transitOK = !issues.length;
+  if (transitOK && $("trains").innerHTML) { $("transit").innerHTML = ""; renderTrains(); return; }
   $("transit").innerHTML = issues.length ? issues.join("") :
     '<span class="line" style="opacity:.85">' + CFG.subwayLines.map(function (r) { return bullet(r); }).join("") +
     '<span class="dot" style="background:var(--good);margin-left:.3vw"></span>Good service near home</span>';
