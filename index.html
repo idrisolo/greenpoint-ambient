@@ -69,7 +69,8 @@
   .row { display: flex; gap: 2vw; align-items: center; }
   .grow { flex: 1; min-width: 0; }
   #progress { margin-top: 2vh; height: 3px; background: var(--line); border-radius: 2px; overflow: hidden; }
-  #bar { height: 100%; width: 0; background: var(--accent); }
+  #bar { height: 100%; width: 0; background: var(--accent); animation: fill linear forwards; }
+  @keyframes fill { from { width: 0; } to { width: 100%; } }
   /* QR tile: black on white so phones read it from across the room */
   .qr { flex: none; text-align: center; }
   .qr .code { background: #fff; padding: .55vw; border-radius: .6vw; width: 10.5vw; height: 10.5vw; }
@@ -144,12 +145,26 @@
   body.ambient #credit b { font-size: 1.6vw; }
 
   /* ---------- Late night: dim everything ---------- */
-  body.night #gallery { filter: brightness(.45); transition: filter 10s; }
-  body.night #stage { opacity: .6; }
+  /* Matchday: Madrid white and gold */
+  body.matchday { --accent: #febe10; }
+  body.matchday #card { background: rgba(250, 248, 242, .9); color: #14110c; border-color: #febe10; }
+  body.matchday #card .body, body.matchday #card .meta, body.matchday #card .lp, body.matchday #card .k { color: #4a4438; }
+  body.matchday #card .tag, body.matchday #card .lw { color: #b8860b; }
+  body.matchday #card .qr .cap { color: #4a4438; }
+  body.matchday #progress { background: rgba(0,0,0,.1); }
+  body.matchday #rmChip { color: #febe10; font-weight: 600; }
+
+  /* Late night: a dim painting and the time, nothing else */
+  body.night #gallery { filter: brightness(.42); transition: filter 10s; }
+  body.night #card, body.night #forecast, body.night #nowDesc, body.night #transit, body.night #rmChip, body.night #credit { opacity: 0; transition: opacity 3s; }
+  body.night #stage { opacity: .7; }
+  body.night #scrimBot { opacity: .3; }
+  body.night #placardWrap { opacity: .55; }
 </style>
 </head>
 <body>
   <div id="gallery"><div class="slide" id="s0"></div><div class="slide" id="s1"></div></div>
+  <canvas id="fx" style="position:fixed;inset:0;z-index:1;pointer-events:none;width:100%;height:100%"></canvas>
   <div id="scrimTop"></div><div id="scrimBot"></div>
 
   <main id="stage" class="shadow">
@@ -189,6 +204,8 @@
    index.html?lat=40.7304&lon=-73.9515&place=Greenpoint%20%C2%B7%20Brooklyn
    ===================================================================== */
 var qs = {}; location.search.replace(/[?&]([^=]+)=([^&]*)/g, function (_, k, v) { qs[k] = decodeURIComponent(v); });
+// Private settings (API key, Wi-Fi, name) come after "#": browsers never send that part to the server.
+location.hash.replace(/[#&]([^=]+)=([^&]*)/g, function (_, k, v) { qs[k] = decodeURIComponent(v); });
 var CFG = {
   lat: +qs.lat || 40.7304, lon: +qs.lon || -73.9515,       // Greenpoint, Brooklyn (set by hand, not detected)
   place: qs.place || "Greenpoint · Brooklyn",
@@ -198,7 +215,7 @@ var CFG = {
   photoSeconds: 50,           // each background image
   ambientEvery: 5,            // after this many cards, a gallery-only break...
   ambientSeconds: 120,        // ...lasting this long
-  nightStart: 1, nightEnd: 6, // dim the screen between these hours
+  nightStart: 0, nightEnd: 6, // late-night mode (paintings + clock only) between these hours
   eventRadiusKm: 4,           // "nearby" radius for NYC Parks events
   realMadridId: "133738",     // TheSportsDB team id
   name: (qs.name || "").slice(0, 30)   // passed in by the Fire Stick app, so it's never in the public code
@@ -353,6 +370,16 @@ function currentMood() {
 }
 var recent = [];
 function nextGalleryItem() {
+  if (document.body.classList.contains("night")) {   // late night: paintings only, night scenes first
+    var art = gal.filter(function (g) { return g.kind === "art" && recent.indexOf(g.url) < 0; });
+    var nightArt = art.filter(function (g) { return g.moods.indexOf("night") > -1; });
+    var from = nightArt.length && Math.random() < 0.6 ? nightArt : art;
+    if (from.length) return { g: from[Math.floor(Math.random() * from.length)], why: "" };
+  }
+  if (document.body.classList.contains("matchday") && Math.random() < 0.5) {   // matchday: more Madrid
+    var mad = gal.filter(function (g) { return /Bernabéu|Madrid/.test(g.title + g.credit) && recent.indexOf(g.url) < 0; });
+    if (mad.length) return { g: mad[Math.floor(Math.random() * mad.length)], why: "Matchday" };
+  }
   var mood = currentMood(), want = mood === "snow" ? "cold" : mood;
   // Two out of three images match the moment when we can; the rest keep the usual variety.
   if (want && Math.random() < 0.67) {
@@ -454,6 +481,42 @@ function renderWeather() {
       '</div><div class="t">' + Math.round(dd.temperature_2m_max[i]) + '° <span>' + Math.round(dd.temperature_2m_min[i]) + '°</span></div></div>';
   }
   $("forecast").innerHTML = f;
+  weatherFx();
+}
+
+/* ================== WINDOW EFFECT: real rain or snow, only when it's happening outside ================== */
+var fx = { kind: "", parts: [], raf: 0, last: 0 };
+function weatherFx() {
+  var c = wx && wx.current ? wx.current.weather_code : -1, kind = qs.fx || "";
+  if (!kind) {
+    if ((c >= 51 && c <= 67) || (c >= 80 && c <= 82) || c >= 95) kind = "rain";
+    else if ((c >= 71 && c <= 77) || c === 85 || c === 86) kind = "snow";
+  }
+  if (kind === fx.kind) return;
+  fx.kind = kind; cancelAnimationFrame(fx.raf);
+  var cv = $("fx"), ctx = cv.getContext("2d");
+  cv.width = Math.round(innerWidth / 1.5); cv.height = Math.round(innerHeight / 1.5);   // lower resolution = light on the Fire Stick
+  ctx.clearRect(0, 0, cv.width, cv.height);
+  if (!kind) return;
+  var heavy = [55, 63, 65, 67, 73, 75, 81, 82, 86, 95, 96, 99].indexOf(c) > -1, n = kind === "rain" ? (heavy ? 220 : 130) : (heavy ? 160 : 90);
+  fx.parts = [];
+  for (var i = 0; i < n; i++) fx.parts.push({ x: Math.random() * cv.width, y: Math.random() * cv.height, s: .6 + Math.random() * .8, w: Math.random() * 6.28 });
+  function frame(t) {
+    fx.raf = requestAnimationFrame(frame);
+    if (t - fx.last < 33) return;                // ~30 fps is plenty
+    fx.last = t; ctx.clearRect(0, 0, cv.width, cv.height);
+    if (fx.kind === "rain") {
+      ctx.strokeStyle = "rgba(210,225,255,.28)"; ctx.lineWidth = 1; ctx.beginPath();
+      fx.parts.forEach(function (p) { p.y += 14 * p.s; p.x -= 2.5 * p.s; if (p.y > cv.height) { p.y = -20; p.x = Math.random() * cv.width * 1.1; }
+        ctx.moveTo(p.x, p.y); ctx.lineTo(p.x - 3 * p.s, p.y + 16 * p.s); });
+      ctx.stroke();
+    } else {
+      ctx.fillStyle = "rgba(255,255,255,.75)";
+      fx.parts.forEach(function (p) { p.y += 1.1 * p.s; p.w += .02; p.x += Math.sin(p.w) * .5; if (p.y > cv.height) { p.y = -5; p.x = Math.random() * cv.width; }
+        ctx.beginPath(); ctx.arc(p.x, p.y, 1.4 * p.s, 0, 6.28); ctx.fill(); });
+    }
+  }
+  fx.raf = requestAnimationFrame(frame);
 }
 
 /* ================== MTA SUBWAY ALERTS ================== */
@@ -576,6 +639,36 @@ function loadEvents() {
 }
 function isoDay(d) { var p = function (n) { return (n < 10 ? "0" : "") + n; }; return d.getFullYear() + "-" + p(d.getMonth() + 1) + "-" + p(d.getDate()) + "T00:00:00"; }
 
+/* ================== CONCERTS & SHOWS (Ticketmaster Discovery API, key passed privately by the TV app) ================== */
+var shows = cache("shows") || [];
+function loadShows() {
+  if (!qs.tm) return;
+  var now = new Date(), end = new Date(+now + 8 * 864e5), iso = function (d) { return d.toISOString().slice(0, 19) + "Z"; };
+  var base = "https://app.ticketmaster.com/discovery/v2/events.json?apikey=" + encodeURIComponent(qs.tm) +
+    "&latlong=" + CFG.lat + "," + CFG.lon + "&radius=12&unit=miles&size=80&sort=date,asc&startDateTime=" + iso(now) + "&endDateTime=" + iso(end);
+  Promise.all(["Music", "Arts & Theatre"].map(function (seg) {
+    return getJSON(base + "&segmentName=" + encodeURIComponent(seg)).then(function (d) { return (d._embedded && d._embedded.events) || []; }).catch(function () { return []; });
+  })).then(function (lists) {
+    var out = [], seen = {};
+    lists[0].concat(lists[1]).forEach(function (e) {
+      var v = (e._embedded && e._embedded.venues && e._embedded.venues[0]) || {}, st = (e.dates && e.dates.start) || {};
+      if (!st.localDate || seen[e.name]) return; seen[e.name] = 1;
+      if (/parking|upsell|vip package|gift card/i.test(e.name)) return;
+      var cls = (e.classifications && e.classifications[0]) || {}, genre = (cls.genre && cls.genre.name) || "", seg = (cls.segment && cls.segment.name) || "";
+      var lat = v.location ? +v.location.latitude : NaN, lon = v.location ? +v.location.longitude : NaN, dist = isNaN(lat) ? 15 : km(lat, lon);
+      var boro = v.city && v.city.name && v.city.name !== "New York" ? v.city.name : (v.address && v.address.line1 ? "" : "");
+      var tt = st.localTime ? hm(new Date(st.localDate + "T" + st.localTime)) : "";
+      var kind = /comedy/i.test(genre) ? "Comedy" : seg === "Music" ? "Live music" : "On stage";
+      var d = new Date(st.localDate + "T" + (st.localTime || "20:00:00"));
+      out.push({ layout: "poster", tag: kind + (genre && !/undefined|other/i.test(genre) && kind === "Live music" ? " · " + genre : ""), title: e.name,
+        body: (v.name || "") + (boro ? " · " + boro : "") + " · " + (dist * 0.621).toFixed(1) + " mi away", place: (v.name || "") + (boro ? ", " + boro : ""),
+        day: st.localDate, timeText: tt, when: +d, boro: boro || "Manhattan", url: e.url, qrCap: "Scan for tickets",
+        score: 60 - dist * 2 - (d - now) / 864e5 * 2 + (/Brooklyn/.test(boro) ? 10 : 0) });
+    });
+    if (out.length) { out.sort(function (a, b) { return b.score - a.score; }); shows = out.slice(0, 16); cache("shows", shows); }
+  });
+}
+
 /* ================== REAL MADRID ================== */
 var rm = cache("rm") || {};
 function loadRM() {
@@ -584,7 +677,22 @@ function loadRM() {
   getJSON(base + "eventslast.php?id=" + CFG.realMadridId).then(function (d) { rm.last = (d.results || [])[0]; cache("rm", rm); }).catch(function () {});
 }
 function kickoff(e) { return toNY(new Date((e.strTimestamp || (e.dateEvent + "T" + (e.strTime || "00:00:00"))).replace(/\+00:00$/, "") + "Z")); }
+function matchHours() {   // hours until kickoff (negative once it's started); ?matchday=1 previews the look
+  if (qs.matchday) return 2.25;
+  return rm.next ? (kickoff(rm.next) - nyNow()) / 36e5 : null;
+}
+function isMatchday() { var h = matchHours(); return h !== null && h > -2.5 && h < 10; }
+function matchdayCard() {
+  var e = rm.next || { strHomeTeam: "Real Madrid", strAwayTeam: "Opponent", strLeague: "" }, h = matchHours();
+  if (h > 0) {
+    var hh = Math.floor(h), mm = Math.round((h - hh) * 60);
+    return { layout: "big", cls: "rm", tag: "Matchday · " + (e.strLeague || "Real Madrid"), num: (hh ? hh + "h " : "") + mm + "m",
+      title: "until " + e.strHomeTeam + " vs " + e.strAwayTeam, body: "Kickoff " + hm(qs.matchday ? new Date(+nyNow() + h * 36e5) : kickoff(e)) + " New York time" + (e.strVenue ? " · " + e.strVenue : "") + ". ¡Hala Madrid!" };
+  }
+  return { layout: "big", cls: "rm", tag: "Matchday · Live now", num: "On now", title: e.strHomeTeam + " vs " + e.strAwayTeam, body: "The final score shows up here after the match." };
+}
 function renderRM() {
+  document.body.classList.toggle("matchday", isMatchday());
   var e = rm.next; if (!e) return;
   var k = kickoff(e), hrs = (k - nyNow()) / 36e5;
   $("rmChip").style.display = hrs > -2.5 && hrs < 36 ? "block" : "none";
@@ -670,13 +778,13 @@ function briefing() {
 }
 function listCard() {
   var now = nyNow(), d = now.getDay(), h = now.getHours(), todayKey = isoDay(now).slice(0, 10);
-  var pool = events.slice(), title, tag;
+  var pool = events.concat(shows), title, tag;
   if (h >= 16 && h < 22) { pool = pool.filter(function (e) { return e.day === todayKey; }); tag = "Tonight"; title = "Still on today"; }
   else if (d >= 4 || d === 0) {
     var wk = []; for (var i = 0; i < 4; i++) { var x = new Date(+now + i * 864e5); if (x.getDay() === 5 || x.getDay() === 6 || x.getDay() === 0) wk.push(isoDay(x).slice(0, 10)); }
     pool = pool.filter(function (e) { return wk.indexOf(e.day) > -1; }); tag = "This weekend"; title = "Three ideas for the weekend";
   } else { tag = "Coming up"; title = "On the calendar this week"; }
-  if (pool.length < 3) { pool = events.slice(); tag = "Coming up"; title = "On the calendar this week"; }
+  if (pool.length < 3) { pool = events.concat(shows); tag = "Coming up"; title = "On the calendar this week"; }
   // Best three, spread across boroughs (at most two from one borough), then shown in time order
   pool.sort(function (a, b) { return b.score - a.score; });
   var picked = [], per = {};
@@ -717,6 +825,15 @@ function nextFact() {
   return { layout: "fact", kicker: "Worth talking about", cat: f.c, text: f.t };
 }
 
+/* ================== GUEST WI-FI (network details passed privately by the TV app) ================== */
+function wifiEsc(s) { return String(s).replace(/([\\;,:"])/g, "\\$1"); }
+function guestHours() { var n = nyNow(), h = n.getHours(), d = n.getDay(); return (d === 0 || d === 6) ? h >= 10 && h < 23 : h >= 17 && h < 23; }
+function wifiCard() {
+  if (!qs.ws) return null;
+  var payload = "WIFI:T:" + (qs.wt || "WPA") + ";S:" + wifiEsc(qs.ws) + ";P:" + wifiEsc(qs.wp || "") + ";;";
+  return { layout: "wifi", ssid: qs.ws, payload: payload };
+}
+
 /* ================== CARD RENDERING ================== */
 function qrBlock(c) {
   if (!c.url) return "";
@@ -738,6 +855,10 @@ function renderCard(c) {
       return '<li><span class="lw">' + esc(r.w) + '</span><span class="lt">' + esc(r.t) + (r.p ? '<span class="lp">' + esc(r.p) + "</span>" : "") + "</span></li>"; }).join("") + "</ol></div>";
   } else if (L === "big") {
     h = '<div class="row big"><div class="grow">' + tag + '<div class="num">' + esc(c.num) + '</div><div class="title">' + title + '</div><div class="body">' + body + "</div></div>" + qrBlock(c) + "</div>";
+  } else if (L === "wifi") {
+    h = '<div class="row wifi"><div class="grow"><div class="tag">Welcome</div><div class="title">Make yourself at home.</div>' +
+      '<div class="body">Point your phone\'s camera at the code to join the Wi-Fi.</div><div class="meta">Network: <b>' + esc(c.ssid) + "</b></div></div>" +
+      '<div class="qr"><div class="code">' + qrSVG(c.payload) + '</div><div class="cap">Scan to join Wi-Fi</div></div></div>';
   } else if (L === "fact") {
     h = '<div class="fact"><div class="mark">“</div><div><div class="tag">' + esc(c.kicker) + ' <span class="cat">· ' + esc(c.cat) + '</span></div><div class="ftext">' + esc(c.text) + "</div></div></div>";
   } else if (L === "brief") {
@@ -757,7 +878,10 @@ function pickCard(p) {   // curated picks get a directions QR
 function buildDeck() {
   var now = nyNow(), m = now.getMonth() + 1, d = now.getDay(), h = now.getHours();
   var picks = shuffle(PICKS.filter(function (p) { return (!p.months || p.months.indexOf(m) > -1) && (!p.days || p.days.indexOf(d) > -1); })).map(pickCard);
-  var ev = events.slice(0, 10).map(function (e) { return e.day ? Object.assign({ layout: "poster" }, e) : e; });
+  // Alternate concerts/shows with city events so neither crowds out the other
+  var ev = [], es = events.slice(0, 10), ss = shows.slice(0, 6);
+  while (es.length || ss.length) { if (es.length) ev.push(es.shift()); if (ss.length) ev.push(ss.shift()); }
+  ev = ev.map(function (e) { return e.day ? Object.assign({ layout: "poster" }, e) : e; });
   var urgent = mtaCards().concat(rmCards()), free = freeCards(), big = bigWeather(), brief = briefing(), list = listCard();
   var morning = (h >= 5 && h < 11) || (h >= 17 && h < 23);   // briefing editions: morning and evening
   deck = [];
@@ -783,17 +907,21 @@ function nextCard() {
     body.classList.add("ambient"); shown++; setTimeout(nextCard, CFG.ambientSeconds * 1000); return;
   }
   body.classList.remove("ambient");
+  if (body.classList.contains("night")) { card.classList.add("out"); setTimeout(nextCard, 60000); return; }   // no cards late at night
   if (!deck.length) buildDeck();
-  // Every fifth card is a fun fact; the rest come from the deck
-  var c = shown % 5 === 3 ? nextFact() : deck.shift(); shown++;
+  // Every fifth card is a fun fact; on matchday every fourth is the countdown; the rest come from the deck
+  var c = body.classList.contains("matchday") && shown % 4 === 1 ? matchdayCard()
+        : qs.ws && guestHours() && shown % 12 === 7 ? wifiCard()      // guest Wi-Fi, now and then during visiting hours
+        : shown % 5 === 3 ? nextFact() : deck.shift();
+  shown++;
   if (!c) { setTimeout(nextCard, 5000); return; }
   card.classList.add("out");
   setTimeout(function () {
     card.className = "out " + (c.cls || "");
     $("cardBody").innerHTML = renderCard(c);
-    var bar = $("bar"); bar.style.transition = "none"; bar.style.width = "0"; void bar.offsetWidth;
     var secs = c.layout === "brief" || c.layout === "list" ? CFG.cardSeconds + 8 : CFG.cardSeconds;
-    bar.style.transition = "width " + (secs - 1.2) + "s linear"; bar.style.width = "100%";
+    // A fresh bar element per card, so the fill always starts from zero (transition resets are unreliable on TV browsers)
+    $("progress").innerHTML = '<div id="bar" style="animation-duration:' + (secs - 1.2) + 's"></div>';
     card.classList.remove("out");
     setTimeout(nextCard, secs * 1000);
   }, 1200);
@@ -805,7 +933,7 @@ function tick() {
   $("time").innerHTML = ((h % 12) || 12) + ":" + (m < 10 ? "0" : "") + m + '<span class="ampm">' + (h < 12 ? "AM" : "PM") + "</span>";
   $("date").textContent = n.toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" });
   document.body.classList.toggle("night", h >= CFG.nightStart && h < CFG.nightEnd);
-  if (m % 5 === 0) renderRM();
+  renderRM();
 }
 function shift() { $("stage").style.transform = "translate(" + Math.round(Math.random() * 16 - 8) + "px," + Math.round(Math.random() * 12 - 6) + "px)"; }
 
@@ -817,6 +945,7 @@ loadMTA(); setInterval(loadMTA, 2 * 6e4);
 loadEvents(); setInterval(loadEvents, 60 * 6e4);
 loadRM(); setInterval(loadRM, 3 * 36e5);
 loadOTD(); setInterval(loadOTD, 36e5);
+loadShows(); setInterval(loadShows, 3 * 36e5);
 showImage(); setInterval(showImage, CFG.photoSeconds * 1000);
 setTimeout(nextCard, 3000);
 setInterval(function () { var n = nyNow(); if (n.getHours() === 4 && n.getMinutes() < 2) location.reload(); }, 6e4);

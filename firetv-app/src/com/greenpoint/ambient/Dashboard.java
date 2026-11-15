@@ -27,8 +27,10 @@ final class Dashboard {
 
     /** Page URL with a cache-buster so every screensaver start gets the latest version of the page. */
     static String freshUrl() {
-        String name = Personal.NAME;   // generated at build time from personal.txt, which is never committed
-        return URL + "?" + (name.isEmpty() ? "" : "name=" + android.net.Uri.encode(name) + "&") + "t=" + (System.currentTimeMillis() / 60000L);
+        // Private settings (name, keys, Wi-Fi) are generated at build time from git-ignored files and go after "#",
+        // the part of a URL that browsers never send to the server.
+        String f = Personal.FRAGMENT;
+        return URL + "?t=" + (System.currentTimeMillis() / 60000L) + (f.isEmpty() ? "" : "#" + f);
     }
 
     @SuppressLint("SetJavaScriptEnabled")

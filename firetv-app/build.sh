@@ -11,10 +11,27 @@ JAR=$SDK/platforms/android-30/android.jar
 OUT=build
 rm -rf $OUT && mkdir -p $OUT/res $OUT/classes $OUT/dex
 
-# Your first name for greetings lives in personal.txt (git-ignored), so it never reaches the public repo.
-NAME=$(head -1 personal.txt 2>/dev/null | tr -cd 'A-Za-z .-' || true)
+# Private settings live in git-ignored files, so they never reach the public repo:
+#   personal.txt  first line: your first name (for greetings)
+#   private.txt   key=value lines: tm=<Ticketmaster key>, wifi_ssid=..., wifi_pass=..., wifi_type=WPA
+# They are baked into the app and passed to the page after "#", which browsers never send to a server.
 mkdir -p $OUT/gen/com/greenpoint/ambient
-printf 'package com.greenpoint.ambient;\nfinal class Personal { static final String NAME = "%s"; }\n' "$NAME" > $OUT/gen/com/greenpoint/ambient/Personal.java
+python3 -I - "$OUT/gen/com/greenpoint/ambient/Personal.java" <<'PY'
+import sys, json, urllib.parse, os
+vals = {}
+if os.path.exists("personal.txt"):
+    n = open("personal.txt").readline().strip()
+    if n: vals["name"] = n
+if os.path.exists("private.txt"):
+    for line in open("private.txt"):
+        if "=" in line and not line.lstrip().startswith("#"):
+            k, v = line.rstrip("\n").split("=", 1)
+            key = {"tm": "tm", "wifi_ssid": "ws", "wifi_pass": "wp", "wifi_type": "wt"}.get(k.strip())
+            if key and v.strip(): vals[key] = v.strip()
+frag = "&".join(k + "=" + urllib.parse.quote(v, safe="") for k, v in vals.items())
+open(sys.argv[1], "w").write("package com.greenpoint.ambient;\nfinal class Personal { static final String FRAGMENT = %s; }\n" % json.dumps(frag))
+print("Private settings included:", ", ".join(sorted(vals)) or "none")
+PY
 
 $BT/aapt2 compile --dir res -o $OUT/res.zip
 $BT/aapt2 link -o $OUT/unsigned.apk -I $JAR --manifest AndroidManifest.xml $OUT/res.zip --java $OUT/gen

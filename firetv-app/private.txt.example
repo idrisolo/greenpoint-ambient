@@ -1,0 +1,7 @@
+# Copy this file to private.txt and fill in what you want. private.txt is never committed.
+# Ticketmaster key (free): https://developer.ticketmaster.com  ->  My Apps  ->  Consumer Key
+tm=
+# Guest Wi-Fi card. Type is WPA for almost all home routers.
+wifi_ssid=
+wifi_pass=
+wifi_type=WPA
