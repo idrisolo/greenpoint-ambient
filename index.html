@@ -62,7 +62,7 @@
   #card.out { opacity: 0; transform: translateY(2vh); }
   .tag { display: inline-flex; align-items: center; gap: .6vw; font-size: .95vw; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--accent); }
   .tag::before { content: ""; width: .6vw; height: .6vw; border-radius: 50%; background: currentColor; }
-  #card.mta .tag { color: var(--warn); } #card.free .tag { color: var(--good); } #card.rm .tag { color: #c9b8ff; }
+  #card.mta .tag { color: var(--warn); } #card.editor .tag { color: #9fd8ff; } #card.holiday .tag { color: #ff8f8f; } #card.free .tag { color: var(--good); } #card.rm .tag { color: #c9b8ff; }
   .title { font-family: Fraunces, serif; font-weight: 500; font-size: 3.1vw; line-height: 1.12; margin: 1.2vh 0 1vh; }
   .body { font-size: 1.5vw; line-height: 1.45; color: var(--ink-soft); font-weight: 300; }
   .meta { margin-top: 1.4vh; font-size: 1.15vw; color: var(--ink-faint); }
@@ -120,6 +120,14 @@
     font-weight: 700; font-size: 1.15vw; color: #fff; text-shadow: none; flex: none; }
   .bullet.inl { width: 1.5em; height: 1.5em; font-size: .78em; vertical-align: .12em; margin: 0 .1em; }
   .dot { width: .6vw; height: .6vw; border-radius: 50%; display: inline-block; }
+  /* Live next-train countdown */
+  #trains { display: flex; align-items: center; gap: 1.4vw; margin-bottom: 1.4vh; font-size: 1.25vw; transition: opacity 2s; }
+  #trains:empty { display: none; }
+  #trains .stn { font-weight: 600; letter-spacing: .02em; }
+  #trains .dir { color: var(--ink-faint); font-size: .95vw; letter-spacing: .08em; text-transform: uppercase; margin-right: .4vw; }
+  #trains .mins { font-family: Fraunces, serif; font-size: 1.7vw; font-weight: 500; }
+  #trains .mins small { font-family: Inter, sans-serif; font-size: .9vw; color: var(--ink-soft); margin-left: .15vw; }
+  #trains .sep { width: 1px; height: 2.2vh; background: var(--line); }
   #rmChip { font-size: 1.05vw; color: var(--ink-soft); display: none; }
   #credit { text-align: right; font-size: .95vw; color: var(--ink-faint); max-width: 38vw; line-height: 1.4; transition: all 2s; }
   #credit b { color: var(--ink-soft); font-weight: 600; font-style: italic; font-family: Fraunces, serif; font-size: 1.15vw; }
@@ -188,6 +196,7 @@
     </section>
     <div id="strip">
       <div>
+        <div id="trains"></div>
         <div id="transit"></div>
         <div id="rmChip"></div>
       </div>
@@ -198,6 +207,7 @@
 
 <script src="gallery.js"></script>
 <script src="vendor/qrcode.min.js"></script>
+<script src="gtfsrt.js"></script>
 <script>
 /* =====================================================================
    SETTINGS. You can also override location from the URL, for example:
@@ -306,6 +316,10 @@ var FACTS = [
   { c: "Art", t: "Van Gogh is often said to have sold just one painting in his lifetime. The Starry Night now hangs at MoMA, a subway ride away." },
   { c: "Art", t: "The Temple of Dendur at the Met is a real Egyptian temple, about 2,000 years old, given to the United States in 1965 and rebuilt indoors." },
   { c: "Art", t: "Hokusai's Great Wave is a woodblock print, so many copies were made. The Met owns impressions of it." },
+  { c: "Holiday history", t: "The first Rockefeller Center tree, in 1931, was a 20-foot fir that construction workers put up on the muddy building site and decorated with cranberries, paper garlands and tin cans.", months: [11, 12, 1] },
+  { c: "Holiday history", t: "The tallest tree ever at Rockefeller Center was a 100-foot Norway spruce, in 1999. The lighting was first televised in 1951." , months: [11, 12, 1] },
+  { c: "Holiday history", t: "The Dyker Heights lights started in 1986 with one woman, Lucy Spata, decorating to honor her mother. Neighbors complained at first. Now whole blocks compete.", months: [11, 12, 1] },
+  { c: "Holiday history", t: "There was no Rockefeller Center tree in 1932. The official tradition, with a lighting ceremony, began in 1933 with a tree hung with 700 lights.", months: [11, 12, 1] },
   { c: "Real Madrid", t: "\"Real\" means royal. King Alfonso XIII granted the title in 1920, and the crown on the crest comes with it." },
   { c: "Real Madrid", t: "The Bernabéu is named for Santiago Bernabéu, who played for the club and then served as its president for 35 years." },
   { c: "Greenpoint history", t: "After a fire destroyed his factory in 1872, Eberhard Faber moved his pencil company to Greenpoint. The complex is now a landmarked historic district." },
@@ -386,6 +400,10 @@ function nextGalleryItem() {
   if (document.body.classList.contains("matchday") && Math.random() < 0.5) {   // matchday: more Madrid
     var mad = gal.filter(function (g) { return /Bernabéu|Madrid/.test(g.title + g.credit) && recent.indexOf(g.url) < 0; });
     if (mad.length) return { g: mad[Math.floor(Math.random() * mad.length)], why: "Matchday" };
+  }
+  if (holidaySeason()) {   // holiday season: more holiday NYC and winter art, especially after dark
+    var after = nyNow().getHours() >= 16, hol = gal.filter(function (g) { return g.moods.indexOf("holiday") > -1 && recent.indexOf(g.url) < 0; });
+    if (hol.length && Math.random() < (after ? 0.5 : 0.3)) return { g: hol[Math.floor(Math.random() * hol.length)], why: "Chosen for the holidays" };
   }
   var mood = currentMood(), want = mood === "snow" ? "cold" : mood;
   // Two out of three images match the moment when we can; the rest keep the usual variety.
@@ -524,6 +542,32 @@ function weatherFx() {
     }
   }
   fx.raf = requestAnimationFrame(frame);
+}
+
+/* ================== LIVE NEXT TRAINS (MTA GTFS-realtime) ================== */
+var TRAIN_STOP = { id: qs.stop || "G26", name: qs.stopName || "Greenpoint Av", feed: "nyct%2Fgtfs-g",
+  dirs: [{ s: "N", label: "to Court Sq" }, { s: "S", label: "to Church Av" }] };
+var trains = null, trainsAt = 0;
+function loadTrains() {
+  if (!window.GTFSRT || !window.fetch) return;
+  fetch("https://api-endpoint.mta.info/Dataservice/mtagtfsfeeds/" + TRAIN_STOP.feed).then(function (r) { if (!r.ok) throw r.status; return r.arrayBuffer(); })
+    .then(function (buf) { trains = GTFSRT.arrivals(new Uint8Array(buf), TRAIN_STOP.dirs.map(function (d) { return TRAIN_STOP.id + d.s; })); trainsAt = Date.now(); renderTrains(); })
+    .catch(function () {});
+}
+function nextTrainMins(dir, n) {   // upcoming arrivals in whole minutes, skipping trains already gone
+  if (!trains) return [];
+  var now = Date.now() / 1000;
+  return (trains[TRAIN_STOP.id + dir] || []).filter(function (a) { return a.time - now > -30; }).slice(0, n || 2)
+    .map(function (a) { return Math.max(0, Math.round((a.time - now) / 60)); });
+}
+function renderTrains() {
+  if (!trains || Date.now() - trainsAt > 10 * 6e4) { $("trains").innerHTML = ""; return; }   // stale data is worse than none
+  var parts = TRAIN_STOP.dirs.map(function (d) {
+    var m = nextTrainMins(d.s, 2); if (!m.length) return "";
+    return '<span><span class="dir">' + esc(d.label) + '</span><span class="mins">' + (m[0] === 0 ? "Now" : m[0]) +
+      (m[0] === 0 ? "" : "<small>min</small>") + "</span>" + (m[1] !== undefined ? '<span class="dir" style="margin-left:.6vw">then ' + m[1] + "</span>" : "") + "</span>";
+  }).filter(Boolean);
+  $("trains").innerHTML = parts.length ? bullet("G") + '<span class="stn">' + esc(TRAIN_STOP.name) + "</span>" + parts.join('<span class="sep"></span>') : "";
 }
 
 /* ================== MTA SUBWAY ALERTS ================== */
@@ -764,6 +808,8 @@ function briefing() {
   var hello = (h < 12 ? "Good morning" : h < 17 ? "Good afternoon" : "Good evening") + (CFG.name ? ", " + CFG.name : "") + ".";
   var mine = mta.filter(affectsMe);
   var subway = mine.length ? mine[0].routes.filter(function (r) { return CFG.alertLines.indexOf(r) > -1; }).join(" and ") + " trains: " + mine[0].label.toLowerCase() : CFG.alertLines.join(" and ") + " running normally near home";
+  var nn = nextTrainMins("N", 1)[0], ns = nextTrainMins("S", 1)[0];
+  if (nn !== undefined || ns !== undefined) subway = "Next G: " + [ns !== undefined ? ns + " min to Church Av" : "", nn !== undefined ? nn + " min to Court Sq" : ""].filter(Boolean).join(", ") + (mine.length ? ". " + subway : "");
   var free = freeCards().filter(function (c) { return c.tag === "Free today"; })[0];
   var todayKey = isoDay(now).slice(0, 10), ev = events.filter(function (e) { return e.day === todayKey; })[0];
   if (h >= 17) {   // Evening edition: tonight and tomorrow
@@ -776,7 +822,8 @@ function briefing() {
       { i: "train", k: "Subway", v: subway },
       { i: "star", k: freeTom || tev ? "Tomorrow" : "Tonight", v: freeTom ? freeTom.title + " is free" : tev ? tev.title + (tev.timeText ? ", " + tev.timeText : "") : "Clear skies? Look for the moon over the Manhattan skyline from Transmitter Park." } ] };
   }
-  var highlight = free ? free.title + " is free today" : ev ? ev.title + (ev.timeText ? ", " + ev.timeText : "") : "Sunset at " + hm(new Date(dd.sunset[0])) + ". Catch it from the waterfront.";
+  var eh = editorFresh(editor) && editor.headline && stillOn(editor.headline) ? editor.headline : null;
+  var highlight = eh ? eh.title + (eh.timeText ? ", " + eh.timeText : "") : free ? free.title + " is free today" : ev ? ev.title + (ev.timeText ? ", " + ev.timeText : "") : "Sunset at " + hm(new Date(dd.sunset[0])) + ". Catch it from the waterfront.";
   return { layout: "brief", hello: hello + " " + Math.round(hi) + "° today.", items: [
     { i: "shirt", k: "Wear", v: wearAdvice(hi, lo) },
     { i: "umbrella", k: "Umbrella", v: rain >= 40 ? "Yes, " + rain + "% chance of rain" : "Not needed (" + rain + "%)" },
@@ -785,13 +832,13 @@ function briefing() {
 }
 function listCard() {
   var now = nyNow(), d = now.getDay(), h = now.getHours(), todayKey = isoDay(now).slice(0, 10);
-  var pool = events.concat(shows), title, tag;
+  var pool = editorEvents().concat(events, shows), title, tag;
   if (h >= 16 && h < 22) { pool = pool.filter(function (e) { return e.day === todayKey; }); tag = "Tonight"; title = "Still on today"; }
   else if (d >= 4 || d === 0) {
     var wk = []; for (var i = 0; i < 4; i++) { var x = new Date(+now + i * 864e5); if (x.getDay() === 5 || x.getDay() === 6 || x.getDay() === 0) wk.push(isoDay(x).slice(0, 10)); }
     pool = pool.filter(function (e) { return wk.indexOf(e.day) > -1; }); tag = "This weekend"; title = "Three ideas for the weekend";
   } else { tag = "Coming up"; title = "On the calendar this week"; }
-  if (pool.length < 3) { pool = events.concat(shows); tag = "Coming up"; title = "On the calendar this week"; }
+  if (pool.length < 3) { pool = editorEvents().concat(events, shows); tag = "Coming up"; title = "On the calendar this week"; }
   // Best three, spread across boroughs (at most two from one borough), then shown in time order
   pool.sort(function (a, b) { return b.score - a.score; });
   var picked = [], per = {};
@@ -827,9 +874,54 @@ function nextFact() {
   // Today's NYC history gets priority, once each
   if (otd.day === key) { var u = otd.items.filter(function (x) { return !x.used; })[0];
     if (u) { u.used = true; return { layout: "fact", kicker: "On this day in " + u.y, cat: "New York history", text: u.t }; } }
-  if (!factBag.length) factBag = shuffle(FACTS.slice());
+  if (!factBag.length) { var mo = n.getMonth() + 1;   // seasonal facts only in their months; AI editor facts join the pool
+    factBag = shuffle(FACTS.concat((editor && editor.facts) || []).filter(function (f) { return !f.months || f.months.indexOf(mo) > -1; })); }
   var f = factBag.shift();
   return { layout: "fact", kicker: "Worth talking about", cat: f.c, text: f.t };
+}
+
+/* ================== AI EDITOR (data/editor.json, researched and written each morning by a scheduled Claude routine) ================== */
+var editor = cache("editor") || null;
+var CAT_TAG = { holiday: "Holiday pick", film: "Film & photo pick", art: "Art pick", music: "Music pick", food: "Food pick", city: "Editor's pick" };
+function editorFresh(e) { return e && e.updated && (nyNow() - new Date(e.updated + "T12:00:00")) / 864e5 < 3; }
+function loadEditor() {
+  fetch("data/editor.json?t=" + Date.now()).then(function (r) { if (!r.ok) throw r.status; return r.json(); })
+    .then(function (e) { if (editorFresh(e)) { editor = e; cache("editor", e); } else editor = null; }).catch(function () {});
+}
+function stillOn(p) { var today = isoDay(nyNow()).slice(0, 10); return !p.until || today <= p.until; }
+function editorEvents() {   // editor picks shaped like events (poster when dated)
+  if (!editorFresh(editor) || !editor.picks) return [];
+  return editor.picks.filter(stillOn).map(function (p) {
+    var d = p.day ? new Date(p.day + "T" + (p.time24 || "12:00") + ":00") : null;
+    return { layout: p.day ? "poster" : "standard", cls: "editor", tag: (CAT_TAG[p.cat] || "Editor's pick") + (p.boro && p.boro !== "Brooklyn" ? " · " + p.boro : ""),
+      title: p.title, body: p.body, meta: p.meta || "", place: p.place || "", day: p.day, timeText: p.timeText || "", when: d ? +d : +nyNow(),
+      boro: p.boro || "Brooklyn", url: p.url, qrCap: p.url ? "Scan for details" : "", score: 200 };
+  });
+}
+function editorHeadline() {
+  var h = editor.headline;
+  return { layout: h.day ? "poster" : "standard", cls: "editor", tag: "Today's pick", title: h.title, body: h.body, meta: h.meta || "", day: h.day, timeText: h.timeText || "",
+    url: h.url, qrCap: h.url ? "Scan for details" : "" };
+}
+
+/* ================== HOLIDAY SEASON ================== */
+// Countdowns. The AI editor can add or correct these in data/editor.json ("countdowns").
+var COUNTDOWNS = [
+  { date: "2026-12-02", title: "Rockefeller Center tree lighting", body: "Wednesday, 7 to 10 PM. Free and first come, first served on the streets around the plaza, or watch it live on NBC.", url: "https://www.rockefellercenter.com/holidays/rockefeller-center-christmas-tree/", qrCap: "Scan for details" },
+  { md: "12-25", title: "Christmas", body: "Rockefeller tree, Saks light show on Fifth Ave, Dyker Heights after dark, and the Bryant Park market. Plan a lights night." },
+  { md: "12-31", title: "New Year's Eve", body: "The ball drops at midnight in Times Square. For a calmer view, the fireworks over Prospect Park are a Brooklyn favorite." }
+];
+function holidaySeason() { var n = nyNow(), m = n.getMonth() + 1, d = n.getDate(); return (m === 11 && d >= 20) || m === 12 || (m === 1 && d <= 6); }
+function countdownCard() {
+  var now = nyNow(), today = new Date(now.getFullYear(), now.getMonth(), now.getDate()), best = null;
+  COUNTDOWNS.concat((editor && editor.countdowns) || []).forEach(function (c) {
+    var ds = c.date || (now.getFullYear() + "-" + c.md), d = new Date(ds + "T00:00:00"), days = Math.round((d - today) / 864e5);
+    if (days >= 0 && days <= 30 && (!best || days < best.days)) best = { c: c, days: days };
+  });
+  if (!best) return null;
+  var c = best.c, days = best.days;
+  return { layout: "big", cls: "holiday", tag: "Countdown", num: days === 0 ? "Today" : days + (days === 1 ? " day" : " days"),
+    title: days === 0 ? c.title + " is today." : "until " + c.title + ".", body: c.body, url: c.url, qrCap: c.qrCap || "Scan for details" };
 }
 
 /* ================== GUEST WI-FI (network details passed privately by the TV app) ================== */
@@ -887,7 +979,8 @@ function buildDeck() {
   var today = isoDay(now).slice(0, 10);   // "until": "YYYY-MM-DD" hides a dated pick once its last day has passed
   var picks = shuffle(PICKS.filter(function (p) { return (!p.months || p.months.indexOf(m) > -1) && (!p.days || p.days.indexOf(d) > -1) && (!p.until || today <= p.until); })).map(pickCard);
   // Alternate concerts/shows with city events so neither crowds out the other
-  var ev = [], es = events.slice(0, 10), ss = shows.slice(0, 6);
+  // Editor picks lead; then city events and concerts alternate
+  var ev = editorEvents(), es = events.slice(0, 10), ss = shows.slice(0, 6);
   while (es.length || ss.length) { if (es.length) ev.push(es.shift()); if (ss.length) ev.push(ss.shift()); }
   ev = ev.map(function (e) { return e.day ? Object.assign({ layout: "poster" }, e) : e; });
   var urgent = mtaCards().concat(rmCards()), free = freeCards(), big = bigWeather(), brief = briefing(), list = listCard();
@@ -896,6 +989,9 @@ function buildDeck() {
   if (morning && brief) deck.push(brief);         // mornings open with the briefing
   deck = deck.concat(urgent);                      // then anything that affects you right now
   if (big) deck.push(big);
+  var cd = countdownCard();   // anything notable within the next 30 days
+  if (cd) deck.push(cd);
+  if (editorFresh(editor) && editor.headline && stillOn(editor.headline)) deck.push(editorHeadline());   // the AI editor's pick of the day, early in every cycle
   if (free[0]) deck.push(free[0]);
   if (list) deck.push(list);
   var i = 0;
@@ -906,6 +1002,7 @@ function buildDeck() {
     if (i === 3 && free[1]) deck.push(free[1]);
     if (i === 4 && morning && brief) deck.push(brief);
     if (i === 5 && list) deck.push(list);
+    if (i === 6 && cd) deck.push(cd);
     if (deck.length > 22) break;
   }
 }
@@ -950,9 +1047,11 @@ tick(); setInterval(tick, 10000);
 setInterval(shift, 4 * 6e4);
 renderWeather(); loadWeather(); setInterval(loadWeather, 15 * 6e4);
 loadMTA(); setInterval(loadMTA, 2 * 6e4);
+loadTrains(); setInterval(loadTrains, 30000); setInterval(renderTrains, 15000);
 loadEvents(); setInterval(loadEvents, 60 * 6e4);
 loadRM(); setInterval(loadRM, 3 * 36e5);
 loadOTD(); setInterval(loadOTD, 36e5);
+loadEditor(); setInterval(loadEditor, 30 * 6e4);
 loadShows(); setInterval(loadShows, 3 * 36e5);
 showImage(); setInterval(showImage, CFG.photoSeconds * 1000);
 setTimeout(nextCard, 3000);
