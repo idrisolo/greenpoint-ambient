@@ -6,7 +6,7 @@ Live page: https://idrisolo.github.io/greenpoint-ambient/
 
 ## How it runs on the TV
 
-The Fire TV Stick (Fire OS 6) uses a small custom app, **Greenpoint Ambient** (`firetv-app/`), as its system screensaver. After 3 minutes idle the dashboard appears; any remote button returns to what you were doing.
+The Fire TV Stick (Fire OS 6) uses a small custom app, **Greenpoint Ambient** (`firetv-app/`), as its system screensaver. After 1 minute idle the dashboard appears; any remote button returns to what you were doing.
 
 One-time setup (already done) from a computer on the same Wi-Fi, with ADB Debugging on:
 
@@ -16,9 +16,9 @@ adb connect <fire-stick-ip>:5555
 adb install -r greenpoint-ambient.apk
 adb shell pm grant com.greenpoint.ambient android.permission.WRITE_SECURE_SETTINGS
 adb shell settings put secure screensaver_components com.greenpoint.ambient/.DashboardDream
-adb shell settings put secure contextual_screen_off_timeout 180000   # start after 3 min (Amazon's timer)
-adb shell settings put system screen_off_timeout 180000
-adb shell settings put secure sleep_timeout 14400000                 # stay awake 4 h before sleeping
+adb shell settings put secure contextual_screen_off_timeout 60000    # start after 1 min (Amazon's timer)
+adb shell settings put system screen_off_timeout 60000
+adb shell settings put secure sleep_timeout 2700000                  # sleep 45 min after the last button press
 ```
 
 The app re-applies the screensaver setting after reboots and updates. If the TV itself still switches off, check the Vizio's **Settings > Timers** (Sleep Timer, Auto Power Off).
