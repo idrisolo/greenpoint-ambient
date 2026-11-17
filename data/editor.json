@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-16",
+  "updated": "2026-11-17",
   "headline": {
     "title": "Lightscape returns to the Botanic Garden Friday",
     "body": "Brooklyn Botanic Garden's winter light trail opens Nov 20 with a new route. Timed tickets only, and weekend slots go first.",
@@ -9,39 +9,6 @@
     "url": "https://www.bbg.org/lightscape"
   },
   "picks": [
-    {
-      "cat": "film",
-      "title": "Film Forum starts a Rossellini retrospective",
-      "body": "A 26-film run opens today with Rome Open City, Paisan, Stromboli and more, in 35mm prints and new 4K restorations.",
-      "meta": "Film Forum · ticketed",
-      "place": "Film Forum, West Village",
-      "boro": "Manhattan",
-      "day": "2026-11-16",
-      "until": "2026-11-22",
-      "url": "https://filmforum.org/"
-    },
-    {
-      "cat": "holiday",
-      "title": "Union Square Holiday Market is open",
-      "body": "Urbanspace's European-style market of 180-plus food and craft booths wraps around the park through Dec 24.",
-      "meta": "Union Square · free entry",
-      "place": "Union Square, Manhattan",
-      "boro": "Manhattan",
-      "day": "2026-11-16",
-      "until": "2026-12-24",
-      "url": "https://secretnyc.co/definitive-guide-every-holiday-market-nyc/"
-    },
-    {
-      "cat": "holiday",
-      "title": "Holiday Train Show at NYBG",
-      "body": "Model trains wind past miniature NYC landmarks built from plant parts in the conservatory. Good for a cold afternoon.",
-      "meta": "New York Botanical Garden · timed tickets",
-      "place": "New York Botanical Garden, Bronx",
-      "boro": "the Bronx",
-      "day": "2026-11-16",
-      "until": "2027-01-10",
-      "url": "https://www.nybg.org/"
-    },
     {
       "cat": "music",
       "title": "Guster at Music Hall of Williamsburg",
@@ -117,9 +84,42 @@
       "meta": "weekends in November",
       "place": "Dumbo Archway, Dumbo",
       "boro": "Brooklyn",
-      "day": "2026-11-15",
+      "day": "2026-11-21",
       "until": "2026-11-29",
       "url": "https://urbanartantiques.com/2026/08/04/brooklyn-flea/"
+    },
+    {
+      "cat": "holiday",
+      "title": "Holiday Shops at Bryant Park Winter Village",
+      "body": "Urbanspace's 180-plus vendor market runs daily beside the free-entry rink. Good for gifts and hot cider after work.",
+      "meta": "Bryant Park · free entry",
+      "place": "Bryant Park, Midtown",
+      "boro": "Manhattan",
+      "day": "2026-11-17",
+      "until": "2027-01-03",
+      "url": "https://secretnyc.co/bryant-park-winter-village-opening-date-2026/"
+    },
+    {
+      "cat": "art",
+      "title": "MoMA PS1 Hard Art opens its run",
+      "body": "The Long Island City museum is free to enter all year, and Hard Art is on view from Nov 5 into March 2027.",
+      "meta": "MoMA PS1 · free admission",
+      "place": "MoMA PS1, Long Island City",
+      "boro": "Queens",
+      "day": "2026-11-17",
+      "until": "2026-11-23",
+      "url": "https://www.momaps1.org/"
+    },
+    {
+      "cat": "film",
+      "title": "Paper Tiger opens at Nitehawk Williamsburg",
+      "body": "The film opens Friday at Nitehawk, which also lists midnight screenings on Friday and Saturday nights.",
+      "meta": "Nitehawk Cinema · ticketed",
+      "place": "Nitehawk Cinema, Williamsburg",
+      "boro": "Brooklyn",
+      "day": "2026-11-20",
+      "until": "2026-11-26",
+      "url": "https://nitehawkcinema.com/williamsburg/movies/paper-tiger/"
     }
   ],
   "facts": [
@@ -127,6 +127,11 @@
       "c": "NYC history",
       "t": "This year's Macy's Thanksgiving Day Parade is the 100th, even though it began in 1924. The parade paused for three years during World War II.",
       "src": "https://www.nycforfree.co/events/the-100th-macys-thanksgiving-day-parade"
+    },
+    {
+      "c": "art",
+      "t": "MoMA PS1 in Long Island City has offered free admission to everyone since January 1, 2026, making it one of the city's largest free museums.",
+      "src": "https://www.timeout.com/newyork/news/starting-january-1-admission-to-moma-ps1-will-be-completely-free-for-all-120925"
     }
   ],
   "countdowns": [
@@ -164,6 +169,9 @@
     "https://www.nybg.org/",
     "https://www.nycforfree.co/events/the-100th-macys-thanksgiving-day-parade",
     "https://www.nycgovparks.org/events/2026/11/21/historic-new-york-greenpoint-neighborhood-history",
-    "https://www.songkick.com/concerts/43341697-resavoir-at-babys-all-right"
+    "https://www.songkick.com/concerts/43341697-resavoir-at-babys-all-right",
+    "https://www.timeout.com/newyork/news/starting-january-1-admission-to-moma-ps1-will-be-completely-free-for-all-120925",
+    "https://www.momaps1.org/",
+    "https://nitehawkcinema.com/williamsburg/movies/paper-tiger/"
   ]
 }
