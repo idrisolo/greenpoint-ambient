@@ -1,14 +1,28 @@
 {
-  "updated": "2026-11-17",
+  "updated": "2026-11-18",
   "headline": {
-    "title": "Lightscape returns to the Botanic Garden Friday",
-    "body": "Brooklyn Botanic Garden's winter light trail opens Nov 20 with a new route. Timed tickets only, and weekend slots go first.",
-    "meta": "Brooklyn Botanic Garden, Prospect Heights · timed tickets",
-    "day": "2026-11-20",
-    "until": "2027-01-03",
-    "url": "https://www.bbg.org/lightscape"
+    "title": "Angine de Poitrine at Brooklyn Steel tonight",
+    "body": "Doors at 7, show at 8 at the East Williamsburg room, a short L ride from Greenpoint. Check the venue page for tickets before you go.",
+    "meta": "Brooklyn Steel, East Williamsburg · tickets via venue",
+    "day": "2026-11-18",
+    "timeText": "8:00 PM",
+    "until": "2026-11-18",
+    "url": "https://www.bowerypresents.com/new-york-metro/shows/detail/1452610-angine-de-poitrine"
   },
   "picks": [
+    {
+      "cat": "music",
+      "title": "Angine de Poitrine at Brooklyn Steel",
+      "body": "The band plays the East Williamsburg room tonight. Doors at 7 PM, show at 8. Check the Bowery Presents page for ticket availability.",
+      "meta": "Brooklyn Steel · tickets via venue",
+      "place": "Brooklyn Steel, East Williamsburg",
+      "boro": "Brooklyn",
+      "day": "2026-11-18",
+      "time24": "20:00",
+      "timeText": "8:00 PM",
+      "until": "2026-11-18",
+      "url": "https://www.bowerypresents.com/new-york-metro/shows/detail/1452610-angine-de-poitrine"
+    },
     {
       "cat": "music",
       "title": "Guster at Music Hall of Williamsburg",
@@ -78,37 +92,15 @@
       "url": "https://vendorsmap.com/events/4525"
     },
     {
-      "cat": "food",
-      "title": "Brooklyn Flea at the Dumbo Archway",
-      "body": "The weekend flea is listed for Nov 14-15, 21-22 and 28-29 under the Manhattan Bridge arches. Vintage, makers and gifts.",
-      "meta": "weekends in November",
-      "place": "Dumbo Archway, Dumbo",
-      "boro": "Brooklyn",
-      "day": "2026-11-21",
-      "until": "2026-11-29",
-      "url": "https://urbanartantiques.com/2026/08/04/brooklyn-flea/"
-    },
-    {
       "cat": "holiday",
       "title": "Holiday Shops at Bryant Park Winter Village",
       "body": "Urbanspace's 180-plus vendor market runs daily beside the free-entry rink. Good for gifts and hot cider after work.",
       "meta": "Bryant Park · free entry",
       "place": "Bryant Park, Midtown",
       "boro": "Manhattan",
-      "day": "2026-11-17",
+      "day": "2026-11-18",
       "until": "2027-01-03",
       "url": "https://secretnyc.co/bryant-park-winter-village-opening-date-2026/"
-    },
-    {
-      "cat": "art",
-      "title": "MoMA PS1 Hard Art opens its run",
-      "body": "The Long Island City museum is free to enter all year, and Hard Art is on view from Nov 5 into March 2027.",
-      "meta": "MoMA PS1 · free admission",
-      "place": "MoMA PS1, Long Island City",
-      "boro": "Queens",
-      "day": "2026-11-17",
-      "until": "2026-11-23",
-      "url": "https://www.momaps1.org/"
     },
     {
       "cat": "film",
@@ -120,18 +112,24 @@
       "day": "2026-11-20",
       "until": "2026-11-26",
       "url": "https://nitehawkcinema.com/williamsburg/movies/paper-tiger/"
+    },
+    {
+      "cat": "art",
+      "title": "Iris van Herpen: Sculpting the Senses",
+      "body": "The Brooklyn Museum's fashion exhibition on the Dutch designer's sculptural work stays up through Dec 6.",
+      "meta": "Brooklyn Museum · admission",
+      "place": "Brooklyn Museum, Prospect Heights",
+      "boro": "Brooklyn",
+      "day": "2026-11-18",
+      "until": "2026-12-06",
+      "url": "https://journalofantiques.com/?p=83057"
     }
   ],
   "facts": [
     {
-      "c": "NYC history",
-      "t": "This year's Macy's Thanksgiving Day Parade is the 100th, even though it began in 1924. The parade paused for three years during World War II.",
-      "src": "https://www.nycforfree.co/events/the-100th-macys-thanksgiving-day-parade"
-    },
-    {
-      "c": "art",
-      "t": "MoMA PS1 in Long Island City has offered free admission to everyone since January 1, 2026, making it one of the city's largest free museums.",
-      "src": "https://www.timeout.com/newyork/news/starting-january-1-admission-to-moma-ps1-will-be-completely-free-for-all-120925"
+      "c": "Greenpoint history",
+      "t": "The USS Monitor was assembled in about 101 days at Greenpoint's Continental Iron Works, near Franklin Street and N 15th Street, not at the Brooklyn Navy Yard.",
+      "src": "https://en.Wikipedia.com/wiki/Continental_Iron_Works"
     }
   ],
   "countdowns": [
@@ -155,7 +153,10 @@
     }
   ],
   "sources": [
+    "https://en.Wikipedia.com/wiki/Continental_Iron_Works",
     "https://filmforum.org/",
+    "https://journalofantiques.com/?p=83057",
+    "https://nitehawkcinema.com/williamsburg/movies/paper-tiger/",
     "https://qns.com/2026/10/winter-lantern-festival-queens-2026/",
     "https://secretnyc.co/bryant-park-winter-village-opening-date-2026/",
     "https://secretnyc.co/definitive-guide-every-holiday-market-nyc/",
@@ -164,14 +165,14 @@
     "https://urbanartantiques.com/2026/08/04/brooklyn-flea/",
     "https://vendorsmap.com/events/4525",
     "https://www.bbg.org/lightscape",
+    "https://www.bowerypresents.com/new-york-metro/shows/detail/1452610-angine-de-poitrine",
     "https://www.jambase.com/show/guster-music-hall-of-williamsburg-20261120",
     "https://www.mcny.org/press-release-after-dark",
+    "https://www.momaps1.org/",
     "https://www.nybg.org/",
     "https://www.nycforfree.co/events/the-100th-macys-thanksgiving-day-parade",
     "https://www.nycgovparks.org/events/2026/11/21/historic-new-york-greenpoint-neighborhood-history",
     "https://www.songkick.com/concerts/43341697-resavoir-at-babys-all-right",
-    "https://www.timeout.com/newyork/news/starting-january-1-admission-to-moma-ps1-will-be-completely-free-for-all-120925",
-    "https://www.momaps1.org/",
-    "https://nitehawkcinema.com/williamsburg/movies/paper-tiger/"
+    "https://www.timeout.com/newyork/news/starting-january-1-admission-to-moma-ps1-will-be-completely-free-for-all-120925"
   ]
 }
