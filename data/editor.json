@@ -1,49 +1,38 @@
 {
-  "updated": "2026-11-18",
+  "updated": "2026-11-19",
   "headline": {
-    "title": "Angine de Poitrine at Brooklyn Steel tonight",
-    "body": "Doors at 7, show at 8 at the East Williamsburg room, a short L ride from Greenpoint. Check the venue page for tickets before you go.",
-    "meta": "Brooklyn Steel, East Williamsburg · tickets via venue",
-    "day": "2026-11-18",
+    "title": "Guster at Music Hall of Williamsburg tonight",
+    "body": "Two nights at the North 6th Street room, 8 PM both times. Tonight is the first, a short walk or L ride from Greenpoint.",
+    "meta": "Music Hall of Williamsburg · ticketed",
+    "day": "2026-11-19",
     "timeText": "8:00 PM",
-    "until": "2026-11-18",
-    "url": "https://www.bowerypresents.com/new-york-metro/shows/detail/1452610-angine-de-poitrine"
+    "until": "2026-11-19",
+    "url": "https://www.jambase.com/show/guster-music-hall-of-williamsburg-20261119"
   },
   "picks": [
     {
       "cat": "music",
-      "title": "Angine de Poitrine at Brooklyn Steel",
-      "body": "The band plays the East Williamsburg room tonight. Doors at 7 PM, show at 8. Check the Bowery Presents page for ticket availability.",
-      "meta": "Brooklyn Steel · tickets via venue",
-      "place": "Brooklyn Steel, East Williamsburg",
-      "boro": "Brooklyn",
-      "day": "2026-11-18",
-      "time24": "20:00",
-      "timeText": "8:00 PM",
-      "until": "2026-11-18",
-      "url": "https://www.bowerypresents.com/new-york-metro/shows/detail/1452610-angine-de-poitrine"
-    },
-    {
-      "cat": "music",
       "title": "Guster at Music Hall of Williamsburg",
-      "body": "The band is listed for back-to-back nights at the Williamsburg venue. Confirm which night has tickets left.",
-      "meta": "tickets via venue",
+      "body": "Two nights, Thursday and Friday, 8 PM at the North 6th Street room. Resale tickets run over $100, so check the venue first.",
+      "meta": "Music Hall of Williamsburg · ticketed",
       "place": "Music Hall of Williamsburg, Williamsburg",
       "boro": "Brooklyn",
       "day": "2026-11-19",
+      "time24": "20:00",
+      "timeText": "8:00 PM",
       "until": "2026-11-20",
-      "url": "https://www.jambase.com/show/guster-music-hall-of-williamsburg-20261120"
+      "url": "https://www.jambase.com/show/guster-music-hall-of-williamsburg-20261119"
     },
     {
-      "cat": "music",
-      "title": "Resavoir at Baby's All Right",
-      "body": "The Austin jazz-leaning collective plays the Williamsburg room on Saturday. Tickets listed from $20.",
-      "meta": "from $20",
-      "place": "Baby's All Right, Williamsburg",
+      "cat": "holiday",
+      "title": "Lightscape returns to Brooklyn Botanic Garden",
+      "body": "The garden's winter light trail opens Friday and runs to Jan 3. Timed tickets are bought in advance online, and popular nights can sell out.",
+      "meta": "Brooklyn Botanic Garden · timed tickets",
+      "place": "Brooklyn Botanic Garden, Prospect Heights",
       "boro": "Brooklyn",
-      "day": "2026-11-21",
-      "until": "2026-11-21",
-      "url": "https://www.songkick.com/concerts/43341697-resavoir-at-babys-all-right"
+      "day": "2026-11-20",
+      "until": "2027-01-03",
+      "url": "https://www.bbg.org/lightscape"
     },
     {
       "cat": "holiday",
@@ -57,6 +46,17 @@
       "url": "https://qns.com/2026/10/winter-lantern-festival-queens-2026/"
     },
     {
+      "cat": "holiday",
+      "title": "Holiday Train Show at the New York Botanical Garden",
+      "body": "Model trains run through miniature landmarks built from plant parts, in the Bronx conservatory. The season runs Nov 14 to Jan 10.",
+      "meta": "NYBG · timed tickets",
+      "place": "New York Botanical Garden, Bronx",
+      "boro": "the Bronx",
+      "day": "2026-11-19",
+      "until": "2027-01-10",
+      "url": "https://www.nybg.org/"
+    },
+    {
       "cat": "art",
       "title": "The Photography Triennial: After Dark opens",
       "body": "The Museum of the City of New York looks at the city's nightlife through contemporary photography, opening to the public Friday.",
@@ -66,6 +66,28 @@
       "day": "2026-11-20",
       "until": "2027-04-25",
       "url": "https://www.mcny.org/press-release-after-dark"
+    },
+    {
+      "cat": "film",
+      "title": "Paper Tiger opens at Nitehawk Williamsburg",
+      "body": "The film opens Friday at Nitehawk, which also lists midnight screenings on Friday and Saturday nights.",
+      "meta": "Nitehawk Cinema · ticketed",
+      "place": "Nitehawk Cinema, Williamsburg",
+      "boro": "Brooklyn",
+      "day": "2026-11-20",
+      "until": "2026-11-26",
+      "url": "https://nitehawkcinema.com/williamsburg/movies/paper-tiger/"
+    },
+    {
+      "cat": "music",
+      "title": "Resavoir at Baby's All Right",
+      "body": "The Austin jazz-leaning collective plays the Williamsburg room on Saturday. Tickets listed from $20.",
+      "meta": "from $20",
+      "place": "Baby's All Right, Williamsburg",
+      "boro": "Brooklyn",
+      "day": "2026-11-21",
+      "until": "2026-11-21",
+      "url": "https://www.songkick.com/concerts/43341697-resavoir-at-babys-all-right"
     },
     {
       "cat": "city",
@@ -92,44 +114,27 @@
       "url": "https://vendorsmap.com/events/4525"
     },
     {
-      "cat": "holiday",
-      "title": "Holiday Shops at Bryant Park Winter Village",
-      "body": "Urbanspace's 180-plus vendor market runs daily beside the free-entry rink. Good for gifts and hot cider after work.",
-      "meta": "Bryant Park · free entry",
-      "place": "Bryant Park, Midtown",
-      "boro": "Manhattan",
-      "day": "2026-11-18",
-      "until": "2027-01-03",
-      "url": "https://secretnyc.co/bryant-park-winter-village-opening-date-2026/"
-    },
-    {
-      "cat": "film",
-      "title": "Paper Tiger opens at Nitehawk Williamsburg",
-      "body": "The film opens Friday at Nitehawk, which also lists midnight screenings on Friday and Saturday nights.",
-      "meta": "Nitehawk Cinema · ticketed",
-      "place": "Nitehawk Cinema, Williamsburg",
-      "boro": "Brooklyn",
-      "day": "2026-11-20",
-      "until": "2026-11-26",
-      "url": "https://nitehawkcinema.com/williamsburg/movies/paper-tiger/"
-    },
-    {
       "cat": "art",
       "title": "Iris van Herpen: Sculpting the Senses",
-      "body": "The Brooklyn Museum's fashion exhibition on the Dutch designer's sculptural work stays up through Dec 6.",
+      "body": "The Brooklyn Museum's show of the Dutch designer's couture, 140-plus pieces, closes Dec 6. Plan a visit before it does.",
       "meta": "Brooklyn Museum · admission",
       "place": "Brooklyn Museum, Prospect Heights",
       "boro": "Brooklyn",
-      "day": "2026-11-18",
+      "day": "2026-11-19",
       "until": "2026-12-06",
-      "url": "https://journalofantiques.com/?p=83057"
+      "url": "https://brooklynmuseum.org/exhibitions/iris-van-herpen"
     }
   ],
   "facts": [
     {
       "c": "Greenpoint history",
-      "t": "The USS Monitor was assembled in about 101 days at Greenpoint's Continental Iron Works, near Franklin Street and N 15th Street, not at the Brooklyn Navy Yard.",
-      "src": "https://en.Wikipedia.com/wiki/Continental_Iron_Works"
+      "t": "The Kosciuszko Bridge over Newtown Creek opened in 1939 as the Meeker Avenue Bridge and was renamed for Tadeusz Kosciuszko in 1940, partly honoring the area's large Polish population.",
+      "src": "https://www.amny.com/opinion/new-kosciuszko-bridge-is-a-reminder-of-greenpoint-s-history-as-an-industrial-polish-neighborhood-1-13530129"
+    },
+    {
+      "c": "Greenpoint history",
+      "t": "The Greenpoint Avenue Bridge over Newtown Creek, opened in 1987, is the sixth span at that crossing since the 1850s.",
+      "src": "https://qns.com/2026/10/waxing-romantic-on-the-bridges-of-newtown-creek-our-neighborhood-the-way-it-was/"
     }
   ],
   "countdowns": [
@@ -153,10 +158,12 @@
     }
   ],
   "sources": [
+    "https://brooklynmuseum.org/exhibitions/iris-van-herpen",
     "https://en.Wikipedia.com/wiki/Continental_Iron_Works",
     "https://filmforum.org/",
     "https://journalofantiques.com/?p=83057",
     "https://nitehawkcinema.com/williamsburg/movies/paper-tiger/",
+    "https://qns.com/2026/10/waxing-romantic-on-the-bridges-of-newtown-creek-our-neighborhood-the-way-it-was/",
     "https://qns.com/2026/10/winter-lantern-festival-queens-2026/",
     "https://secretnyc.co/bryant-park-winter-village-opening-date-2026/",
     "https://secretnyc.co/definitive-guide-every-holiday-market-nyc/",
@@ -164,8 +171,10 @@
     "https://songkick.com/concerts/42974907-armand-hammer-at-music-hall-of-williamsburg",
     "https://urbanartantiques.com/2026/08/04/brooklyn-flea/",
     "https://vendorsmap.com/events/4525",
+    "https://www.amny.com/opinion/new-kosciuszko-bridge-is-a-reminder-of-greenpoint-s-history-as-an-industrial-polish-neighborhood-1-13530129",
     "https://www.bbg.org/lightscape",
     "https://www.bowerypresents.com/new-york-metro/shows/detail/1452610-angine-de-poitrine",
+    "https://www.jambase.com/show/guster-music-hall-of-williamsburg-20261119",
     "https://www.jambase.com/show/guster-music-hall-of-williamsburg-20261120",
     "https://www.mcny.org/press-release-after-dark",
     "https://www.momaps1.org/",
