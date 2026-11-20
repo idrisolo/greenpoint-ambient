@@ -1,32 +1,18 @@
 {
-  "updated": "2026-11-19",
+  "updated": "2026-11-20",
   "headline": {
-    "title": "Guster at Music Hall of Williamsburg tonight",
-    "body": "Two nights at the North 6th Street room, 8 PM both times. Tonight is the first, a short walk or L ride from Greenpoint.",
-    "meta": "Music Hall of Williamsburg · ticketed",
-    "day": "2026-11-19",
-    "timeText": "8:00 PM",
-    "until": "2026-11-19",
-    "url": "https://www.jambase.com/show/guster-music-hall-of-williamsburg-20261119"
+    "title": "Lightscape opens tonight at Brooklyn Botanic Garden",
+    "body": "The winter light trail through the garden starts its season tonight and runs to Jan 3. Book timed tickets ahead, since popular nights sell out.",
+    "meta": "Brooklyn Botanic Garden · timed tickets",
+    "day": "2026-11-20",
+    "until": "2027-01-03",
+    "url": "https://www.bbg.org/lightscape"
   },
   "picks": [
     {
-      "cat": "music",
-      "title": "Guster at Music Hall of Williamsburg",
-      "body": "Two nights, Thursday and Friday, 8 PM at the North 6th Street room. Resale tickets run over $100, so check the venue first.",
-      "meta": "Music Hall of Williamsburg · ticketed",
-      "place": "Music Hall of Williamsburg, Williamsburg",
-      "boro": "Brooklyn",
-      "day": "2026-11-19",
-      "time24": "20:00",
-      "timeText": "8:00 PM",
-      "until": "2026-11-20",
-      "url": "https://www.jambase.com/show/guster-music-hall-of-williamsburg-20261119"
-    },
-    {
       "cat": "holiday",
       "title": "Lightscape returns to Brooklyn Botanic Garden",
-      "body": "The garden's winter light trail opens Friday and runs to Jan 3. Timed tickets are bought in advance online, and popular nights can sell out.",
+      "body": "The garden's winter light trail opens today and runs to Jan 3. Timed tickets are bought in advance online, and popular nights can sell out.",
       "meta": "Brooklyn Botanic Garden · timed tickets",
       "place": "Brooklyn Botanic Garden, Prospect Heights",
       "boro": "Brooklyn",
@@ -46,20 +32,9 @@
       "url": "https://qns.com/2026/10/winter-lantern-festival-queens-2026/"
     },
     {
-      "cat": "holiday",
-      "title": "Holiday Train Show at the New York Botanical Garden",
-      "body": "Model trains run through miniature landmarks built from plant parts, in the Bronx conservatory. The season runs Nov 14 to Jan 10.",
-      "meta": "NYBG · timed tickets",
-      "place": "New York Botanical Garden, Bronx",
-      "boro": "the Bronx",
-      "day": "2026-11-19",
-      "until": "2027-01-10",
-      "url": "https://www.nybg.org/"
-    },
-    {
       "cat": "art",
       "title": "The Photography Triennial: After Dark opens",
-      "body": "The Museum of the City of New York looks at the city's nightlife through contemporary photography, opening to the public Friday.",
+      "body": "The Museum of the City of New York looks at the city's nightlife through contemporary photography, opening to the public today.",
       "meta": "Museum of the City of New York · admission",
       "place": "Museum of the City of New York, East Harlem",
       "boro": "Manhattan",
@@ -68,15 +43,26 @@
       "url": "https://www.mcny.org/press-release-after-dark"
     },
     {
-      "cat": "film",
-      "title": "Paper Tiger opens at Nitehawk Williamsburg",
-      "body": "The film opens Friday at Nitehawk, which also lists midnight screenings on Friday and Saturday nights.",
-      "meta": "Nitehawk Cinema · ticketed",
-      "place": "Nitehawk Cinema, Williamsburg",
+      "cat": "art",
+      "title": "Iris van Herpen: Sculpting the Senses",
+      "body": "The Brooklyn Museum's show of the Dutch designer's couture, 140-plus pieces, closes Dec 6. Plan a visit before it does.",
+      "meta": "Brooklyn Museum · admission",
+      "place": "Brooklyn Museum, Prospect Heights",
       "boro": "Brooklyn",
+      "day": "2026-11-19",
+      "until": "2026-12-06",
+      "url": "https://brooklynmuseum.org/exhibitions/iris-van-herpen"
+    },
+    {
+      "cat": "film",
+      "title": "Faces: Moving-Image Portraiture at Anthology",
+      "body": "Anthology Film Archives runs a series on the human face in cinema, from today through Dec 1. Check the calendar for the film lineup.",
+      "meta": "Anthology Film Archives · ticketed",
+      "place": "Anthology Film Archives, East Village",
+      "boro": "Manhattan",
       "day": "2026-11-20",
-      "until": "2026-11-26",
-      "url": "https://nitehawkcinema.com/williamsburg/movies/paper-tiger/"
+      "until": "2026-12-01",
+      "url": "https://anthologyfilmarchives.org/"
     },
     {
       "cat": "music",
@@ -114,41 +100,49 @@
       "url": "https://vendorsmap.com/events/4525"
     },
     {
-      "cat": "art",
-      "title": "Iris van Herpen: Sculpting the Senses",
-      "body": "The Brooklyn Museum's show of the Dutch designer's couture, 140-plus pieces, closes Dec 6. Plan a visit before it does.",
-      "meta": "Brooklyn Museum · admission",
-      "place": "Brooklyn Museum, Prospect Heights",
+      "cat": "food",
+      "title": "Brooklyn Flea at the DUMBO Archway",
+      "body": "Vintage, makers and food stalls every Saturday and Sunday, 10 AM to 5 PM, under the Manhattan Bridge archway. Free to enter.",
+      "meta": "80 Pearl St · free",
+      "place": "DUMBO Archway, DUMBO",
       "boro": "Brooklyn",
-      "day": "2026-11-19",
+      "day": "2026-11-21",
+      "time24": "10:00",
+      "timeText": "10:00 AM",
+      "until": "2026-11-29",
+      "url": "https://www.brooklynflea.com/Locations"
+    },
+    {
+      "cat": "holiday",
+      "title": "Shop Small Greenpoint Fall Retail Crawl",
+      "body": "Pick up a passport at any participating shop and collect stamps across 60-plus Greenpoint businesses over nine days.",
+      "meta": "Greenpoint shops · passport",
+      "place": "Greenpoint shops, Greenpoint",
+      "boro": "Brooklyn",
+      "day": "2026-11-28",
       "until": "2026-12-06",
-      "url": "https://brooklynmuseum.org/exhibitions/iris-van-herpen"
+      "url": "https://www.nycforfree.co/events/shop-small-greenpoint-fall-crawl"
     }
   ],
   "facts": [
     {
       "c": "Greenpoint history",
-      "t": "The Kosciuszko Bridge over Newtown Creek opened in 1939 as the Meeker Avenue Bridge and was renamed for Tadeusz Kosciuszko in 1940, partly honoring the area's large Polish population.",
-      "src": "https://www.amny.com/opinion/new-kosciuszko-bridge-is-a-reminder-of-greenpoint-s-history-as-an-industrial-polish-neighborhood-1-13530129"
-    },
-    {
-      "c": "Greenpoint history",
-      "t": "The Greenpoint Avenue Bridge over Newtown Creek, opened in 1987, is the sixth span at that crossing since the 1850s.",
-      "src": "https://qns.com/2026/10/waxing-romantic-on-the-bridges-of-newtown-creek-our-neighborhood-the-way-it-was/"
+      "t": "The SS Great Republic, launched from Henry Steers's Greenpoint yard on November 8, 1866, was then the largest ship of any kind ever built in the United States.",
+      "src": "https://en.wikipedia.org/wiki/SS_Great_Republic_(1866)"
     }
   ],
   "countdowns": [
-    {
-      "date": "2026-11-20",
-      "title": "Lightscape opens",
-      "body": "Brooklyn Botanic Garden's winter light trail runs Nov 20 to Jan 3.",
-      "url": "https://www.bbg.org/lightscape"
-    },
     {
       "date": "2026-11-26",
       "title": "100th Macy's Thanksgiving Day Parade",
       "body": "Thursday, 8:30 AM to noon, from 77th Street to Herald Square. Free on the sidewalk.",
       "url": "https://www.nycforfree.co/events/the-100th-macys-thanksgiving-day-parade"
+    },
+    {
+      "date": "2026-11-28",
+      "title": "Shop Small Greenpoint crawl begins",
+      "body": "Nine days of stamps and prizes at 60-plus Greenpoint shops, Nov 28 to Dec 6.",
+      "url": "https://www.nycforfree.co/events/shop-small-greenpoint-fall-crawl"
     },
     {
       "date": "2026-12-02",
@@ -158,8 +152,10 @@
     }
   ],
   "sources": [
+    "https://anthologyfilmarchives.org/",
     "https://brooklynmuseum.org/exhibitions/iris-van-herpen",
     "https://en.Wikipedia.com/wiki/Continental_Iron_Works",
+    "https://en.wikipedia.org/wiki/SS_Great_Republic_(1866)",
     "https://filmforum.org/",
     "https://journalofantiques.com/?p=83057",
     "https://nitehawkcinema.com/williamsburg/movies/paper-tiger/",
@@ -174,11 +170,13 @@
     "https://www.amny.com/opinion/new-kosciuszko-bridge-is-a-reminder-of-greenpoint-s-history-as-an-industrial-polish-neighborhood-1-13530129",
     "https://www.bbg.org/lightscape",
     "https://www.bowerypresents.com/new-york-metro/shows/detail/1452610-angine-de-poitrine",
+    "https://www.brooklynflea.com/Locations",
     "https://www.jambase.com/show/guster-music-hall-of-williamsburg-20261119",
     "https://www.jambase.com/show/guster-music-hall-of-williamsburg-20261120",
     "https://www.mcny.org/press-release-after-dark",
     "https://www.momaps1.org/",
     "https://www.nybg.org/",
+    "https://www.nycforfree.co/events/shop-small-greenpoint-fall-crawl",
     "https://www.nycforfree.co/events/the-100th-macys-thanksgiving-day-parade",
     "https://www.nycgovparks.org/events/2026/11/21/historic-new-york-greenpoint-neighborhood-history",
     "https://www.songkick.com/concerts/43341697-resavoir-at-babys-all-right",
