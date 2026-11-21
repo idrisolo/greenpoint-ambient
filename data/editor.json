@@ -1,12 +1,13 @@
 {
-  "updated": "2026-11-20",
+  "updated": "2026-11-21",
   "headline": {
-    "title": "Lightscape opens tonight at Brooklyn Botanic Garden",
-    "body": "The winter light trail through the garden starts its season tonight and runs to Jan 3. Book timed tickets ahead, since popular nights sell out.",
-    "meta": "Brooklyn Botanic Garden · timed tickets",
-    "day": "2026-11-20",
-    "until": "2027-01-03",
-    "url": "https://www.bbg.org/lightscape"
+    "title": "Walk Greenpoint's industrial past, today at 1",
+    "body": "NYC Parks rangers lead a free history walk from McGolrick Park to WNYC Transmitter Park. Shipyards, immigrants and a lot of old brick.",
+    "meta": "McGolrick Park · NYC Parks event",
+    "day": "2026-11-21",
+    "timeText": "1:00 PM",
+    "until": "2026-11-21",
+    "url": "https://www.nycgovparks.org/events/2026/11/21/historic-new-york-greenpoint-neighborhood-history"
   },
   "picks": [
     {
@@ -22,14 +23,14 @@
     },
     {
       "cat": "holiday",
-      "title": "NYC Winter Lantern Festival opens in Queens",
-      "body": "Lantern displays light up Queens County Farm in Glen Oaks, 5 to 10 PM, starting Thursday. End date is listed as Jan 3.",
-      "meta": "Queens County Farm · timed tickets",
-      "place": "Queens County Farm, Glen Oaks",
-      "boro": "Queens",
-      "day": "2026-11-19",
-      "until": "2027-01-03",
-      "url": "https://qns.com/2026/10/winter-lantern-festival-queens-2026/"
+      "title": "Bryant Park Winter Village is open",
+      "body": "The free skating rink and holiday shops are up through Jan 3 for the shops, with the village running to Feb 28. Hours run later on weekends.",
+      "meta": "Bryant Park · free entry",
+      "place": "Bryant Park, Midtown",
+      "boro": "Manhattan",
+      "day": "2026-11-21",
+      "until": "2027-02-28",
+      "url": "https://bryantpark.org/amenities/bank-of-america-winter-village-at-bryant-park"
     },
     {
       "cat": "art",
@@ -100,17 +101,17 @@
       "url": "https://vendorsmap.com/events/4525"
     },
     {
-      "cat": "food",
-      "title": "Brooklyn Flea at the DUMBO Archway",
-      "body": "Vintage, makers and food stalls every Saturday and Sunday, 10 AM to 5 PM, under the Manhattan Bridge archway. Free to enter.",
-      "meta": "80 Pearl St · free",
-      "place": "DUMBO Archway, DUMBO",
+      "cat": "city",
+      "title": "20th Annual Brooklyn Children's Book Fair",
+      "body": "The Brooklyn Museum hosts its book fair on Sunday, with authors, illustrators and readings for families.",
+      "meta": "Brooklyn Museum · see site",
+      "place": "Brooklyn Museum, Prospect Heights",
       "boro": "Brooklyn",
-      "day": "2026-11-21",
-      "time24": "10:00",
-      "timeText": "10:00 AM",
-      "until": "2026-11-29",
-      "url": "https://www.brooklynflea.com/Locations"
+      "day": "2026-11-22",
+      "time24": "11:00",
+      "timeText": "11:00 AM",
+      "until": "2026-11-22",
+      "url": "https://www.brooklynmuseum.org/press/public-programs-november-2026"
     },
     {
       "cat": "holiday",
@@ -154,6 +155,7 @@
   "sources": [
     "https://anthologyfilmarchives.org/",
     "https://brooklynmuseum.org/exhibitions/iris-van-herpen",
+    "https://bryantpark.org/amenities/bank-of-america-winter-village-at-bryant-park",
     "https://en.Wikipedia.com/wiki/Continental_Iron_Works",
     "https://en.wikipedia.org/wiki/SS_Great_Republic_(1866)",
     "https://filmforum.org/",
@@ -171,6 +173,7 @@
     "https://www.bbg.org/lightscape",
     "https://www.bowerypresents.com/new-york-metro/shows/detail/1452610-angine-de-poitrine",
     "https://www.brooklynflea.com/Locations",
+    "https://www.brooklynmuseum.org/press/public-programs-november-2026",
     "https://www.jambase.com/show/guster-music-hall-of-williamsburg-20261119",
     "https://www.jambase.com/show/guster-music-hall-of-williamsburg-20261120",
     "https://www.mcny.org/press-release-after-dark",
