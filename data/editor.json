@@ -1,93 +1,92 @@
 {
-  "updated": "2026-11-21",
+  "updated": "2026-11-22",
   "headline": {
-    "title": "Walk Greenpoint's industrial past, today at 1",
-    "body": "NYC Parks rangers lead a free history walk from McGolrick Park to WNYC Transmitter Park. Shipyards, immigrants and a lot of old brick.",
-    "meta": "McGolrick Park · NYC Parks event",
-    "day": "2026-11-21",
-    "timeText": "1:00 PM",
-    "until": "2026-11-21",
-    "url": "https://www.nycgovparks.org/events/2026/11/21/historic-new-york-greenpoint-neighborhood-history"
+    "title": "Rossellini at Film Forum, 26 films",
+    "body": "Rome Open City, Paisan and Voyage to Italy in 35mm and new 4K restorations. A cold Sunday is a good excuse to start.",
+    "meta": "Film Forum, Manhattan · ticketed",
+    "day": "2026-11-22",
+    "until": "2026-12-10",
+    "url": "https://filmforum.org/"
   },
   "picks": [
     {
       "cat": "holiday",
-      "title": "Lightscape returns to Brooklyn Botanic Garden",
-      "body": "The garden's winter light trail opens today and runs to Jan 3. Timed tickets are bought in advance online, and popular nights can sell out.",
-      "meta": "Brooklyn Botanic Garden · timed tickets",
+      "title": "Lightscape at Brooklyn Botanic Garden",
+      "body": "The garden's winter light trail runs to Jan 3. Timed tickets are bought in advance online, and popular nights can sell out.",
+      "meta": "Timed tickets",
       "place": "Brooklyn Botanic Garden, Prospect Heights",
       "boro": "Brooklyn",
-      "day": "2026-11-20",
+      "day": "2026-11-22",
       "until": "2027-01-03",
       "url": "https://www.bbg.org/lightscape"
     },
     {
       "cat": "holiday",
-      "title": "Bryant Park Winter Village is open",
-      "body": "The free skating rink and holiday shops are up through Jan 3 for the shops, with the village running to Feb 28. Hours run later on weekends.",
-      "meta": "Bryant Park · free entry",
-      "place": "Bryant Park, Midtown",
-      "boro": "Manhattan",
-      "day": "2026-11-21",
-      "until": "2027-02-28",
-      "url": "https://bryantpark.org/amenities/bank-of-america-winter-village-at-bryant-park"
+      "title": "Winter Lantern Festival, Queens",
+      "body": "A lantern walk at Queens County Farm Museum, about 60 to 90 minutes, running through Jan 3. Tickets listed from about $19.",
+      "meta": "Fever tickets from ~$19",
+      "place": "Queens County Farm Museum, Floral Park",
+      "boro": "Queens",
+      "day": "2026-11-22",
+      "until": "2027-01-03",
+      "url": "https://qns.com/2026/10/winter-lantern-festival-queens-2026/"
     },
     {
-      "cat": "art",
-      "title": "The Photography Triennial: After Dark opens",
-      "body": "The Museum of the City of New York looks at the city's nightlife through contemporary photography, opening to the public today.",
-      "meta": "Museum of the City of New York · admission",
-      "place": "Museum of the City of New York, East Harlem",
-      "boro": "Manhattan",
-      "day": "2026-11-20",
-      "until": "2027-04-25",
-      "url": "https://www.mcny.org/press-release-after-dark"
-    },
-    {
-      "cat": "art",
-      "title": "Iris van Herpen: Sculpting the Senses",
-      "body": "The Brooklyn Museum's show of the Dutch designer's couture, 140-plus pieces, closes Dec 6. Plan a visit before it does.",
-      "meta": "Brooklyn Museum · admission",
-      "place": "Brooklyn Museum, Prospect Heights",
-      "boro": "Brooklyn",
-      "day": "2026-11-19",
-      "until": "2026-12-06",
-      "url": "https://brooklynmuseum.org/exhibitions/iris-van-herpen"
+      "cat": "holiday",
+      "title": "Holiday Train Show at NYBG",
+      "body": "Model trains weave through miniature landmarks made of plant parts, now through Jan 10. Adult tickets start around $39.",
+      "meta": "NYBG · timed tickets",
+      "place": "New York Botanical Garden, Bedford Park",
+      "boro": "the Bronx",
+      "day": "2026-11-22",
+      "until": "2027-01-10",
+      "url": "https://www.nybg.org/"
     },
     {
       "cat": "film",
-      "title": "Faces: Moving-Image Portraiture at Anthology",
-      "body": "Anthology Film Archives runs a series on the human face in cinema, from today through Dec 1. Check the calendar for the film lineup.",
-      "meta": "Anthology Film Archives · ticketed",
+      "title": "Faces: Moving-Image Portraiture",
+      "body": "Anthology Film Archives surveys how filmmakers have shot the human face, through Dec 1. Check the calendar for the lineup.",
+      "meta": "Anthology · ticketed",
       "place": "Anthology Film Archives, East Village",
       "boro": "Manhattan",
-      "day": "2026-11-20",
+      "day": "2026-11-22",
       "until": "2026-12-01",
       "url": "https://anthologyfilmarchives.org/"
     },
     {
-      "cat": "music",
-      "title": "Resavoir at Baby's All Right",
-      "body": "The Austin jazz-leaning collective plays the Williamsburg room on Saturday. Tickets listed from $20.",
-      "meta": "from $20",
-      "place": "Baby's All Right, Williamsburg",
+      "cat": "art",
+      "title": "Iris van Herpen: Sculpting the Senses",
+      "body": "The Brooklyn Museum's show of the Dutch designer's couture, 140-plus pieces, closes Dec 6.",
+      "meta": "Brooklyn Museum · admission",
+      "place": "Brooklyn Museum, Prospect Heights",
       "boro": "Brooklyn",
-      "day": "2026-11-21",
-      "until": "2026-11-21",
-      "url": "https://www.songkick.com/concerts/43341697-resavoir-at-babys-all-right"
+      "day": "2026-11-22",
+      "until": "2026-12-06",
+      "url": "https://brooklynmuseum.org/exhibitions/iris-van-herpen"
     },
     {
-      "cat": "city",
-      "title": "Historic New York: a Greenpoint history walk",
-      "body": "NYC Parks rangers lead a walk on the neighborhood's industrial past and immigrant communities, ending at WNYC Transmitter Park.",
-      "meta": "McGolrick Park · Parks event",
-      "place": "Msgr. McGolrick Park, Greenpoint",
+      "cat": "art",
+      "title": "The Photography Triennial: After Dark",
+      "body": "The Museum of the City of New York looks at the city's nightlife through contemporary photography. Opened Nov 20.",
+      "meta": "MCNY · admission",
+      "place": "Museum of the City of New York, East Harlem",
+      "boro": "Manhattan",
+      "day": "2026-11-22",
+      "until": "2027-04-25",
+      "url": "https://www.mcny.org/press-release-after-dark"
+    },
+    {
+      "cat": "music",
+      "title": "Lucy Dacus at Music Hall of Williamsburg",
+      "body": "The indie songwriter plays the 550-capacity Williamsburg room on Monday, Nov 30. Doors at 8 PM.",
+      "meta": "Doors 8 PM · tickets via Songkick",
+      "place": "Music Hall of Williamsburg, Williamsburg",
       "boro": "Brooklyn",
-      "day": "2026-11-21",
-      "time24": "13:00",
-      "timeText": "1:00 PM",
-      "until": "2026-11-21",
-      "url": "https://www.nycgovparks.org/events/2026/11/21/historic-new-york-greenpoint-neighborhood-history"
+      "day": "2026-11-30",
+      "time24": "20:00",
+      "timeText": "8:00 PM",
+      "until": "2026-11-30",
+      "url": "https://songkick.com/concerts/43499904-lucy-dacus-at-music-hall-of-williamsburg"
     },
     {
       "cat": "food",
@@ -96,22 +95,9 @@
       "meta": "Saturdays · Union Ave",
       "place": "McCarren Park, Greenpoint",
       "boro": "Brooklyn",
-      "day": "2026-11-21",
-      "until": "2026-11-28",
+      "day": "2026-11-28",
+      "until": "2026-12-04",
       "url": "https://vendorsmap.com/events/4525"
-    },
-    {
-      "cat": "city",
-      "title": "20th Annual Brooklyn Children's Book Fair",
-      "body": "The Brooklyn Museum hosts its book fair on Sunday, with authors, illustrators and readings for families.",
-      "meta": "Brooklyn Museum · see site",
-      "place": "Brooklyn Museum, Prospect Heights",
-      "boro": "Brooklyn",
-      "day": "2026-11-22",
-      "time24": "11:00",
-      "timeText": "11:00 AM",
-      "until": "2026-11-22",
-      "url": "https://www.brooklynmuseum.org/press/public-programs-november-2026"
     },
     {
       "cat": "holiday",
@@ -123,13 +109,24 @@
       "day": "2026-11-28",
       "until": "2026-12-06",
       "url": "https://www.nycforfree.co/events/shop-small-greenpoint-fall-crawl"
+    },
+    {
+      "cat": "food",
+      "title": "Brooklyn Flea holiday market, DUMBO",
+      "body": "The Flea's December edition at the DUMBO Archway runs Dec 5 to 20, free entry, no food booths.",
+      "meta": "Free entry",
+      "place": "DUMBO Archway, DUMBO",
+      "boro": "Brooklyn",
+      "day": "2026-12-05",
+      "until": "2026-12-20",
+      "url": "https://www.brooklynflea.com/Locations"
     }
   ],
   "facts": [
     {
       "c": "Greenpoint history",
-      "t": "The SS Great Republic, launched from Henry Steers's Greenpoint yard on November 8, 1866, was then the largest ship of any kind ever built in the United States.",
-      "src": "https://en.wikipedia.org/wiki/SS_Great_Republic_(1866)"
+      "t": "The USS Monitor was built at Greenpoint's Continental Iron Works in just 101 days, and the Navy waived the penalty when it was delivered a day late.",
+      "src": "https://en.wikipedia.org/wiki/Continental_Iron_Works"
     }
   ],
   "countdowns": [
@@ -153,36 +150,19 @@
     }
   ],
   "sources": [
+    "https://filmforum.org/",
+    "https://www.bbg.org/lightscape",
+    "https://qns.com/2026/10/winter-lantern-festival-queens-2026/",
+    "https://www.nybg.org/",
     "https://anthologyfilmarchives.org/",
     "https://brooklynmuseum.org/exhibitions/iris-van-herpen",
-    "https://bryantpark.org/amenities/bank-of-america-winter-village-at-bryant-park",
-    "https://en.Wikipedia.com/wiki/Continental_Iron_Works",
-    "https://en.wikipedia.org/wiki/SS_Great_Republic_(1866)",
-    "https://filmforum.org/",
-    "https://journalofantiques.com/?p=83057",
-    "https://nitehawkcinema.com/williamsburg/movies/paper-tiger/",
-    "https://qns.com/2026/10/waxing-romantic-on-the-bridges-of-newtown-creek-our-neighborhood-the-way-it-was/",
-    "https://qns.com/2026/10/winter-lantern-festival-queens-2026/",
-    "https://secretnyc.co/bryant-park-winter-village-opening-date-2026/",
-    "https://secretnyc.co/definitive-guide-every-holiday-market-nyc/",
-    "https://secretnyc.co/rockefeller-center-christmas-tree-2026-details/",
-    "https://songkick.com/concerts/42974907-armand-hammer-at-music-hall-of-williamsburg",
-    "https://urbanartantiques.com/2026/08/04/brooklyn-flea/",
-    "https://vendorsmap.com/events/4525",
-    "https://www.amny.com/opinion/new-kosciuszko-bridge-is-a-reminder-of-greenpoint-s-history-as-an-industrial-polish-neighborhood-1-13530129",
-    "https://www.bbg.org/lightscape",
-    "https://www.bowerypresents.com/new-york-metro/shows/detail/1452610-angine-de-poitrine",
-    "https://www.brooklynflea.com/Locations",
-    "https://www.brooklynmuseum.org/press/public-programs-november-2026",
-    "https://www.jambase.com/show/guster-music-hall-of-williamsburg-20261119",
-    "https://www.jambase.com/show/guster-music-hall-of-williamsburg-20261120",
     "https://www.mcny.org/press-release-after-dark",
-    "https://www.momaps1.org/",
-    "https://www.nybg.org/",
+    "https://songkick.com/concerts/43499904-lucy-dacus-at-music-hall-of-williamsburg",
+    "https://vendorsmap.com/events/4525",
     "https://www.nycforfree.co/events/shop-small-greenpoint-fall-crawl",
-    "https://www.nycforfree.co/events/the-100th-macys-thanksgiving-day-parade",
-    "https://www.nycgovparks.org/events/2026/11/21/historic-new-york-greenpoint-neighborhood-history",
-    "https://www.songkick.com/concerts/43341697-resavoir-at-babys-all-right",
-    "https://www.timeout.com/newyork/news/starting-january-1-admission-to-moma-ps1-will-be-completely-free-for-all-120925"
+    "https://www.brooklynflea.com/Locations",
+    "https://en.wikipedia.org/wiki/Continental_Iron_Works",
+    "https://secretnyc.co/rockefeller-center-christmas-tree-2026-details/",
+    "https://www.nycforfree.co/events/the-100th-macys-thanksgiving-day-parade"
   ]
 }
