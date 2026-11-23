@@ -1,10 +1,10 @@
 {
-  "updated": "2026-11-22",
+  "updated": "2026-11-23",
   "headline": {
     "title": "Rossellini at Film Forum, 26 films",
-    "body": "Rome Open City, Paisan and Voyage to Italy in 35mm and new 4K restorations. A cold Sunday is a good excuse to start.",
+    "body": "Rome Open City, Paisan and Voyage to Italy in 35mm and new 4K restorations. A gray Monday is a good excuse to start.",
     "meta": "Film Forum, Manhattan · ticketed",
-    "day": "2026-11-22",
+    "day": "2026-11-23",
     "until": "2026-12-10",
     "url": "https://filmforum.org/"
   },
@@ -16,31 +16,20 @@
       "meta": "Timed tickets",
       "place": "Brooklyn Botanic Garden, Prospect Heights",
       "boro": "Brooklyn",
-      "day": "2026-11-22",
+      "day": "2026-11-23",
       "until": "2027-01-03",
       "url": "https://www.bbg.org/lightscape"
     },
     {
       "cat": "holiday",
-      "title": "Winter Lantern Festival, Queens",
-      "body": "A lantern walk at Queens County Farm Museum, about 60 to 90 minutes, running through Jan 3. Tickets listed from about $19.",
-      "meta": "Fever tickets from ~$19",
-      "place": "Queens County Farm Museum, Floral Park",
-      "boro": "Queens",
-      "day": "2026-11-22",
+      "title": "Bank of America Winter Village, Bryant Park",
+      "body": "Free skating, with the holiday shops open through Jan 3. The rink stays open until midnight from Nov 19 to Jan 3.",
+      "meta": "Free entry, bring skates",
+      "place": "Bryant Park, Midtown",
+      "boro": "Manhattan",
+      "day": "2026-11-23",
       "until": "2027-01-03",
-      "url": "https://qns.com/2026/10/winter-lantern-festival-queens-2026/"
-    },
-    {
-      "cat": "holiday",
-      "title": "Holiday Train Show at NYBG",
-      "body": "Model trains weave through miniature landmarks made of plant parts, now through Jan 10. Adult tickets start around $39.",
-      "meta": "NYBG · timed tickets",
-      "place": "New York Botanical Garden, Bedford Park",
-      "boro": "the Bronx",
-      "day": "2026-11-22",
-      "until": "2027-01-10",
-      "url": "https://www.nybg.org/"
+      "url": "https://bryantpark.org/amenities/bank-of-america-winter-village-at-bryant-park"
     },
     {
       "cat": "film",
@@ -49,7 +38,7 @@
       "meta": "Anthology · ticketed",
       "place": "Anthology Film Archives, East Village",
       "boro": "Manhattan",
-      "day": "2026-11-22",
+      "day": "2026-11-23",
       "until": "2026-12-01",
       "url": "https://anthologyfilmarchives.org/"
     },
@@ -60,7 +49,7 @@
       "meta": "Brooklyn Museum · admission",
       "place": "Brooklyn Museum, Prospect Heights",
       "boro": "Brooklyn",
-      "day": "2026-11-22",
+      "day": "2026-11-23",
       "until": "2026-12-06",
       "url": "https://brooklynmuseum.org/exhibitions/iris-van-herpen"
     },
@@ -71,7 +60,7 @@
       "meta": "MCNY · admission",
       "place": "Museum of the City of New York, East Harlem",
       "boro": "Manhattan",
-      "day": "2026-11-22",
+      "day": "2026-11-23",
       "until": "2027-04-25",
       "url": "https://www.mcny.org/press-release-after-dark"
     },
@@ -87,6 +76,17 @@
       "timeText": "8:00 PM",
       "until": "2026-11-30",
       "url": "https://songkick.com/concerts/43499904-lucy-dacus-at-music-hall-of-williamsburg"
+    },
+    {
+      "cat": "art",
+      "title": "Sonia Boyce: Demonstrate",
+      "body": "The Queens Museum hosts the British artist's show, on view through Jan 27, 2027. Listed in Hyperallergic's fall 2026 art guide.",
+      "meta": "Queens Museum · admission",
+      "place": "Queens Museum, Flushing Meadows",
+      "boro": "Queens",
+      "day": "2026-11-23",
+      "until": "2027-01-27",
+      "url": "https://queensmuseum.org/"
     },
     {
       "cat": "food",
@@ -125,8 +125,8 @@
   "facts": [
     {
       "c": "Greenpoint history",
-      "t": "The USS Monitor was built at Greenpoint's Continental Iron Works in just 101 days, and the Navy waived the penalty when it was delivered a day late.",
-      "src": "https://en.wikipedia.org/wiki/Continental_Iron_Works"
+      "t": "The Greenpoint Avenue Bridge over Newtown Creek is the sixth span at that spot. Its official name is the J.J. Byrne Bridge, for a Brooklyn Borough President.",
+      "src": "https://wikipedia.com/wiki/J.J._Byrne_Bridge"
     }
   ],
   "countdowns": [
@@ -150,19 +150,23 @@
     }
   ],
   "sources": [
-    "https://filmforum.org/",
-    "https://www.bbg.org/lightscape",
-    "https://qns.com/2026/10/winter-lantern-festival-queens-2026/",
-    "https://www.nybg.org/",
     "https://anthologyfilmarchives.org/",
     "https://brooklynmuseum.org/exhibitions/iris-van-herpen",
-    "https://www.mcny.org/press-release-after-dark",
+    "https://bryantpark.org/amenities/bank-of-america-winter-village-at-bryant-park",
+    "https://en.wikipedia.org/wiki/Continental_Iron_Works",
+    "https://filmforum.org/",
+    "https://hyperallergic.com/hyperallergic-fall-2026-new-york-art-guide/",
+    "https://qns.com/2026/10/winter-lantern-festival-queens-2026/",
+    "https://secretnyc.co/rockefeller-center-christmas-tree-2026-details/",
     "https://songkick.com/concerts/43499904-lucy-dacus-at-music-hall-of-williamsburg",
     "https://vendorsmap.com/events/4525",
-    "https://www.nycforfree.co/events/shop-small-greenpoint-fall-crawl",
+    "https://wikipedia.com/wiki/J.J._Byrne_Bridge",
+    "https://www.6sqft.com/bryant-parks-winter-village-opens-for-the-2026-holiday-season/",
+    "https://www.bbg.org/lightscape",
     "https://www.brooklynflea.com/Locations",
-    "https://en.wikipedia.org/wiki/Continental_Iron_Works",
-    "https://secretnyc.co/rockefeller-center-christmas-tree-2026-details/",
+    "https://www.mcny.org/press-release-after-dark",
+    "https://www.nybg.org/",
+    "https://www.nycforfree.co/events/shop-small-greenpoint-fall-crawl",
     "https://www.nycforfree.co/events/the-100th-macys-thanksgiving-day-parade"
   ]
 }
