@@ -1,46 +1,26 @@
 {
-  "updated": "2026-11-23",
+  "updated": "2026-11-24",
   "headline": {
     "title": "Rossellini at Film Forum, 26 films",
-    "body": "Rome Open City, Paisan and Voyage to Italy in 35mm and new 4K restorations. A gray Monday is a good excuse to start.",
+    "body": "Rome Open City, Paisan and Voyage to Italy in 35mm and new 4K restorations. A cold Tuesday is a good excuse to start.",
     "meta": "Film Forum, Manhattan · ticketed",
-    "day": "2026-11-23",
+    "day": "2026-11-24",
     "until": "2026-12-10",
     "url": "https://filmforum.org/"
   },
   "picks": [
     {
       "cat": "holiday",
-      "title": "Lightscape at Brooklyn Botanic Garden",
-      "body": "The garden's winter light trail runs to Jan 3. Timed tickets are bought in advance online, and popular nights can sell out.",
-      "meta": "Timed tickets",
-      "place": "Brooklyn Botanic Garden, Prospect Heights",
-      "boro": "Brooklyn",
-      "day": "2026-11-23",
+      "title": "Winter Lantern Festival, Queens",
+      "body": "Hand-built lantern displays light up Queens County Farm from 5 PM nightly. Last entry 9:30 PM. Runs through Jan 3.",
+      "meta": "Timed tickets via Fever",
+      "place": "Queens County Farm Museum, Glen Oaks",
+      "boro": "Queens",
+      "day": "2026-11-24",
+      "time24": "17:00",
+      "timeText": "5:00 PM",
       "until": "2027-01-03",
-      "url": "https://www.bbg.org/lightscape"
-    },
-    {
-      "cat": "holiday",
-      "title": "Bank of America Winter Village, Bryant Park",
-      "body": "Free skating, with the holiday shops open through Jan 3. The rink stays open until midnight from Nov 19 to Jan 3.",
-      "meta": "Free entry, bring skates",
-      "place": "Bryant Park, Midtown",
-      "boro": "Manhattan",
-      "day": "2026-11-23",
-      "until": "2027-01-03",
-      "url": "https://bryantpark.org/amenities/bank-of-america-winter-village-at-bryant-park"
-    },
-    {
-      "cat": "film",
-      "title": "Faces: Moving-Image Portraiture",
-      "body": "Anthology Film Archives surveys how filmmakers have shot the human face, through Dec 1. Check the calendar for the lineup.",
-      "meta": "Anthology · ticketed",
-      "place": "Anthology Film Archives, East Village",
-      "boro": "Manhattan",
-      "day": "2026-11-23",
-      "until": "2026-12-01",
-      "url": "https://anthologyfilmarchives.org/"
+      "url": "https://qns.com/2026/10/winter-lantern-festival-queens-2026/"
     },
     {
       "cat": "art",
@@ -96,7 +76,7 @@
       "place": "McCarren Park, Greenpoint",
       "boro": "Brooklyn",
       "day": "2026-11-28",
-      "until": "2026-12-04",
+      "until": "2026-12-05",
       "url": "https://vendorsmap.com/events/4525"
     },
     {
@@ -111,22 +91,46 @@
       "url": "https://www.nycforfree.co/events/shop-small-greenpoint-fall-crawl"
     },
     {
-      "cat": "food",
-      "title": "Brooklyn Flea holiday market, DUMBO",
-      "body": "The Flea's December edition at the DUMBO Archway runs Dec 5 to 20, free entry, no food booths.",
-      "meta": "Free entry",
-      "place": "DUMBO Archway, DUMBO",
+      "cat": "music",
+      "title": "LCD Soundsystem at Brooklyn Steel",
+      "body": "The band's annual NYC residency hits Brooklyn Steel Nov 30 to Dec 3, starting with the 100th show. Doors 7 PM, 16+.",
+      "meta": "Doors 7 PM · tickets via Bowery Presents",
+      "place": "Brooklyn Steel, East Williamsburg",
       "boro": "Brooklyn",
-      "day": "2026-12-05",
-      "until": "2026-12-20",
-      "url": "https://www.brooklynflea.com/Locations"
+      "day": "2026-12-01",
+      "time24": "20:00",
+      "timeText": "8:00 PM",
+      "until": "2026-12-03",
+      "url": "https://www.ticketnews.com/2026/10/lcd-soundsystem-brooklyn-tickets-on-sale-at-brooklyn-steel/"
+    },
+    {
+      "cat": "art",
+      "title": "Laia Abril: On Rape and Institutional Failure",
+      "body": "ICP shows the Spanish photographer's chapter from A History of Misogyny, built on objects and testimony. Runs to Jan 11.",
+      "meta": "ICP · admission",
+      "place": "International Center of Photography, Lower East Side",
+      "boro": "Manhattan",
+      "day": "2026-11-24",
+      "until": "2027-01-11",
+      "url": "https://www.e-flux.com/criticism/6782494/laia-abril-s-on-rape-and-institutional-failure"
+    },
+    {
+      "cat": "holiday",
+      "title": "SKATE at Domino Park",
+      "body": "Williamsburg's waterfront rink is open daily through Feb 21, with skyline views. Weekday admission is $13 for NYC residents.",
+      "meta": "Skate rental $13",
+      "place": "Domino Park, Williamsburg",
+      "boro": "Brooklyn",
+      "day": "2026-11-24",
+      "until": "2027-02-21",
+      "url": "https://www.amny.com/news/skate-at-domino-park-returns-to-williamsburg-for-third-season/"
     }
   ],
   "facts": [
     {
       "c": "Greenpoint history",
-      "t": "The Greenpoint Avenue Bridge over Newtown Creek is the sixth span at that spot. Its official name is the J.J. Byrne Bridge, for a Brooklyn Borough President.",
-      "src": "https://wikipedia.com/wiki/J.J._Byrne_Bridge"
+      "t": "In 1866 the Great Republic, the largest wooden ship built up to that time, was built along Newtown Creek in Greenpoint.",
+      "src": "https://www.wikipedia.com/wiki/Greenpoint,_NY"
     }
   ],
   "countdowns": [
@@ -143,10 +147,10 @@
       "url": "https://www.nycforfree.co/events/shop-small-greenpoint-fall-crawl"
     },
     {
-      "date": "2026-12-02",
-      "title": "Rockefeller Center tree lighting",
-      "body": "The 2026 ceremony is Wednesday, Dec 2. Free, first come, first served.",
-      "url": "https://secretnyc.co/rockefeller-center-christmas-tree-2026-details/"
+      "date": "2026-11-30",
+      "title": "LCD Soundsystem 100th NYC residency show",
+      "body": "Brooklyn Steel, 8 PM, with proceeds to a charity to be announced.",
+      "url": "https://www.ticketnews.com/2026/10/lcd-soundsystem-brooklyn-tickets-on-sale-at-brooklyn-steel/"
     }
   ],
   "sources": [
@@ -157,16 +161,21 @@
     "https://filmforum.org/",
     "https://hyperallergic.com/hyperallergic-fall-2026-new-york-art-guide/",
     "https://qns.com/2026/10/winter-lantern-festival-queens-2026/",
+    "https://queensmuseum.org/",
     "https://secretnyc.co/rockefeller-center-christmas-tree-2026-details/",
     "https://songkick.com/concerts/43499904-lucy-dacus-at-music-hall-of-williamsburg",
     "https://vendorsmap.com/events/4525",
     "https://wikipedia.com/wiki/J.J._Byrne_Bridge",
     "https://www.6sqft.com/bryant-parks-winter-village-opens-for-the-2026-holiday-season/",
+    "https://www.amny.com/news/skate-at-domino-park-returns-to-williamsburg-for-third-season/",
     "https://www.bbg.org/lightscape",
     "https://www.brooklynflea.com/Locations",
+    "https://www.e-flux.com/criticism/6782494/laia-abril-s-on-rape-and-institutional-failure",
     "https://www.mcny.org/press-release-after-dark",
     "https://www.nybg.org/",
     "https://www.nycforfree.co/events/shop-small-greenpoint-fall-crawl",
-    "https://www.nycforfree.co/events/the-100th-macys-thanksgiving-day-parade"
+    "https://www.nycforfree.co/events/the-100th-macys-thanksgiving-day-parade",
+    "https://www.ticketnews.com/2026/10/lcd-soundsystem-brooklyn-tickets-on-sale-at-brooklyn-steel/",
+    "https://www.wikipedia.com/wiki/Greenpoint,_NY"
   ]
 }
