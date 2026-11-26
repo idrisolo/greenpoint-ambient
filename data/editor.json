@@ -1,10 +1,10 @@
 {
-  "updated": "2026-11-25",
+  "updated": "2026-11-26",
   "headline": {
     "title": "Lightscape at Brooklyn Botanic Garden",
     "body": "A nightly walk-through light show among the garden's trees and paths, open now through Jan 3. Bundle up and book a timed ticket.",
     "meta": "Brooklyn Botanic Garden · ticketed",
-    "day": "2026-11-25",
+    "day": "2026-11-26",
     "until": "2027-01-03",
     "url": "https://www.bbg.org/lightscape"
   },
@@ -16,7 +16,7 @@
       "meta": "Timed tickets via Fever",
       "place": "Queens County Farm Museum, Glen Oaks",
       "boro": "Queens",
-      "day": "2026-11-25",
+      "day": "2026-11-26",
       "time24": "17:00",
       "timeText": "5:00 PM",
       "until": "2027-01-03",
@@ -29,7 +29,7 @@
       "meta": "Brooklyn Museum · admission",
       "place": "Brooklyn Museum, Prospect Heights",
       "boro": "Brooklyn",
-      "day": "2026-11-25",
+      "day": "2026-11-26",
       "until": "2026-12-06",
       "url": "https://brooklynmuseum.org/exhibitions/iris-van-herpen"
     },
@@ -40,7 +40,7 @@
       "meta": "MCNY · admission",
       "place": "Museum of the City of New York, East Harlem",
       "boro": "Manhattan",
-      "day": "2026-11-25",
+      "day": "2026-11-26",
       "until": "2027-04-25",
       "url": "https://www.mcny.org/press-release-after-dark"
     },
@@ -82,24 +82,13 @@
       "url": "https://www.nycforfree.co/events/shop-small-greenpoint-fall-crawl"
     },
     {
-      "cat": "food",
-      "title": "Greenpoint-McCarren Park Greenmarket",
-      "body": "The Saturday farmers market sets up on Union Avenue between Driggs and N 12th Street.",
-      "meta": "Saturdays · Union Ave",
-      "place": "McCarren Park, Greenpoint",
-      "boro": "Brooklyn",
-      "day": "2026-11-28",
-      "until": "2026-12-05",
-      "url": "https://vendorsmap.com/events/4525"
-    },
-    {
       "cat": "holiday",
       "title": "SKATE at Domino Park",
       "body": "Williamsburg's waterfront rink is open daily through Feb 21, with skyline views. Weekday admission is $13 for NYC residents.",
       "meta": "Skate rental $13",
       "place": "Domino Park, Williamsburg",
       "boro": "Brooklyn",
-      "day": "2026-11-25",
+      "day": "2026-11-26",
       "until": "2027-02-21",
       "url": "https://www.amny.com/news/skate-at-domino-park-returns-to-williamsburg-for-third-season/"
     },
@@ -116,35 +105,48 @@
     },
     {
       "cat": "holiday",
-      "title": "Union Square Holiday Market",
-      "body": "About 200 vendors in its 33rd year, free to browse. Open daily through Christmas Eve for gifts, ornaments and snacks.",
-      "meta": "Free entry · daily",
-      "place": "Union Square, Manhattan",
+      "title": "Bryant Park Tree Lighting",
+      "body": "The park's Christmas tree is lit at 5:30 PM on Tuesday, Dec 1, with the Winter Village rink and shops already open around it.",
+      "meta": "Free · Winter Village",
+      "place": "Bryant Park, Midtown",
       "boro": "Manhattan",
-      "day": "2026-11-25",
-      "until": "2026-12-24",
-      "url": "https://urbanspacemarkets.com/pages/union-square"
+      "day": "2026-12-01",
+      "time24": "17:30",
+      "timeText": "5:30 PM",
+      "until": "2026-12-01",
+      "url": "https://secretnyc.co/bryant-park-winter-village-opening-tree-lighting-2026/"
+    },
+    {
+      "cat": "food",
+      "title": "Brooklyn Flea Holiday Pop-Up, DUMBO",
+      "body": "Vintage, makers and gifts at 80 Pearl Street, opening Saturday, Nov 28 and running through Dec 20.",
+      "meta": "80 Pearl St · browse free",
+      "place": "80 Pearl Street, DUMBO",
+      "boro": "Brooklyn",
+      "day": "2026-11-28",
+      "until": "2026-12-20",
+      "url": "https://secretnyc.co/?p=416029"
     }
   ],
   "facts": [
     {
-      "c": "Greenpoint history",
-      "t": "The USS Monitor was launched from Greenpoint's Continental Iron Works after a build of just 101 days. It was delivered one day past the contract deadline, which the Navy waived.",
-      "src": "https://en.wikipedia.org/wiki/Continental_Iron_Works"
+      "c": "Brooklyn music",
+      "t": "Music Hall of Williamsburg, which opened as Northsix in 2001, loses its lease at the end of 2026 and will close, though shows are booked through the year.",
+      "src": "https://secretnyc.co/brooklyn-music-hall-of-williamsburg-closing-after-2026/"
     }
   ],
   "countdowns": [
-    {
-      "date": "2026-11-26",
-      "title": "100th Macy's Thanksgiving Day Parade",
-      "body": "Thursday, 8:30 AM to noon, from 77th Street to Herald Square. Free on the sidewalk.",
-      "url": "https://www.nycforfree.co/events/the-100th-macys-thanksgiving-day-parade"
-    },
     {
       "date": "2026-11-30",
       "title": "LCD Soundsystem 100th NYC residency show",
       "body": "Brooklyn Steel, doors 7 PM, first of four nights through Dec 3.",
       "url": "https://www.ticketnews.com/2026/10/lcd-soundsystem-brooklyn-tickets-on-sale-at-brooklyn-steel/"
+    },
+    {
+      "date": "2026-12-01",
+      "title": "Bryant Park Tree Lighting",
+      "body": "Tuesday, Dec 1, 5:30 PM. Winter Village is open through Feb 28, 2027.",
+      "url": "https://secretnyc.co/bryant-park-winter-village-opening-tree-lighting-2026/"
     },
     {
       "date": "2026-12-02",
@@ -163,6 +165,9 @@
     "https://nitehawkcinema.com/williamsburg/",
     "https://qns.com/2026/10/winter-lantern-festival-queens-2026/",
     "https://queensmuseum.org/",
+    "https://secretnyc.co/?p=416029",
+    "https://secretnyc.co/brooklyn-music-hall-of-williamsburg-closing-after-2026/",
+    "https://secretnyc.co/bryant-park-winter-village-opening-tree-lighting-2026/",
     "https://secretnyc.co/rockefeller-center-christmas-tree-2026-details/",
     "https://songkick.com/concerts/43499904-lucy-dacus-at-music-hall-of-williamsburg",
     "https://urbanspacemarkets.com/pages/union-square",
