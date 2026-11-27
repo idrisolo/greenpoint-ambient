@@ -1,27 +1,14 @@
 {
-  "updated": "2026-11-26",
+  "updated": "2026-11-27",
   "headline": {
     "title": "Lightscape at Brooklyn Botanic Garden",
     "body": "A nightly walk-through light show among the garden's trees and paths, open now through Jan 3. Bundle up and book a timed ticket.",
     "meta": "Brooklyn Botanic Garden · ticketed",
-    "day": "2026-11-26",
+    "day": "2026-11-27",
     "until": "2027-01-03",
     "url": "https://www.bbg.org/lightscape"
   },
   "picks": [
-    {
-      "cat": "holiday",
-      "title": "Winter Lantern Festival, Queens",
-      "body": "Hand-built lantern displays light up Queens County Farm from 5 PM nightly. Last entry 9:30 PM. Runs through Jan 3.",
-      "meta": "Timed tickets via Fever",
-      "place": "Queens County Farm Museum, Glen Oaks",
-      "boro": "Queens",
-      "day": "2026-11-26",
-      "time24": "17:00",
-      "timeText": "5:00 PM",
-      "until": "2027-01-03",
-      "url": "https://qns.com/2026/10/winter-lantern-festival-queens-2026/"
-    },
     {
       "cat": "art",
       "title": "Iris van Herpen: Sculpting the Senses",
@@ -29,7 +16,7 @@
       "meta": "Brooklyn Museum · admission",
       "place": "Brooklyn Museum, Prospect Heights",
       "boro": "Brooklyn",
-      "day": "2026-11-26",
+      "day": "2026-11-27",
       "until": "2026-12-06",
       "url": "https://brooklynmuseum.org/exhibitions/iris-van-herpen"
     },
@@ -40,7 +27,7 @@
       "meta": "MCNY · admission",
       "place": "Museum of the City of New York, East Harlem",
       "boro": "Manhattan",
-      "day": "2026-11-26",
+      "day": "2026-11-27",
       "until": "2027-04-25",
       "url": "https://www.mcny.org/press-release-after-dark"
     },
@@ -82,17 +69,6 @@
       "url": "https://www.nycforfree.co/events/shop-small-greenpoint-fall-crawl"
     },
     {
-      "cat": "holiday",
-      "title": "SKATE at Domino Park",
-      "body": "Williamsburg's waterfront rink is open daily through Feb 21, with skyline views. Weekday admission is $13 for NYC residents.",
-      "meta": "Skate rental $13",
-      "place": "Domino Park, Williamsburg",
-      "boro": "Brooklyn",
-      "day": "2026-11-26",
-      "until": "2027-02-21",
-      "url": "https://www.amny.com/news/skate-at-domino-park-returns-to-williamsburg-for-third-season/"
-    },
-    {
       "cat": "film",
       "title": "Citizen Kane in 35mm, 85th anniversary",
       "body": "Nitehawk Williamsburg lists a 35mm screening of Welles's debut on Saturday, Nov 28. Check the site for showtimes and seats.",
@@ -126,6 +102,30 @@
       "day": "2026-11-28",
       "until": "2026-12-20",
       "url": "https://secretnyc.co/?p=416029"
+    },
+    {
+      "cat": "holiday",
+      "title": "Greenpointers Holiday Market",
+      "body": "The neighborhood blog's annual one-day market of local designers, food stalls and mulled wine, listed for Sunday, Dec 6 at the Greenpoint Loft.",
+      "meta": "67 West St · check site for details",
+      "place": "Greenpoint Loft, Greenpoint",
+      "boro": "Brooklyn",
+      "day": "2026-12-06",
+      "until": "2026-12-06",
+      "url": "https://greenpointers.com/greenpointers-markets/"
+    },
+    {
+      "cat": "art",
+      "title": "WANG'S WORLD: Harvey Wang",
+      "body": "Photographs and films of everyday New Yorkers at the Bronx Documentary Center annex, free. A companion film screening is Dec 1.",
+      "meta": "Free · Thu-Fri 3-7, Sat 1-5",
+      "place": "BDC Annex, Mott Haven",
+      "boro": "the Bronx",
+      "day": "2026-11-27",
+      "time24": "15:00",
+      "timeText": "3:00 PM",
+      "until": "2027-01-10",
+      "url": "https://www.bronxdocumentarycenter.org/"
     }
   ],
   "facts": [
@@ -161,11 +161,13 @@
     "https://bryantpark.org/amenities/bank-of-america-winter-village-at-bryant-park",
     "https://en.wikipedia.org/wiki/Continental_Iron_Works",
     "https://filmforum.org/",
+    "https://greenpointers.com/greenpointers-markets/",
     "https://hyperallergic.com/hyperallergic-fall-2026-new-york-art-guide/",
     "https://nitehawkcinema.com/williamsburg/",
     "https://qns.com/2026/10/winter-lantern-festival-queens-2026/",
     "https://queensmuseum.org/",
     "https://secretnyc.co/?p=416029",
+    "https://secretnyc.co/?p=416052",
     "https://secretnyc.co/brooklyn-music-hall-of-williamsburg-closing-after-2026/",
     "https://secretnyc.co/bryant-park-winter-village-opening-tree-lighting-2026/",
     "https://secretnyc.co/rockefeller-center-christmas-tree-2026-details/",
@@ -177,6 +179,7 @@
     "https://www.amny.com/news/skate-at-domino-park-returns-to-williamsburg-for-third-season/",
     "https://www.bbg.org/lightscape",
     "https://www.brooklynflea.com/Locations",
+    "https://www.digitalcameraworld.com/photography/galleries-and-exhibitions/he-photographed-a-ramone-in-queens-and-blues-legends-on-a-floral-sofa-but-this-new-york-photographers-real-passion-is-everyday-people",
     "https://www.e-flux.com/criticism/6782494/laia-abril-s-on-rape-and-institutional-failure",
     "https://www.mcny.org/press-release-after-dark",
     "https://www.nybg.org/",
