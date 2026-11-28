@@ -1,10 +1,10 @@
 {
-  "updated": "2026-11-27",
+  "updated": "2026-11-28",
   "headline": {
     "title": "Lightscape at Brooklyn Botanic Garden",
-    "body": "A nightly walk-through light show among the garden's trees and paths, open now through Jan 3. Bundle up and book a timed ticket.",
+    "body": "A walk-through light show among the garden's trees and paths, open now through Jan 3. Bundle up and book a timed ticket.",
     "meta": "Brooklyn Botanic Garden · ticketed",
-    "day": "2026-11-27",
+    "day": "2026-11-28",
     "until": "2027-01-03",
     "url": "https://www.bbg.org/lightscape"
   },
@@ -69,17 +69,6 @@
       "url": "https://www.nycforfree.co/events/shop-small-greenpoint-fall-crawl"
     },
     {
-      "cat": "film",
-      "title": "Citizen Kane in 35mm, 85th anniversary",
-      "body": "Nitehawk Williamsburg lists a 35mm screening of Welles's debut on Saturday, Nov 28. Check the site for showtimes and seats.",
-      "meta": "Nitehawk Williamsburg · ticketed",
-      "place": "Nitehawk Cinema, Williamsburg",
-      "boro": "Brooklyn",
-      "day": "2026-11-28",
-      "until": "2026-11-28",
-      "url": "https://nitehawkcinema.com/williamsburg/"
-    },
-    {
       "cat": "holiday",
       "title": "Bryant Park Tree Lighting",
       "body": "The park's Christmas tree is lit at 5:30 PM on Tuesday, Dec 1, with the Winter Village rink and shops already open around it.",
@@ -115,17 +104,28 @@
       "url": "https://greenpointers.com/greenpointers-markets/"
     },
     {
-      "cat": "art",
-      "title": "WANG'S WORLD: Harvey Wang",
-      "body": "Photographs and films of everyday New Yorkers at the Bronx Documentary Center annex, free. A companion film screening is Dec 1.",
-      "meta": "Free · Thu-Fri 3-7, Sat 1-5",
-      "place": "BDC Annex, Mott Haven",
-      "boro": "the Bronx",
-      "day": "2026-11-27",
-      "time24": "15:00",
-      "timeText": "3:00 PM",
-      "until": "2027-01-10",
-      "url": "https://www.bronxdocumentarycenter.org/"
+      "cat": "holiday",
+      "title": "Skate at Domino Park",
+      "body": "The waterfront rink under the Williamsburg Bridge is open for its third season, through Feb 21, with the Manhattan skyline as backdrop.",
+      "meta": "Weekend skate from $17 for NYC residents",
+      "place": "Domino Park, Williamsburg",
+      "boro": "Brooklyn",
+      "day": "2026-11-28",
+      "until": "2027-02-21",
+      "url": "https://dominopark.com/ice-skating"
+    },
+    {
+      "cat": "holiday",
+      "title": "NYC Winter Lantern Festival, Queens",
+      "body": "Illuminated lantern installations at the Queens County Farm Museum, open evenings 5 to 10 PM. Timed tickets, outdoors.",
+      "meta": "Queens County Farm Museum · ticketed",
+      "place": "Queens County Farm Museum, Floral Park",
+      "boro": "Queens",
+      "day": "2026-11-28",
+      "time24": "17:00",
+      "timeText": "5:00 PM",
+      "until": "2027-01-03",
+      "url": "https://qns.com/2026/10/winter-lantern-festival-queens-2026/"
     }
   ],
   "facts": [
@@ -159,6 +159,7 @@
     "https://anthologyfilmarchives.org/",
     "https://brooklynmuseum.org/exhibitions/iris-van-herpen",
     "https://bryantpark.org/amenities/bank-of-america-winter-village-at-bryant-park",
+    "https://dominopark.com/ice-skating",
     "https://en.wikipedia.org/wiki/Continental_Iron_Works",
     "https://filmforum.org/",
     "https://greenpointers.com/greenpointers-markets/",
